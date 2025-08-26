@@ -4,12 +4,10 @@
   - MCXenoBase
   - MCXenoPlantingWeeds
   - MCXenoPickupOne
-  - MCXenoLayEgg
   - MCXenoCharge
   - MCXenoSpiting
   # RMC
   - CMXenoDeveloped
-  - CMXenoFlammable
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
@@ -86,10 +84,27 @@
   - type: XenoInhands
     prefix: queen
   - type: MCXenoBlessings
+    entries:
+    - LarvaSilo
+    - EvolutionTower
+    - PsychicRelay
+    - PheromoneTower
+    - Spawner
+    - AcidPool
+    - AcidJaws
+    - AcidMaw
+    - AcidTurret
+    - StickyResinTurret
+    - Gargoyle
+    - PrimordialTierOne
+    - PrimordialTierTwo
+    - PrimordialTierThree
+    - PrimordialTierFour
   - type: MCXenoHiveLeader
   - type: RMCSize
     size: Big
   - type: XenoAcid
+  # - type: MCXenoLayEgg
   - type: DropshipHijacker
   - type: TacticalMapUser
     canDraw: true

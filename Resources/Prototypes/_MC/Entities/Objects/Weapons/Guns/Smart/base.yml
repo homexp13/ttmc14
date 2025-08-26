@@ -1,0 +1,7 @@
+- type: entity
+  parent:
+  - BaseItem
+  - MCWeaponGun
+  - MCAttachableHolder
+  id: MCWeaponSmartGun
+  abstract: true

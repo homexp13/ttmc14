@@ -2,6 +2,14 @@
   id: MCXenoNoMeleeBase
   abstract: true
   components:
+  - type: Flammable
+    fireSpread: false
+    canResistFire: true
+    resistDuration: 1
+    # per second, scales with number of fire 'stacks'
+    damage:
+      types:
+        Heat: 1
   - type: RMCSize
     size: Xeno
   - type: Tag
@@ -61,7 +69,7 @@
 
 - type: entity
   parent: MCXenoNoMeleeBase
-  id: MCXenoBase
+  id: MCXenoUnactiveBase
   abstract: true
   components:
   - type: MeleeWeapon
@@ -70,9 +78,24 @@
     widePrimary: true
     altDisarm: false
     altHeavy: false
-  - type: MCXenoDamageVisuals
   - type: CombatMode
     canDisarm: false
+
+- type: entity
+  parent: MCXenoUnactiveBase
+  id: MCXenoBase
+  abstract: true
+  components:
+  - type: ActiveInputMover
+  - type: MCXenoDamageVisuals
+
+- type: entity
+  id: MCXenoAI
+  abstract: true
+  components:
+  - type: HTN
+    rootTask:
+      task: CMXenoCompound
 
 - type: entity
   id: MCXenoPlantingWeeds
@@ -125,18 +148,13 @@
       - XenoParasite
       - XenoEgg
       - XenoFruit
+      - MCXenoResinJelly
   - type: MultiHandedHolder
     items:
     - hands: 2
       whitelist:
         components:
         - XenoEgg
-
-- type: entity
-  id: MCXenoLayEgg
-  abstract: true
-  components:
-  - type: MCXenoLayEgg
 
 - type: entity
   id: MCXenoCharge

@@ -4,7 +4,6 @@
   - MCXenoBase
   # RMC
   - CMXenoDeveloped
-  - CMXenoFlammable
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
@@ -67,8 +66,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Critical
-      400: Dead
+      240: Critical
+      340: Dead
   - type: XenoPlasma
     plasma: 200
     maxPlasma: 200

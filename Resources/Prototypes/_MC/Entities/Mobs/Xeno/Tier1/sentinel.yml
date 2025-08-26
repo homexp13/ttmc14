@@ -5,7 +5,6 @@
   - MCXenoSpiting
   # RMC
   - CMXenoDeveloped
-  - CMXenoFlammable
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
@@ -40,6 +39,7 @@
     - MCActionXenoToxicSlash
     - MCActionXenoDrainSting
     - MCActionXenoAcidWeak
+    - MCActionXenoPlaceTrap
     hudOffset: -0.1,0.1
   - type: XenoEvolution
     actionId: MCActionXenoEvolve
@@ -72,3 +72,7 @@
   - type: MCXenoToxicSlash
   - type: MCXenoDrainSting
   - type: XenoAcid
+  - type: AcidTrap
+    trapLevel: 1
+    cost: 70
+    spray: XenoAcidSprayTrapWeak

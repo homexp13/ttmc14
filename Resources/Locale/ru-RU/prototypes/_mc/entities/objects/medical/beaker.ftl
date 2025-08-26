@@ -1,0 +1,14 @@
+ent-MCBeakerBase = { ent-BaseBeaker }
+    .suffix = MC
+    .desc = { ent-BaseBeaker.desc }
+ent-MCBeakerBaseMetallic = { ent-BaseBeakerMetallic }
+    .suffix = MC
+    .desc = { ent-BaseBeakerMetallic.desc }
+ent-MCBeaker = мензурка
+    .desc = Мензурка. Может содержать на 60 юнитов.
+ent-MCBeakerLarge = большая мензурка
+    .desc = Большая мензурка. Может содержать на 120 юнитов.
+ent-MCBeakerBluespace = блюспейс мензурка
+    .desc = Блюспейс мензурка, работает на экспериментальной технологии блюспейс. Может содержать на 300 юнитов.
+ent-MCVial = флакон
+    .desc = Маленький стеклянный флаком. Может содержать на 30 юнитов.

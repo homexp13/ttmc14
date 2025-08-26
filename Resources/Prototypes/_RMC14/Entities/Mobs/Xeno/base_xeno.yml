@@ -320,7 +320,6 @@
     - enum.VendingMachineUiKey.Key
     - enum.PaperUiKey.Key
     - enum.RMCCameraUiKey.Key
-  - type: ActiveInputMover
   - type: HiveTracker
     mode: Queen
     trackerModes:
@@ -362,7 +361,7 @@
   - type: RMCCanBeFultoned
   # - type: CMArmor
   - type: CriticalGraceTime
-  - type: RMCObstacleSlamming
+  # - type: RMCObstacleSlamming
   - type: Buckle
     buckleDelay: 0
     clickUnbuckle: false

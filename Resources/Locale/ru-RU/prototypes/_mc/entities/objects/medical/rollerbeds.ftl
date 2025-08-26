@@ -1,0 +1,13 @@
+ent-MCRollerBedDestruction = { "" }
+    .desc = { "" }
+ent-MCRollerBed = каталка
+    .desc = Складная каталка, которую можно переносить.
+    .suffix = MC
+ent-MCRollerBedSpawnFolded = { ent-MCRollerBed }
+    .suffix = MC, folded
+    .desc = { ent-MCRollerBed.desc }
+ent-MCPortableSurgicalBed = переносная хирургическая кровать
+    .desc = Складная хирургическая кровать. Она не идеальна, но это лучшее, что вы можете получить, кроме настоящего хирургического стола.
+ent-MCPortableSurgicalBedSpawnFolded = { ent-MCPortableSurgicalBed }
+    .suffix = folded
+    .desc = { ent-MCPortableSurgicalBed.desc }

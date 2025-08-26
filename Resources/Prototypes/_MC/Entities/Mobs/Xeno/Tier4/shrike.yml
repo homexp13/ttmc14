@@ -6,7 +6,6 @@
   - MCXenoPickupOne
   # RMC
   - CMXenoDeveloped
-  - CMXenoFlammable
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
@@ -42,6 +41,7 @@
     - MCActionXenoSecreteStructure
     - MCActionXenoLayEgg
     - MCActionXenoBlessings
+    - MCActionXenoCreateResinJelly
     # Weeds
     - MCActionXenoSelectWeeds
     - MCActionXenoPlantWeeds
@@ -90,10 +90,26 @@
   - type: XenoInhands
     prefix: shrike
   - type: MCXenoAcidicSalve
-  - type: MCXenoLayEgg
+  # - type: MCXenoLayEgg
   - type: MCXenoPsychicFling
   - type: MCXenoUnrelentingForce
   - type: MCXenoBlessings
+    entries:
+    - LarvaSilo
+    - EvolutionTower
+    - PsychicRelay
+    - PheromoneTower
+    - Spawner
+    - AcidPool
+    - AcidJaws
+    - AcidMaw
+    - AcidTurret
+    - StickyResinTurret
+    - Gargoyle
+    - PrimordialTierOne
+    - PrimordialTierTwo
+    - PrimordialTierThree
+    - PrimordialTierFour
   - type: MCXenoHiveLeader
   - type: DropshipHijacker
   - type: TacticalMapUser
@@ -106,3 +122,5 @@
     - MCWallXenoResinThickFireproof
     - MCWallXenoResinThickHardy
     - MCDoorXenoResinThick
+  - type: XenoAcid
+  - type: MCXenoCreateResinJelly

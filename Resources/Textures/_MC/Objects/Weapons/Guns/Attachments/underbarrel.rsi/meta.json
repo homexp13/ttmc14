@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": null,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "sg153_e_a"
+    },
+    {
+      "name": "sg153_a"
+    },
+    {
+      "name": "sg153_on"
+    },
+    {
+      "name": "uflashlight"
+    },
+    {
+      "name": "uflashlight_on"
+    },
+    {
+      "name": "uflashlight_a"
+    },
+    {
+      "name": "uflashlight_a-on"
+    },
+    {
+      "name": "bipod"
+    },
+    {
+      "name": "bipod_open"
+    },
+    {
+      "name": "bipod_a"
+    },
+    {
+      "name": "bipod_open_a"
+    },
+    {
+      "name": "rapidfire"
+    },
+    {
+      "name": "rapidfire_a"
+    },
+    {
+      "name": "gyro"
+    },
+    {
+      "name": "gyro_a",
+      "delays": [
+        [
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ]
+      ]
+    },
+    {
+      "name": "lasersight"
+    },
+    {
+      "name": "lasersight_a"
+    },
+    {
+      "name": "angledgrip"
+    },
+    {
+      "name": "angledgrip_a"
+    },
+    {
+      "name": "verticalgrip"
+    },
+    {
+      "name": "verticalgrip_a"
+    },
+    {
+      "name": "t81barrel_a"
+    }
+  ]
+}

@@ -4,7 +4,6 @@
   - MCXenoBase
   # RMC
   - CMXenoDeveloped
-  - CMXenoFlammable
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
@@ -22,8 +21,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      380: Critical
-      480: Dead
+      325: Critical
+      425: Dead
   - type: XenoPlasma
     plasma: 1000
     maxPlasma: 1000
@@ -37,6 +36,7 @@
     - MCActionXenoDevolve
     - MCActionXenoSprayAcidBoiler
     - MCActionXenoAcidStrong
+    - MCActionXenoPlaceTrap
     hudOffset: -0.15,0.25
   - type: XenoDevolve
     devolvesTo:

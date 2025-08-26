@@ -55,6 +55,35 @@
         whitelist:
           tags:
           - MCMagazineShotgunSH15
+  - type: AttachableHolder
+    slots:
+      rmc-aslot-barrel:
+        whitelist:
+          tags:
+          - MCAttachmentMuzzleCharger
+          - MCAttachmentRecoilCompensator
+          - MCAttachmentExtendedMuzzle
+          - MCAttachmentBayonet
+      rmc-aslot-rail:
+        whitelist:
+          tags:
+          - MCAttachmentMagneticHarness
+          - MCAttachmentRedDotSight
+          - MCAttachmentRailFlashlight
+      rmc-aslot-underbarrel:
+        whitelist:
+          tags:
+          - MCAttachmentUnderbarrelFlashlight
+          - MCAttachmentGyroscopicStabilizer
+          - MCAttachmentAngledGrip
+          - MCAttachmentVerticalGrip
+          - MCAttachmentGrenadeLauncher
+          - MCAttachmentMiniFlamethrower
+  - type: AttachableHolderVisuals
+    offsets:
+      rmc-aslot-barrel: 0.80, -0.035
+      rmc-aslot-rail: -0.05, 0.03
+      rmc-aslot-underbarrel: 0.3, -0.34
 
 - type: entity
   parent: CMMagazineRifleBase

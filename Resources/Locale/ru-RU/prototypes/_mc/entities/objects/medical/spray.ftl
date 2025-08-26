@@ -1,0 +1,12 @@
+ent-MCSprayBottleSterilizing = антисептический спрей
+    .desc = Забудьте об инфекциях и некрозе!
+    .suffix = MC, Empty
+ent-MCSprayBottleSterilizingFill = антисептический спрей
+    .suffix = MC, Filled
+    .desc = { ent-MCSprayBottleSterilizing.desc }
+ent-MCSprayBottleSpaceCleaner = космический очиститель
+    .desc = BLAM! — космический очиститель без пены!
+    .suffix = MC, Filled
+ent-MCSprayBottleSurgeryCleaner = хирургический очиститель
+    .desc = Кто-то вычеркнул слово «Space» в названии «Space Cleaner» и написал «Surgery». На обратной стороне нацарапано: «Не снимать под страхом смерти!!!»
+    .suffix = MC, Filled

@@ -4,10 +4,8 @@
   - MCXenoBase
   - MCXenoPlantingWeeds
   - MCXenoCreateResinJelly
-  - MCXenoLayEgg
   # RMC
   - CMXenoDeveloped
-  - CMXenoFlammable
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
@@ -124,6 +122,7 @@
     - MCActionXenoSelectWeeds
     - MCActionXenoPlantWeeds
     - MCActionXenoLayEgg
+    - MCActionXenoPlaceTrap
   - type: XenoParasiteThrower
   - type: XenoEvolution
     actionId: MCActionXenoEvolve
