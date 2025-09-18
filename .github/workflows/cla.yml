@@ -25,5 +25,5 @@ jobs:
         with:
           path-to-signatures: 'signatures/version1/cla.json'
           path-to-document: 'https://github.com/ttmc14/ttmc14/blob/main/CLA.md'
-          branch: 'main'
+          branch: 'cla'
           allowlist: bot*
