@@ -2,8 +2,6 @@
 using Content.Shared._MC.Nuke.UI;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Containers;
 
 namespace Content.Client._MC.Nuke.UI;
 
@@ -25,28 +23,48 @@ public sealed class MCNukeBui : BoundUserInterface
 
         _window = this.CreateWindow<MCNukeWindow>();
 
-        _window.DiskRedButton.OnPressed += _ => SendMessage(new MCNukeSlotBuiMessage(MCNukeComponent.SlotRedId));
-        _window.DiskBlueButton.OnPressed += _ => SendMessage(new MCNukeSlotBuiMessage(MCNukeComponent.SlotBlueId));
-        _window.DiskGreenButton.OnPressed += _ => SendMessage(new MCNukeSlotBuiMessage(MCNukeComponent.SlotGreenId));
+        _window.AnchorButton.OnPressed += _ => SendMessage(new MCNukeAnchorBuiMessage());
 
-        RefreshButtons();
+        if (!_entities.TryGetComponent<MCNukeComponent>(Owner, out var component))
+            return;
+
+        SetTime(component.Time);
+        SetReady(component.Ready);
     }
 
-    private void RefreshButtons()
+    protected override void UpdateState(BoundUserInterfaceState state)
     {
+        base.UpdateState(state);
+
         if (_window is null)
             return;
 
-        if (!_entities.TryGetComponent<ContainerManagerComponent>(Owner, out var component))
-            return;
-
-        RefreshButton(_window.DiskRedButton, MCNukeComponent.SlotRedId, component);
-        RefreshButton(_window.DiskBlueButton, MCNukeComponent.SlotBlueId, component);
-        RefreshButton(_window.DiskGreenButton, MCNukeComponent.SlotGreenId, component);
+        switch (state)
+        {
+            case MCNukeBuiState mainState:
+                SetState(mainState);
+                break;
+        }
     }
 
-    private void RefreshButton(Button button, string id, ContainerManagerComponent component)
+    private void SetState(MCNukeBuiState state)
     {
-        button.Text = component.Containers[id].Count == 0 ? "Inject" : "Eject";
+        SetReady(state.Ready);
+        SetAnchored(state.Anchored);
+    }
+
+    private void SetReady(bool value)
+    {
+        _window?.SetSettingsVisible(value);
+    }
+
+    private void SetAnchored(bool value)
+    {
+        _window?.SetSettingsAnchored(value);
+    }
+
+    private void SetTime(TimeSpan time)
+    {
+        _window?.SetTime(time);
     }
 }

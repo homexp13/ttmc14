@@ -63,4 +63,4 @@
   - type: SpawnPoint
     job_id: MCCSE
   - type: Sprite
-    state: ce_spawn
+    state: cse

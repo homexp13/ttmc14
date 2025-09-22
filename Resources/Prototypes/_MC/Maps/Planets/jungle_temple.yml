@@ -1,0 +1,8 @@
+- type: entity
+  id: MCPlanetJungleTemple
+  name: Храм в джунглях
+  components:
+  - type: RMCPlanetMapPrototype
+    map: /Maps/_MC/jungle_temple.yml
+    camouflage: Classic
+    announcement: ""

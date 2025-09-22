@@ -66,4 +66,4 @@
   - type: SpawnPoint
     job_id: MCAssaultCrewman
   - type: Sprite
-    state: medic_spawn
+    state: ac

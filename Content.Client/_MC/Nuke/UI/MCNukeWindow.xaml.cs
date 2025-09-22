@@ -11,4 +11,19 @@ public sealed partial class MCNukeWindow : DefaultWindow
     {
         RobustXamlLoader.Load(this);
     }
+
+    public void SetTime(TimeSpan time)
+    {
+        TimeLabel.Text = $"{time}s";
+    }
+
+    public void SetSettingsVisible(bool value)
+    {
+        SettingsBoxContainer.Visible = value;
+    }
+
+    public void SetSettingsAnchored(bool value)
+    {
+        AnchorButton.Text = value ? "Unanchor" : "Anchor";
+    }
 }
