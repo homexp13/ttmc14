@@ -77,9 +77,6 @@
     guides:
     - Chemicals
     - Chemist
-  - type: RequiresSkill
-    skills:
-      RMCSkillMedical: 1
   - type: ActivatableUIBlacklist
     blacklist:
       components:
