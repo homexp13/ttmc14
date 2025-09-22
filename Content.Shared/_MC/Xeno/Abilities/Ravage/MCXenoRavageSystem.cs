@@ -3,6 +3,10 @@ using Content.Shared._MC.Knockback;
 using Content.Shared._MC.Stun;
 using Content.Shared._RMC14.CameraShake;
 using Content.Shared._RMC14.Emote;
+using Content.Shared._RMC14.Entrenching;
+using Content.Shared._RMC14.Marines;
+using Content.Shared._RMC14.Power;
+using Content.Shared._RMC14.Xenonids;
 using Content.Shared._RMC14.Xenonids.Hive;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
@@ -46,6 +50,9 @@ public sealed class MCXenoRavageSystem : MCXenoAbilitySystem<MCXenoRavageCompone
                 continue;
 
             if (_mobState.IsDead(uid))
+                continue;
+
+            if (!HasComp<BarricadeComponent>(uid) && !HasComp<MarineComponent>(uid) && !HasComp<XenoComponent>(uid) && !HasComp<RMCApcComponent>(uid))
                 continue;
 
             ApplyEffect(uid, entity, direction);
