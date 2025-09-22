@@ -69,7 +69,7 @@
   - type: Projectile
     impactEffect: null
     damage: {}
-  - type: RMCStaminaDamageOnCollide
+  - type: MCStaminaDamageOnCollide
     damage: 20
   - type: XenoProjectile
     deleteOnFriendlyXeno: false
