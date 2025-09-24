@@ -40,10 +40,12 @@
         RMCSkillEngineer: 3
         RMCSkillConstruction: 2
         RMCSkillPolice: 2
+        RMCSkillJtac: 2
         RMCSkillPowerLoader: 2
         RMCSkillLeadership: 3
         RMCSkillSmartGun: -4
         RMCSkillFirearms: 1
+        RMCSkillFireman: 1
     - type: JobPrefix
       prefix: mc-job-prefix-so
     - type: TacticalMapIcon
@@ -73,4 +75,4 @@
   - type: SpawnPoint
     job_id: MCSO
   - type: Sprite
-    state: medic_spawn
+    state: io

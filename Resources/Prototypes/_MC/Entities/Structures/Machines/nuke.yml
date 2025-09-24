@@ -1,0 +1,42 @@
+- type: entity
+  parent: MCStructure
+  id: MCNuclearBomb
+  name: nuclear fission explosive
+  description: You probably shouldn't stick around to see if this is armed.
+  components:
+  - type: Sprite
+    sprite: _MC/Structures/Machines/nuclear_bomb.rsi
+    state: base
+  - type: Corrodible
+    isCorrodible: false
+  - type: InteractionOutline
+  - type: MCNuke
+  # UI
+  - type: ActivatableUI
+    key: enum.MCNukeUi.Key
+  - type: UserInterface
+    interfaces:
+      enum.MCNukeUi.Key:
+        type: MCNukeBui
+  - type: ItemSlots
+    slots:
+      disk_red:
+        name: Disk Red
+        whitelist:
+          tags:
+          - MCDiskNukeRed
+      disk_blue:
+        name: Disk Blue
+        whitelist:
+          tags:
+          - MCDiskNukeBlue
+      disk_green:
+        name: Disk Green
+        whitelist:
+          tags:
+          - MCDiskNukeGreen
+  - type: ContainerContainer
+    containers:
+      disk_red: !type:ContainerSlot ""
+      disk_blue: !type:ContainerSlot ""
+      disk_green: !type:ContainerSlot ""

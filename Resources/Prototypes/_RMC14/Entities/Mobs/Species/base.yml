@@ -34,7 +34,8 @@
   - type: SolutionContainerManager
   - type: InjectableSolution
     solution: chemicals
-  - type: RMCStamina
+  - type: MCStamina
+  - type: MCStaminaActive
   - type: Bloodstream
     bloodReagent: Blood
     bloodMaxVolume: 560
@@ -111,6 +112,7 @@
     fireSpread: false
     canResistFire: true
     firestackFade: 1
+    resistDuration: 5
     damage:
       types:
         Heat: 1

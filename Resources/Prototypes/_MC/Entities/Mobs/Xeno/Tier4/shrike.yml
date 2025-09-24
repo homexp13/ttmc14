@@ -50,7 +50,7 @@
     - MCActionXenoPsychicFling
     - MCActionXenoUnrelentingForce
     - MCActionXenoPheromones
-    - MCActionXenoAcidMedium
+    - MCActionXenoAcidStrong
     hudOffset: -0.1,0.1
   - type: XenoEvolution
     canEvolveWithoutGranter: true
@@ -80,7 +80,7 @@
     baseWalkSpeed: 2.941
     baseSprintSpeed: 4.166
   - type: XenoPheromones
-    pheromonesMultiplier: 3
+    pheromonesMultiplier: 4.5
     pheroSuffix: queen
   - type: TunnelRenamer
   - type: TacticalMapIcon

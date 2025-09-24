@@ -73,6 +73,8 @@
   # RMC - FindParasite Event
   - type: FindParasite
   - type: JoinXeno
+  # MC - RespawnAction Event
+  - type: MCRespawnAction
   - type: UserInterface
     interfaces:
       enum.XenoFindParasiteUI.Key:

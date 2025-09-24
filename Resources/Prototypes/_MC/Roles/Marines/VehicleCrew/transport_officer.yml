@@ -38,10 +38,12 @@
         RMCSkillEngineer: 3
         RMCSkillConstruction: 3
         RMCSkillPilot: 1
+        RMCSkillJtac: 2
         RMCSkillPowerLoader: 3
         RMCSkillLeadership: 2
         RMCSkillSmartGun: -4
         RMCSkillFirearms: 1
+        RMCSkillFireman: 1
     - type: JobPrefix
       prefix: mc-job-prefix-transport-officer
     - type: TacticalMapIcon
@@ -66,4 +68,4 @@
   - type: SpawnPoint
     job_id: MCTransportOfficer
   - type: Sprite
-    state: medic_spawn
+    state: to

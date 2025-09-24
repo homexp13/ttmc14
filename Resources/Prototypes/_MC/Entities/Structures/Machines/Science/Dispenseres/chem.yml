@@ -90,9 +90,6 @@
   - type: Appearance
   - type: Machine
     board: CMCircuitboardDispenserChem
-  - type: RequiresSkill
-    skills:
-      RMCSkillMedical: 1
   - type: ItemSlots
     slots:
       chemical_dispenser_slot:
