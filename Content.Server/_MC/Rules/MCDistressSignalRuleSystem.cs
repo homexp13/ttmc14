@@ -47,6 +47,9 @@ public sealed class MCDistressSignalRuleSystem : MCRuleSystem<MCDistressSignalRu
 
     private void OnMapLoading(LoadingMapsEvent ev)
     {
+        if (!GameTicker.IsGameRuleAdded<MCCrashRuleComponent>())
+            return;
+
         _mcXenoSpawn.SelectRandomPlanet();
         GameTicker.UpdateInfoText();
     }

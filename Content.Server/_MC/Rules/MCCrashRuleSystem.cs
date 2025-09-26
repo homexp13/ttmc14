@@ -50,6 +50,9 @@ public sealed class MCCrashRuleSystem : MCRuleSystem<MCCrashRuleComponent>
 
     private void OnMapLoading(LoadingMapsEvent ev)
     {
+        if (!GameTicker.IsGameRuleAdded<MCCrashRuleComponent>())
+            return;
+
         ev.Maps.Clear();
         ev.Maps.Add(_prototype.Index<GameMapPrototype>("MCCanterbury"));
 
