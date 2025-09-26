@@ -82,7 +82,7 @@ public sealed partial class MCStaminaSystem : EntitySystem
                 {
                     var dmgSys = EntitySystem.Get<DamageableSystem>();
                     var spec = new DamageSpecifier();
-                    spec.DamageDict["Asphyxiation"] = 2.5f * frameTime;
+                    spec.DamageDict["Asphyxiation"] = 5.0f * frameTime;
                     dmgSys.TryChangeDamage(uid, spec, true, true, dmg);
                 }
             }

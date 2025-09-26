@@ -25,7 +25,7 @@ public sealed partial class MCStaminaActiveComponent : Component
     /// Stamina damage to apply when entity is running
     /// </summary>
     [DataField("runStaminaDamage"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public float RunStaminaDamage = 0.5f;
+    public float RunStaminaDamage = 0.25f;
 
     public bool Change;
 
