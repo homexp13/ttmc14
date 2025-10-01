@@ -17,11 +17,11 @@ public sealed partial class MCCommunicationsConsoleComponent : Component
     public List<ResPath> MapPaths = new()
     {
         new ResPath("/Maps/_MC/ERT/ert_pmc_shuttle_friends.yml"),
-        new ResPath("/Maps/_MC/ERT/ert_pmc_shuttle_enemies.yml"),
         new ResPath("/Maps/_MC/ERT/ert_spp_shuttle_enemies.yml"),
         new ResPath("/Maps/_MC/ERT/ert_spp_shuttle_friends.yml"),
         new ResPath("/Maps/_MC/ERT/ert_tse_shuttle_enemies.yml"),
         new ResPath("/Maps/_MC/ERT/ert_tse_shuttle_friends.yml")
+        //new ResPath("/Maps/_MC/ERT/ert_pmc_shuttle_enemies.yml")
     };
 
     [DataField, AutoNetworkedField]

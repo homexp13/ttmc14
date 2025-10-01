@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 09/30/2025 19:20:23
-  entityCount: 75
+  time: 10/01/2025 11:13:10
+  entityCount: 79
 maps:
 - 1
 grids:
@@ -292,341 +292,361 @@ entities:
     - type: Transform
       pos: 2.5,3.5
       parent: 2
-- proto: RMCERTShuttleEngineLeft01
+- proto: MCRandomHumanoidPMCGunner
   entities:
   - uid: 21
+    components:
+    - type: Transform
+      pos: 1.5322509,1.71875
+      parent: 2
+  - uid: 22
+    components:
+    - type: Transform
+      pos: 1.5010009,0.5
+      parent: 2
+  - uid: 23
+    components:
+    - type: Transform
+      pos: -0.552341,1.6875
+      parent: 2
+  - uid: 24
+    components:
+    - type: Transform
+      pos: -0.552341,0.515625
+      parent: 2
+  - uid: 25
+    components:
+    - type: Transform
+      pos: 0.46328413,3.5625
+      parent: 2
+- proto: RMCERTShuttleEngineLeft01
+  entities:
+  - uid: 26
     components:
     - type: Transform
       pos: -2.5,-6.5
       parent: 2
 - proto: RMCERTShuttleEngineLeft02
   entities:
-  - uid: 22
+  - uid: 27
     components:
     - type: Transform
       pos: -2.5,-5.5
       parent: 2
 - proto: RMCERTShuttleEngineLeft03
   entities:
-  - uid: 23
+  - uid: 28
     components:
     - type: Transform
       pos: -2.5,-4.5
       parent: 2
 - proto: RMCERTShuttleEngineRight01
   entities:
-  - uid: 24
+  - uid: 29
     components:
     - type: Transform
       pos: 3.5,-6.5
       parent: 2
 - proto: RMCERTShuttleEngineRight02
   entities:
-  - uid: 25
+  - uid: 30
     components:
     - type: Transform
       pos: 3.5,-5.5
       parent: 2
 - proto: RMCERTShuttleEngineRight03
   entities:
-  - uid: 26
+  - uid: 31
     components:
     - type: Transform
       pos: 3.5,-4.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa01
   entities:
-  - uid: 27
+  - uid: 32
     components:
     - type: Transform
       pos: -1.5,-6.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa02
   entities:
-  - uid: 28
+  - uid: 33
     components:
     - type: Transform
       pos: 0.5,-6.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa03
   entities:
-  - uid: 29
+  - uid: 34
     components:
     - type: Transform
       pos: 2.5,-6.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa06
   entities:
-  - uid: 30
+  - uid: 35
     components:
     - type: Transform
       pos: -1.5,-3.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa07
   entities:
-  - uid: 31
+  - uid: 36
     components:
     - type: Transform
       pos: 2.5,-3.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa08
   entities:
-  - uid: 32
+  - uid: 37
     components:
     - type: Transform
       pos: -2.5,-0.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa09
   entities:
-  - uid: 33
+  - uid: 38
     components:
     - type: Transform
       pos: 3.5,-0.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa10
   entities:
-  - uid: 34
+  - uid: 39
     components:
     - type: Transform
       pos: -2.5,0.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa11
   entities:
-  - uid: 35
+  - uid: 40
     components:
     - type: Transform
       pos: 3.5,0.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa12
   entities:
-  - uid: 36
+  - uid: 41
     components:
     - type: Transform
       pos: -2.5,1.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa13
   entities:
-  - uid: 37
+  - uid: 42
     components:
     - type: Transform
       pos: 3.5,1.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa14
   entities:
-  - uid: 38
+  - uid: 43
     components:
     - type: Transform
       pos: -1.5,-4.5
       parent: 2
-  - uid: 39
+  - uid: 44
     components:
     - type: Transform
       pos: -1.5,-5.5
       parent: 2
-  - uid: 40
+  - uid: 45
     components:
     - type: Transform
       pos: -2.5,3.5
       parent: 2
-  - uid: 41
+  - uid: 46
     components:
     - type: Transform
       pos: -2.5,-2.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa15
   entities:
-  - uid: 42
+  - uid: 47
     components:
     - type: Transform
       pos: 3.5,-2.5
       parent: 2
-  - uid: 43
+  - uid: 48
     components:
     - type: Transform
       pos: 2.5,-4.5
       parent: 2
-  - uid: 44
+  - uid: 49
     components:
     - type: Transform
       pos: 3.5,3.5
       parent: 2
-  - uid: 45
+  - uid: 50
     components:
     - type: Transform
       pos: 2.5,-5.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa16
   entities:
-  - uid: 46
+  - uid: 51
     components:
     - type: Transform
       pos: -0.5,5.5
       parent: 2
-  - uid: 47
+  - uid: 52
     components:
     - type: Transform
       pos: -2.5,4.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa17
   entities:
-  - uid: 48
+  - uid: 53
     components:
     - type: Transform
       pos: -1.5,4.5
       parent: 2
-  - uid: 49
+  - uid: 54
     components:
     - type: Transform
       pos: 2.5,4.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa18
   entities:
-  - uid: 50
+  - uid: 55
     components:
     - type: Transform
       pos: -0.5,4.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa19
   entities:
-  - uid: 51
+  - uid: 56
     components:
     - type: Transform
       pos: 1.5,4.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa20
   entities:
-  - uid: 52
+  - uid: 57
     components:
     - type: Transform
       pos: 3.5,4.5
       parent: 2
-  - uid: 53
+  - uid: 58
     components:
     - type: Transform
       pos: 1.5,5.5
       parent: 2
 - proto: RMCERTShuttleWallWeYa21
   entities:
-  - uid: 54
+  - uid: 59
     components:
     - type: Transform
       pos: 0.5,5.5
       parent: 2
 - proto: RMCERTShuttleWallWeYaEngineLeft
   entities:
-  - uid: 55
+  - uid: 60
     components:
     - type: Transform
       pos: -2.5,-3.5
       parent: 2
 - proto: RMCERTShuttleWallWeYaEngineRight
   entities:
-  - uid: 56
+  - uid: 61
     components:
     - type: Transform
       pos: 3.5,-3.5
       parent: 2
 - proto: RMCLightFixtureBlueDoubleAlwaysPowered
   entities:
-  - uid: 57
+  - uid: 62
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,3.5
       parent: 2
-  - uid: 58
+  - uid: 63
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,3.5
       parent: 2
-  - uid: 59
+  - uid: 64
     components:
     - type: Transform
       pos: 2.5,-2.5
       parent: 2
-  - uid: 60
+  - uid: 65
     components:
     - type: Transform
       pos: -1.5,-2.5
       parent: 2
-  - uid: 61
+  - uid: 66
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,-4.5
       parent: 2
-  - uid: 62
+  - uid: 67
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 1.5,-4.5
       parent: 2
-- proto: RMCRandomHumanoidFoxtrotSmartGunOperator
-  entities:
-  - uid: 63
-    components:
-    - type: Transform
-      pos: 0.5,3.5
-      parent: 2
 - proto: RMCSeatDark
   entities:
-  - uid: 64
+  - uid: 68
     components:
     - type: Transform
       pos: 0.5,2.5
       parent: 2
-  - uid: 65
+  - uid: 69
     components:
     - type: Transform
       pos: 0.5,0.5
       parent: 2
-  - uid: 66
+  - uid: 70
     components:
     - type: Transform
       pos: 0.5,-0.5
       parent: 2
-  - uid: 67
+  - uid: 71
     components:
     - type: Transform
       pos: 0.5,-1.5
       parent: 2
-  - uid: 68
+  - uid: 72
     components:
     - type: Transform
       pos: 0.5,1.5
       parent: 2
-  - uid: 69
+  - uid: 73
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,1.5
       parent: 2
-  - uid: 70
+  - uid: 74
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,0.5
       parent: 2
-  - uid: 71
+  - uid: 75
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-0.5
       parent: 2
-  - uid: 72
+  - uid: 76
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,1.5
       parent: 2
-  - uid: 73
+  - uid: 77
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -1.5,0.5
       parent: 2
-  - uid: 74
+  - uid: 78
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
@@ -634,7 +654,7 @@ entities:
       parent: 2
 - proto: RMCToolboxSyndicateFilled
   entities:
-  - uid: 75
+  - uid: 79
     components:
     - type: Transform
       pos: -1.5,3.5
