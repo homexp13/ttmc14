@@ -68,7 +68,8 @@ public sealed class MCNukeSystem : EntitySystem
         if (!ent.Comp.Ready)
             return;
 
-        if (ent.Comp.Safety)
+        var transform = Transform(ent);
+        if (ent.Comp.Safety || !transform.Anchored)
             return;
 
         ent.Comp.Activated = !ent.Comp.Activated;
