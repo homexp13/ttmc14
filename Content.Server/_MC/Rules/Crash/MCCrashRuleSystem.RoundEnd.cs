@@ -1,4 +1,5 @@
-﻿using Content.Shared._MC.Rules.Crash;
+﻿using Content.Server.GameTicking;
+using Content.Shared._MC.Rules.Crash;
 using Content.Shared._RMC14.Marines;
 using Content.Shared._RMC14.Thunderdome;
 using Content.Shared.GameTicking.Components;
@@ -9,6 +10,16 @@ namespace Content.Server._MC.Rules.Crash;
 
 public sealed partial class MCCrashRuleSystem
 {
+    protected override void AppendRoundEndText(EntityUid uid,
+        MCCrashRuleComponent component,
+        GameRuleComponent gameRule,
+        ref RoundEndTextAppendEvent args)
+    {
+        base.AppendRoundEndText(uid, component, gameRule, ref args);
+
+        args.AddLine($"{Loc.GetString($"mc-crash-{component.Result.ToString().ToLower()}")}");
+    }
+
     private void CheckRoundShouldEnd()
     {
         var query = QueryActiveRules();
