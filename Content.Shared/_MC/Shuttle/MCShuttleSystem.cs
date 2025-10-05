@@ -1,21 +1,26 @@
 ﻿using Content.Shared._MC.FTL.Events;
 using Content.Shared._MC.Operation;
+using Content.Shared._MC.Shuttle.Events;
+using Content.Shared._RMC14.Rules;
 
 namespace Content.Shared._MC.Shuttle;
 
-public abstract class MCShuttleSystem : EntitySystem
+public sealed class MCShuttleSystem : EntitySystem
 {
-    [Dependency] private readonly MCOperationSystem _mcOperation = default!;
-
-    public override void Initialize()
+    public void Evacuate(Entity<MCShuttleComponent> entity)
     {
-        base.Initialize();
+        if (!OnPlanet(entity) || entity.Comp.Evacuated)
+            return;
 
-        SubscribeLocalEvent<MCShuttleComponent, MCFTLEndEvent>(OnFTLEnd);
+        entity.Comp.Evacuated = true;
+        Dirty(entity);
+
+        var ev = new MCShuttleEvacuationEvent();
+        RaiseLocalEvent(ev);
     }
 
-    private void OnFTLEnd(Entity<MCShuttleComponent> ent, ref MCFTLEndEvent args)
+    private bool OnPlanet(Entity<MCShuttleComponent> entity)
     {
-        _mcOperation.Start();
+        return HasComp<RMCPlanetComponent>(Transform(entity).MapUid);
     }
 }

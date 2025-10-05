@@ -82,6 +82,12 @@ public sealed class MCXenoEvolutionSystem : EntitySystem
             return false;
         }
 
+        if (hive.Comp.CaseEvolutionBlock.Contains(target))
+        {
+            Popup(Loc.GetString("mc-xeno-evolution-not-available"));
+            return false;
+        }
+
         var living = _mcXenoHive.GetLiving(hive);
         if (hive.Comp.CasteEvolutionCountRequire.TryGetValue(target, out var countRequire) && _mcXenoHive.GetLiving(hive) < countRequire)
         {

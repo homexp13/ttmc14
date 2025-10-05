@@ -2,5 +2,9 @@
 
 namespace Content.Shared._MC.Shuttle.Console;
 
-[RegisterComponent, NetworkedComponent]
-public sealed partial class MCShuttleConsoleComponent : Component;
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class MCShuttleConsoleComponent : Component
+{
+    [AutoNetworkedField]
+    public EntityUid? Shuttle;
+}

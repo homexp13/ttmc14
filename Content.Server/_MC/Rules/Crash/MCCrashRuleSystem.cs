@@ -8,7 +8,9 @@ using Content.Server.Players.PlayTimeTracking;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
+using Content.Shared._MC.Nuke.Bomb.Events;
 using Content.Shared._MC.Rules.Crash;
+using Content.Shared._MC.Shuttle.Events;
 using Content.Shared._RMC14.Marines;
 using Content.Shared._RMC14.Spawners;
 using Content.Shared._RMC14.Xenonids;
@@ -53,6 +55,9 @@ public sealed partial class MCCrashRuleSystem : MCRuleSystem<MCCrashRuleComponen
 
         SubscribeLocalEvent<LoadingMapsEvent>(OnMapLoading);
         SubscribeLocalEvent<RulePlayerSpawningEvent>(OnRulePlayerSpawning);
+
+        SubscribeLocalEvent<MCShuttleEvacuationEvent>(OnShuttleEvacuationEvent);
+        SubscribeLocalEvent<MCNukeExplodedEvent>(OnNukeExploded);
 
         SubscribeLocalEvent<MarineComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<MarineComponent, ComponentRemove>(OnCompRemove);
@@ -278,9 +283,31 @@ public sealed partial class MCCrashRuleSystem : MCRuleSystem<MCCrashRuleComponen
         }
     }
 
+    private void OnNukeExploded(MCNukeExplodedEvent ev)
+    {
+        foreach (var gameRule in GameTicker.GetActiveGameRules())
+        {
+            if (!TryComp<MCCrashRuleComponent>(gameRule, out var component))
+                continue;
+
+            EndRound((gameRule, component), MCCrashRuleResult.MajorMarineVictory);
+        }
+    }
+
+    private void OnShuttleEvacuationEvent(MCShuttleEvacuationEvent ev)
+    {
+        foreach (var gameRule in GameTicker.GetActiveGameRules())
+        {
+            if (!TryComp<MCCrashRuleComponent>(gameRule, out var component))
+                continue;
+
+            EndRound((gameRule, component), MCCrashRuleResult.MinorXenoVictory);
+        }
+    }
+
     private void CrashShuttle(TimeSpan flyTime)
     {
-        var points = GetEntities<Shared._MC.Rules.Crash.MCCrashPointComponent>();
+        var points = GetEntities<MCCrashPointComponent>();
         if (points.Count == 0)
             return;
 
@@ -288,7 +315,7 @@ public sealed partial class MCCrashRuleSystem : MCRuleSystem<MCCrashRuleComponen
         var query = EntityQueryEnumerator<AlmayerComponent, ShuttleComponent>();
         while (query.MoveNext(out var uid, out _, out var shuttle))
         {
-            _shuttle.FTLToCoordinates(uid, shuttle, Transform(point).Coordinates.Offset(Comp<Shared._MC.Rules.Crash.MCCrashPointComponent>(point).Offset), Angle.Zero, hyperspaceTime: (float) flyTime.TotalSeconds);
+            _shuttle.FTLToCoordinates(uid, shuttle, Transform(point).Coordinates.Offset(Comp<MCCrashPointComponent>(point).Offset), Angle.Zero, hyperspaceTime: (float) flyTime.TotalSeconds);
             return;
         }
     }

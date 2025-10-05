@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared._MC.Nuke.Bomb.Components;
+using Content.Shared._MC.Nuke.Bomb.Events;
 using Content.Shared._MC.Nuke.Bomb.UI;
 using Robust.Shared.Containers;
 
@@ -73,6 +74,13 @@ public sealed class MCNukeSystem : EntitySystem
             return;
 
         ent.Comp.Activated = !ent.Comp.Activated;
+
+        // TODO: todo lol
+        if (!ent.Comp.Activated)
+            return;
+
+        var ev = new MCNukeExplodedEvent();
+        RaiseLocalEvent(ev);
     }
 
     private void OnRefreshReady<T>(Entity<MCNukeComponent> ent, ref T _)

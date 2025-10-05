@@ -9,8 +9,8 @@
     - state: shuttle
   - type: ActivatableUI
     key: enum.MCShuttleConsoleUi.Key
-  # - type: UserInterface
-  #   interfaces:
-  #     enum.MCShuttleConsoleUi.Key:
-  #       type: MCNukeDiskGeneratorBui
+  - type: UserInterface
+    interfaces:
+      enum.MCShuttleConsoleUi.Key:
+        type: MCShuttleConsoleBui
   - type: MCShuttleConsole

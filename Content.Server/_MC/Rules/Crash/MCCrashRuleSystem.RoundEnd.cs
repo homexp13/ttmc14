@@ -49,11 +49,9 @@ public sealed partial class MCCrashRuleSystem
             EndRound(ent, MCCrashRuleResult.MajorXenoVictory);
     }
 
-    private void EndRound(Entity<MCCrashRuleComponent, GameRuleComponent> ent, MCCrashRuleResult result, LocId? customMessage = null)
+    private void EndRound(Entity<MCCrashRuleComponent> ent, MCCrashRuleResult result, LocId? customMessage = null)
     {
-        var ruleComponent = ent.Comp1;
-        var gameRuleComponent = ent.Comp2;
-
+        var ruleComponent = ent.Comp;
         if (ruleComponent.Result != MCCrashRuleResult.None)
             return;
 
