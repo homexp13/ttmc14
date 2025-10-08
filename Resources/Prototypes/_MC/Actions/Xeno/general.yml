@@ -55,10 +55,8 @@
       sprite: _MC/Interface/Actions/Xeno/general.rsi
       state: headbite
   - type: TargetAction
-  - type: WorldTargetAction
-    event: !type:MCXenoPounceActionEvent
-  - type: XenoActionPlasma
-    cost: 50
+  - type: EntityTargetAction
+    event: !type:MCXenoPsydrainActionEvent
 
 - type: entity
   parent: ActionXenoBase

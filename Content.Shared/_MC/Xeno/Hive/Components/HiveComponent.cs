@@ -10,6 +10,9 @@ public sealed partial class HiveComponent
     public Dictionary<ProtoId<MCXenoHivePsypointTypePrototype>, int> Psypoints = new();
 
     [DataField, AutoNetworkedField]
+    public int LarvaPoints;
+
+    [DataField, AutoNetworkedField]
     public TimeSpan RespawnTime = TimeSpan.FromMinutes(3);
 
     [DataField, AutoNetworkedField]

@@ -63,4 +63,46 @@ public partial class SharedXenoHiveSystem
     {
         return value < GetPsypointsFromOwner(uid, id);
     }
+
+    public void AddLarvaPointsOwner(EntityUid uid, int value)
+    {
+        SetLarvaPointsFromOwner(uid, GetLarvapointsFromOwner(uid) + value);
+    }
+
+    public void AddLarvaPoints(Entity<HiveComponent> entity, int value)
+    {
+        SetLarvaPoints(entity, GetLarvapoints(entity) + value);
+    }
+
+    public void SetLarvaPointsFromOwner(EntityUid uid, int value)
+    {
+        if (!TryComp<HiveMemberComponent>(uid, out var hiveMemberComponent))
+            return;
+
+        if (!TryComp<HiveComponent>(hiveMemberComponent.Hive, out var hiveComponent))
+            return;
+
+        SetLarvaPoints((hiveMemberComponent.Hive.Value, hiveComponent), value);
+    }
+
+    public void SetLarvaPoints(Entity<HiveComponent> entity, int value)
+    {
+        entity.Comp.LarvaPoints = value;
+        Dirty(entity);
+    }
+
+    public int GetLarvapoints(Entity<HiveComponent> entity)
+    {
+        return entity.Comp.LarvaPoints;
+    }
+
+    public int GetLarvapointsFromOwner(EntityUid uid)
+    {
+        if (!TryComp<HiveMemberComponent>(uid, out var hiveMemberComponent))
+            return 0;
+
+        return !TryComp<HiveComponent>(hiveMemberComponent.Hive, out var hiveComponent)
+            ? 0
+            : GetLarvapoints((hiveMemberComponent.Hive.Value, hiveComponent));
+    }
 }
