@@ -1,20 +1,39 @@
-﻿namespace Content.Shared._MC.Xeno.Biomass;
+﻿using System.Runtime.CompilerServices;
 
-public partial class MCXenoBiomassSystem : EntitySystem
+namespace Content.Shared._MC.Xeno.Biomass;
+
+public sealed class MCXenoBiomassSystem : EntitySystem
 {
-    public void AddBiomassValue(Entity<MCXenoBiomassComponent> entity, int value)
+    private EntityQuery<MCXenoBiomassComponent> _biomassQuery;
+
+    public override void Initialize()
     {
-        SetBiomassValue(entity, GetBiomassValue(entity) + value);
+        base.Initialize();
+
+        _biomassQuery = GetEntityQuery<MCXenoBiomassComponent>();
     }
 
-    public void SetBiomassValue(Entity<MCXenoBiomassComponent> entity, int value)
+    public void Add(Entity<MCXenoBiomassComponent?> entity, int value)
     {
-        entity.Comp.CurrentBiomass = value;
+        if (!_biomassQuery.Resolve(entity, ref entity.Comp))
+            return;
+
+        Set(entity, Get(entity) + value);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Set(Entity<MCXenoBiomassComponent?> entity, int value)
+    {
+        if (!_biomassQuery.Resolve(entity, ref entity.Comp))
+            return;
+
+        entity.Comp.Amount = value;
         Dirty(entity);
     }
 
-    public int GetBiomassValue(Entity<MCXenoBiomassComponent> entity)
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public int Get(Entity<MCXenoBiomassComponent?> entity)
     {
-        return entity.Comp.CurrentBiomass;
+        return !_biomassQuery.Resolve(entity, ref entity.Comp) ? 0 : entity.Comp.Amount;
     }
 }

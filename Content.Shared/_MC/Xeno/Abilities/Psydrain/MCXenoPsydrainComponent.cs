@@ -15,19 +15,16 @@ public sealed partial class MCXenoPsydrainComponent : Component
     public TimeSpan Delay = TimeSpan.FromSeconds(5);
 
     [DataField, AutoNetworkedField]
-    public TimeSpan JitteringDelayOwner = TimeSpan.FromSeconds(3);
+    public TimeSpan JitteringDelayOwner = TimeSpan.FromSeconds(4);
 
     [DataField, AutoNetworkedField]
-    public TimeSpan JitteringDelayTarget = TimeSpan.FromSeconds(5);
+    public TimeSpan JitteringDelayTarget = TimeSpan.FromSeconds(7);
 
     [DataField, AutoNetworkedField]
     public SoundSpecifier SoundDrain = new SoundPathSpecifier("/Audio/_MC/Effects/nightfall.ogg");
 
     [DataField, AutoNetworkedField]
     public SoundSpecifier SoundDrainEnd = new SoundPathSpecifier("/Audio/_MC/Effects/end_of_psy_drain.ogg");
-
-    [DataField, AutoNetworkedField]
-    public ProtoId<MCXenoHivePsypointTypePrototype> PsypointType = "Psypoint";
 
     [DataField, AutoNetworkedField]
     public int PsypointGain = 60;
@@ -45,7 +42,7 @@ public sealed partial class MCXenoPsydrainComponent : Component
     public float AmplitudeTarget = 10f;
 
     [DataField, AutoNetworkedField]
-    public float FrequencyTarget = 2f;
+    public float FrequencyTarget = 4f;
 
     [DataField, AutoNetworkedField]
     public int LarvaPointsGain = 1;
@@ -54,7 +51,7 @@ public sealed partial class MCXenoPsydrainComponent : Component
     public FixedPoint2 PlasmaNeed = 50;
 
     [DataField, AutoNetworkedField]
-    public DamageSpecifier CloneDamage = new()
+    public DamageSpecifier Damage = new()
     {
         DamageDict =
         {

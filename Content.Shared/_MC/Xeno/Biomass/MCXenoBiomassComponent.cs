@@ -7,5 +7,5 @@ namespace Content.Shared._MC.Xeno.Biomass;
 public sealed partial class MCXenoBiomassComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public int CurrentBiomass;
+    public int Amount;
 }

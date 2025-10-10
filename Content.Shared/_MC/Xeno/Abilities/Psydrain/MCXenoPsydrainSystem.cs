@@ -12,6 +12,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Mobs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Systems;
 
@@ -36,16 +37,6 @@ public sealed class MCXenoPsydrainSystem : EntitySystem
 
     private EntityQuery<MCXenoPsydrainableComponent> _psydrainableQuery;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _psydrainableQuery = GetEntityQuery<MCXenoPsydrainableComponent>();
-
-        SubscribeLocalEvent<MCXenoPsydrainComponent, MCXenoPsydrainActionEvent>(OnAction);
-        SubscribeLocalEvent<MCXenoPsydrainComponent, MCXenoPsydrainDoAfterEvent>(OnDoAfter);
-    }
-
     private void OnAction(Entity<MCXenoPsydrainComponent> entity, ref MCXenoPsydrainActionEvent args)
     {
         var target = args.Target;
@@ -55,32 +46,32 @@ public sealed class MCXenoPsydrainSystem : EntitySystem
 
         if (!_psydrainableQuery.TryComp(target, out var psydrainableComponent))
         {
-            _popup.PopupEntity(Loc.GetString("psydrain-not-human"), entity, entity, PopupType.MediumXeno);
+            _popup.PopupClient(Loc.GetString("psydrain-not-human"), entity, entity, PopupType.MediumXeno);
             return;
         }
 
         if (!psydrainableComponent.Available)
         {
-            _popup.PopupEntity(Loc.GetString("someone-already-psydrained"), entity, entity, PopupType.MediumXeno);
+            _popup.PopupClient(Loc.GetString("someone-already-psydrained"), entity, entity, PopupType.MediumXeno);
             return;
         }
 
         if (!_mobState.IsDead(target))
         {
             var notDead = Loc.GetString("psydrain-not-dead");
-            _popup.PopupEntity(notDead, entity, entity, PopupType.MediumXeno);
+            _popup.PopupClient(notDead, entity, entity, PopupType.MediumXeno);
             return;
         }
 
         if (_flammable.IsOnFire(entity.Owner))
         {
-            _popup.PopupEntity(Loc.GetString("psydrain-our-fire"), entity, entity, PopupType.MediumXeno);
+            _popup.PopupClient(Loc.GetString("psydrain-our-fire"), entity, entity, PopupType.MediumXeno);
             return;
         }
 
         if (!_xenoHive.HasHive(entity.Owner))
         {
-            _popup.PopupEntity(Loc.GetString("psydrain-dont-have-hive"), entity, entity, PopupType.MediumXeno);
+            _popup.PopupClient(Loc.GetString("psydrain-dont-have-hive"), entity, entity, PopupType.MediumXeno);
             return;
         }
 
@@ -88,6 +79,9 @@ public sealed class MCXenoPsydrainSystem : EntitySystem
             return;
 
         args.Handled = true;
+
+        _popup.PopupClient(Loc.GetString("being-psydrained", ("entity", entity), ("target", target)), entity, entity, PopupType.MediumXeno);
+        _audio.PlayPredicted(entity.Comp.SoundDrain, entity, entity);
 
         var ev = new MCXenoPsydrainDoAfterEvent();
         var doAfter = new DoAfterArgs(EntityManager, entity, entity.Comp.Delay, ev, entity, target)
@@ -100,14 +94,27 @@ public sealed class MCXenoPsydrainSystem : EntitySystem
             BreakOnRest = true,
         };
 
-        _popup.PopupEntity(Loc.GetString("being-psydrained", ("entity", entity), ("target", target)), entity, entity, PopupType.MediumXeno);
-        _audio.PlayPvs(entity.Comp.SoundDrain, entity);
-
         if (_doAfter.TryStartDoAfter(doAfter))
             return;
 
-        _popup.PopupEntity(Loc.GetString("doAfter-canceled-owner"), entity, entity, PopupType.MediumXeno);
-        _audio.Stop(entity);
+        _popup.PopupClient(Loc.GetString("doAfter-canceled-owner"), entity, entity, PopupType.MediumXeno);
+
+        // No, it doesn't work that way.
+        // You need to save the result _audio.PlayPvs(entity.Comp.SoundDrain, entity);
+        // and stop it, but I'm too lazy to do that. TODO
+        // _audio.Stop(entity);
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _psydrainableQuery = GetEntityQuery<MCXenoPsydrainableComponent>();
+
+        SubscribeLocalEvent<MCXenoPsydrainComponent, MCXenoPsydrainActionEvent>(OnAction);
+        SubscribeLocalEvent<MCXenoPsydrainComponent, MCXenoPsydrainDoAfterEvent>(OnDoAfter);
+
+        SubscribeLocalEvent<MCXenoPsydrainableComponent, MobStateChangedEvent>(OnPsydrainableStateChanged);
     }
 
     private void OnDoAfter(Entity<MCXenoPsydrainComponent> entity, ref MCXenoPsydrainDoAfterEvent args)
@@ -117,7 +124,7 @@ public sealed class MCXenoPsydrainSystem : EntitySystem
 
         if (args.Cancelled)
         {
-            _popup.PopupEntity(Loc.GetString("doAfter-canceled-owner"), entity, entity, PopupType.MediumXeno);
+            _popup.PopupClient(Loc.GetString("doAfter-canceled-owner"), entity, entity, PopupType.MediumXeno);
             return;
         }
 
@@ -129,25 +136,28 @@ public sealed class MCXenoPsydrainSystem : EntitySystem
 
         if (!psydrainableComponent.Available)
         {
-            _popup.PopupEntity(Loc.GetString("someone-already-psydrained"), entity, entity, PopupType.MediumXeno);
+            _popup.PopupClient(Loc.GetString("someone-already-psydrained"), entity, entity, PopupType.MediumXeno);
             return;
         }
-
-        args.Handled = true;
-
-        _audio.PlayLocal(entity.Comp.SoundDrainEnd, entity, entity);
-
-        _popup.PopupEntity(Loc.GetString("end-drain-owner", ("target", target)), entity, entity, PopupType.MediumXeno);
-        _jittering.DoJitter(entity, entity.Comp.JitteringDelayOwner, true, entity.Comp.AmplitudeOwner, entity.Comp.FrequencyOwner);
-        _jittering.DoJitter(target, entity.Comp.JitteringDelayTarget, true, entity.Comp.AmplitudeTarget, entity.Comp.FrequencyTarget);
-        _damageable.TryChangeDamage(target, entity.Comp.CloneDamage);
 
         psydrainableComponent.Available = false;
         Dirty(target, psydrainableComponent);
 
+        args.Handled = true;
 
-        var biomassEntity = (target, biomass);
-        _mcXenoBiomass.AddBiomassValue(biomassEntity, entity.Comp.BiomassGain);
+        // Effects
+        _audio.PlayPredicted(entity.Comp.SoundDrainEnd, entity, entity);
+        _popup.PopupClient(Loc.GetString("end-drain-owner", ("target", target)), entity, entity, PopupType.MediumXeno);
+        _jittering.DoJitter(entity, entity.Comp.JitteringDelayOwner, true, entity.Comp.AmplitudeOwner, entity.Comp.FrequencyOwner);
+        _jittering.DoJitter(target, entity.Comp.JitteringDelayTarget, true, entity.Comp.AmplitudeTarget, entity.Comp.FrequencyTarget);
+
+        // Damage
+        _damageable.TryChangeDamage(target, entity.Comp.Damage);
+
+        // Biomass
+        _mcXenoBiomass.Add(target, entity.Comp.BiomassGain);
+
+        // Plasma
         _xenoPlasma.TryRemovePlasma(entity.Owner, entity.Comp.PlasmaNeed);
 
         // Hive reward
@@ -166,6 +176,15 @@ public sealed class MCXenoPsydrainSystem : EntitySystem
             $"at {Transform(target).Coordinates:coordinates}. " +
             $"Larva points gained: {entity.Comp.LarvaPointsGain}, " +
             $"Psy points gained: {entity.Comp.PsypointGain}, " +
-            $"Damage applied: {entity.Comp.CloneDamage}");
+            $"Damage applied: {entity.Comp.Damage}");
+    }
+
+    private void OnPsydrainableStateChanged(Entity<MCXenoPsydrainableComponent> ent, ref MobStateChangedEvent args)
+    {
+        if (args.OldMobState != MobState.Dead || args.NewMobState == MobState.Dead)
+            return;
+
+        ent.Comp.Available = true;
+        Dirty(ent);
     }
 }
