@@ -88,6 +88,8 @@
   id: MCXenoBase
   abstract: true
   components:
+  - type: MCXenoBiomass
+  - type: MCXenoPsydrain
   - type: ActiveInputMover
   - type: MCXenoDamageVisuals
 
