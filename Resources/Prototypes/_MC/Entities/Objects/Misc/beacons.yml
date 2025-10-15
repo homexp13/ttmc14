@@ -1,0 +1,13 @@
+- type: entity
+  parent: MCItem
+  id: MCBeacon
+  name: beacon
+  abstract: true
+  components:
+  - type: Tag
+    tags: MCBeacon
+  - type: MCBeacon
+    category: Supply
+
+- type: Tag
+  id: MCBeacon
