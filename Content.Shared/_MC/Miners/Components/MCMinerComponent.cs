@@ -1,10 +1,17 @@
 ﻿using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared._MC.Miners.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MCMinerComponent : Component
 {
+    /// <summary>
+    /// Current status of the miner.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public MCMinerState State = MCMinerState.Running;
+
     /// <summary>
     /// The mineral type that's produced.
     /// </summary>
@@ -34,4 +41,13 @@ public sealed partial class MCMinerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public int DropshipBonus = 15;
+}
+
+[Serializable, NetSerializable]
+public enum MCMinerState : byte
+{
+    Running,
+    SmallDamage,
+    MediumDamage,
+    Destroyed,
 }
