@@ -62,14 +62,11 @@ public sealed class MCRoundScheduleSystem : EntitySystem
 
     public bool CanStartRound()
     {
-        if (!_enabled)
-            return true;
-
         var day = DateNow.DayOfWeek;
         var time = DateNow.TimeOfDay;
 
         var allowedDay = _days.Contains(day);
-        var allowedTime = time >= _start && time < _end;
+        var allowedTime = IsInTimeRange(time, _start, _end);
 
         return allowedDay && allowedTime;
     }
@@ -102,4 +99,10 @@ public sealed class MCRoundScheduleSystem : EntitySystem
     {
         return TimeSpan.TryParse(input, out var result) ? result : TimeSpan.Zero;
     }
+
+    private static bool IsInTimeRange(TimeSpan time, TimeSpan start, TimeSpan end)
+    {
+        return end <= start ? time >= start || time < end : time >= start && time < end;
+    }
+
 }
