@@ -5,9 +5,6 @@
   name: turret
   description: A deployable, semi-automated turret with AI targeting capabilities. Armed with an M30 Autocannon and a 500-round drum magazine.
   components:
-  - type: Corrodible
-    timeToApply: 4
-    structure: true
   - type: Item
     size: Normal
   - type: Clickable
@@ -42,24 +39,11 @@
     noRot: true
     layers:
     - map: [ "base" ]
-      state: defense_base_off
-    - map: [ "sentry" ]
-      state: normal_uac_sentry_handheld
+      state: handled
   - type: Icon
     sprite: _RMC14/Objects/Weapons/Sentries/sentry.rsi
     state: normal_uac_sentry_handheld
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.SentryLayers.Layer:
-        base:
-          Item: { state: "", visible: false }
-          Off: { state: defense_base_off, visible: true }
-          On: { state: defense_base, visible: true }
-        sentry:
-          Item: { state: normal_uac_sentry_handheld }
-          Off: { state: normal_uac_sentry_noammo }
-          On: { state: normal_uac_sentry_on }
   - type: CombatMode
     toggleMouseRotator: false
   - type: Gun
@@ -113,6 +97,19 @@
     item: Sentry
   - type: RequireProjectileTarget
   - type: RMCWeaponAccuracy
+  - type: GenericVisualizer
+    visuals:
+      enum.MCSentryLayers.Layer:
+        base:
+          Item:
+            state: handled
+          Deployed:
+            state: deployed
+  - type: NpcFactionMember
+    factions:
+    - UNMC
+  - type: UserIFF
+    faction: FactionMarine
 
 - type: entity
   parent: MCSentryPremade
@@ -121,24 +118,12 @@
   abstract: true
   components:
   - type: MCSentry
-
-- type: entity
-  parent: MCSentry
-  id: MCSentryDebug
-  name: UN 571-C sentry gun
-  description: A deployable, semi-automated turret with AI targeting capabilities. Armed with an M30 Autocannon and a 500-round drum magazine.
-  suffix: DEBUG CM
-  components:
-  - type: Sentry
-  - type: Icon
-    sprite: _RMC14/Objects/Weapons/Sentries/sentry.rsi
-    state: normal_uac_sentry_handheld
-  - type: NpcFactionMember
-    factions:
-    - UNMC
-  - type: UserIFF
-    faction: FactionMarine
-  - type: XenoCrusherChargable
-    setDamage:
-      types:
-        Blunt: 40
+  - type: MCArmor
+    melee: 50
+    bullet: 50
+    laser: 50
+    energy: 50
+    bomb: 50
+    bio: 100
+    fire: 80
+    acid: 50
