@@ -16,9 +16,6 @@ server_ban_erase_player = true
 new_player_threshold = 600
 alert.explosion_min_intensity = -1
 
-[adminlogs]
-server_name = "TTMC"
-
 [atmos]
 space_wind = false
 monstermos_rip_tiles = false
@@ -34,14 +31,18 @@ enabled = false
 [explosion]
 can_create_vacuum = false
 
+[adminlogs]
+server_name = "TTMC"
+
 [game]
 hostname = "[RU][LRP] 🌪️ TornadoTech's Marine Corps — Main"
 desc = "Сборка сервера основана на https://github.com/ttmc14/ttmc14"
-defaultpreset = "MCDistressSignal"
+defaultpreset = "MCCrash"
+map = "MCPillarOfSpring"
+
 fallbackenabled = false
 fallbackpreset = "MCDistressSignal"
 round_end_sound_collection = "CMRoundEnd"
-map = "MCPillarOfSpring"
 contraband_examine = false
 maxplayers = 100
 soft_max_players = 60
