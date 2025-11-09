@@ -3,6 +3,12 @@
   abstract: true
   categories: [ MCContent ]
   components:
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
   - type: Flammable
     fireSpread: false
     canResistFire: true
