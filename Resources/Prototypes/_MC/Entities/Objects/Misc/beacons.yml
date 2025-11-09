@@ -10,10 +10,24 @@
   - type: MCBeacon
     category: None
   - type: Sprite
+    noRot: true
     sprite: _MC/Objects/Items/beacon.rsi
-    state: motion_0
+    layers:
+    - map: [ "base" ]
+      state: motion_0
   - type: Item
     size: Small
+  - type: MCDeploy
+    deployTime: 1
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.MCDeployLayers.Layer:
+        base:
+          Item:
+            state: motion_0
+          Deployed:
+            state: motion_2
 
 - type: Tag
   id: MCBeacon
@@ -32,7 +46,6 @@
     category: Supply
   - type: Sprite
     sprite: _MC/Objects/Items/beacon.rsi
-    state: motion_0
 
 - type: Tag
   id: MCBeaconSupply
@@ -51,7 +64,17 @@
     category: Medevac
   - type: Sprite
     sprite: _MC/Objects/Items/beacon.rsi
-    state: med_0
+    layers:
+    - map: [ "base" ]
+      state: med_0
+  - type: GenericVisualizer
+    visuals:
+      enum.MCDeployLayers.Layer:
+        base:
+          Item:
+            state: med_0
+          Deployed:
+            state: med_1
 
 - type: Tag
   id: MCBeaconMedevac
@@ -70,7 +93,17 @@
     category: Orbital
   - type: Sprite
     sprite: _MC/Objects/Items/beacon.rsi
-    state: motion_1
+    layers:
+    - map: [ "base" ]
+      state: motion_4
+  - type: GenericVisualizer
+    visuals:
+      enum.MCDeployLayers.Layer:
+        base:
+          Item:
+            state: motion_4
+          Deployed:
+            state: motion_1
 
 - type: Tag
   id: MCBeaconOrbital

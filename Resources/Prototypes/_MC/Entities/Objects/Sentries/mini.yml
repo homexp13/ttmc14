@@ -10,6 +10,7 @@
   - type: Sprite
     sprite: _MC/Objects/Sentries/mini.rsi
   - type: MCSentry
+  - type: MCDeploy
     deployTime: 1
   - type: Gun
     fireRate: 5

@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Radio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared._MC.Sentries;
 
@@ -9,16 +8,7 @@ namespace Content.Shared._MC.Sentries;
 public sealed partial class MCSentryComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public MCSentryState State = MCSentryState.Item;
-
-    [DataField, AutoNetworkedField]
     public bool RadialMode;
-
-    [DataField, AutoNetworkedField]
-    public TimeSpan DeployTime = TimeSpan.FromSeconds(10);
-
-    [DataField, AutoNetworkedField]
-    public string? DeployFixture = "sentry";
 
     [DataField, AutoNetworkedField]
     public TimeSpan AlertDamageNextTime;
@@ -37,17 +27,4 @@ public sealed partial class MCSentryComponent : Component
 
     [DataField, AutoNetworkedField]
     public bool AlertMode = true;
-}
-
-[Serializable, NetSerializable]
-public enum MCSentryState
-{
-    Item,
-    Deployed,
-}
-
-[Serializable, NetSerializable]
-public enum MCSentryLayers
-{
-    Layer,
 }

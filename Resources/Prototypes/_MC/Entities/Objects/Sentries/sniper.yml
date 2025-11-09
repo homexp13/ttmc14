@@ -10,6 +10,7 @@
   - type: Sprite
     sprite: _MC/Objects/Sentries/sniper.rsi
   - type: MCSentry
+  - type: MCDeploy
     deployTime: 10
   - type: Gun
     fireRate: 0.5
