@@ -6,6 +6,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Coordinates;
 using Content.Shared._RMC14.Actions;
+using Content.Shared._RMC14.Xenonids.Hive;
 using Content.Shared.Damage;
 using Content.Shared.Actions;
 using Content.Shared.Maps;
@@ -35,6 +36,7 @@ public sealed class MCXenoInfernoSystem : EntitySystem
     [Dependency] private readonly XenoSystem _xeno = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedXenoHiveSystem _xenoHive = default!;
 
     private readonly HashSet<Entity<MobStateComponent>> _receivers = new();
 
@@ -103,7 +105,8 @@ public sealed class MCXenoInfernoSystem : EntitySystem
                 if (!_interaction.InRangeUnobstructed(xeno.Owner, offsetPosition, xeno.Comp.Range))
                     continue;
 
-                Spawn(xeno.Comp.Spawn, offsetPosition);
+                var fire = Spawn(xeno.Comp.Spawn, offsetPosition);
+                _xenoHive.SetSameHive(xeno.Owner, fire);
             }
         }
 
