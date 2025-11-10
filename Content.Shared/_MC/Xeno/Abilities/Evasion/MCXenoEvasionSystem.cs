@@ -100,7 +100,7 @@ public sealed class MCXenoEvasionSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        args.Cancel();
+        // args.Cancel();
     }
 
     private void OnEvaderPreventCollide(Entity<MCXenoEvaderComponent> entity, ref PreventCollideEvent args)

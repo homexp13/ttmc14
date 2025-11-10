@@ -22,10 +22,6 @@
     damage:
       groups:
         Brute: 20
-  - type: MeleeDamageMultiplier
-    whitelist:
-      components:
-      - Xeno
   - type: Item
     size: Normal
     sprite: _MC/Objects/Weapons/Melee/combat_knife.rsi

@@ -46,10 +46,10 @@
       state: fireslash
     useDelay: 12
   - type: TargetAction
+    range: 100
     checkCanAccess: false
-    range: 8
   - type: WorldTargetAction
-    event: !type:MCXenoFirechargeActionEvent
+    event: !type:MCXenoPounceActionEvent
   - type: XenoActionPlasma
     cost: 30
   - type: ActionBlockIfResting

@@ -36,6 +36,7 @@
     - MCActionXenoDevolve
     # Abilities
     - MCActionXenoRavage
+    - MCActionXenoCharge
     hudOffset: -0.1,0.1
   - type: XenoDevolve
     devolvesTo:
@@ -55,10 +56,14 @@
     bio: 40
     fire: 65
     acid: 40
+  # Melee
   - type: MeleeWeapon
     damage:
       groups:
-        Brute: 30
+        Brute: 25
+  - type: CMArmorPiercing
+    amount: 15
+  # ...
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.333
     baseSprintSpeed: 5
@@ -75,3 +80,15 @@
     multiplier: 0.5
   # Abilities
   - type: MCXenoRavage
+  # Pounce (Charge)
+  - type: MCXenoPounceEmote
+    emote: XenoRoar
+  - type: MCXenoPounce
+    maxDistance: 4
+    strength: 45
+    hitSelfParalyzeTime: 0
+    hitKnockdownTime: 2
+    stopOnHit: false
+    hitDamage:
+      groups:
+        Brute: 10

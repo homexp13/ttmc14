@@ -99,6 +99,8 @@
     bio: 0
     fire: 200
     acid: 0
+  - type: RMCImmuneToIgnition
+  - type: RMCImmuneToFireTileDamage
 
 - type: entity
   parent: MCWallXenoResinThick

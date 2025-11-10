@@ -83,7 +83,7 @@
 - type: job
   parent: MCJobXeno
   id: MCXenoForger
-  name: mc-job-name-xeno-bull # ИЗМЕНИ!!
+  name: mc-job-name-xeno-forger
   playTimeTracker: MCXenoForger
 
 - type: playTimeTracker

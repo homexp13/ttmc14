@@ -21,10 +21,6 @@
   categories: [ MCContent ]
   abstract: true
   components:
-  - type: MeleeDamageMultiplier
-    whitelist:
-      components:
-      - Xeno
   - type: MeleeWeapon
     angle: 0
   - type: CMArmorPiercing

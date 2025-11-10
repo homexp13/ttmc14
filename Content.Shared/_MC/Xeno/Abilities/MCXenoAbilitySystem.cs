@@ -2,18 +2,13 @@
 using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.Effects;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Player;
 
 namespace Content.Shared._MC.Xeno.Abilities;
 
-/// <summary>
-/// Base generic system for handling Xeno abilities.
-/// Provides unified logic for validating and executing custom ability actions.
-/// </summary>
-/// <typeparam name="TComp">The component type required on the entity to receive the action.</typeparam>
-/// <typeparam name="TAction">The type of the action event to handle (derived from <see cref="BaseActionEvent"/>).</typeparam>
-public abstract class MCXenoAbilitySystem<TComp, TAction> : EntitySystem where TComp : IComponent where TAction : BaseActionEvent
+public abstract class MCXenoAbilitySystem : EntitySystem
 {
     /// <summary>
     /// Reference to the central actions system used for validating and consuming ability actions.
@@ -24,6 +19,31 @@ public abstract class MCXenoAbilitySystem<TComp, TAction> : EntitySystem where T
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] protected readonly SharedColorFlashEffectSystem ColorFlash = default!;
 
+    protected DamageSpecifier GetDamage(EntityUid uid)
+    {
+        return TryComp<MeleeWeaponComponent>(uid, out var component) ? component.Damage : new DamageSpecifier();
+    }
+
+    protected void RaiseEffect(EntityUid ownerUid, EntityUid targetUid, Color? color = null)
+    {
+        var filter = Filter.Pvs(targetUid, entityManager: EntityManager).RemoveWhereAttachedEntity(uid => uid == ownerUid);
+        ColorFlash.RaiseEffect(color ?? Color.Red, new List<EntityUid> { targetUid }, filter);
+    }
+
+    protected bool IsMob(EntityUid uid)
+    {
+        return HasComp<MobStateComponent>(uid);
+    }
+}
+
+/// <summary>
+/// Base generic system for handling Xeno abilities.
+/// Provides unified logic for validating and executing custom ability actions.
+/// </summary>
+/// <typeparam name="TComp">The component type required on the entity to receive the action.</typeparam>
+/// <typeparam name="TAction">The type of the action event to handle (derived from <see cref="BaseActionEvent"/>).</typeparam>
+public abstract class MCXenoAbilitySystem<TComp, TAction> : MCXenoAbilitySystem where TComp : IComponent where TAction : BaseActionEvent
+{
     /// <summary>
     /// Determines whether the ability should automatically attempt to consume its action when it is triggered.
     /// When true, the action is immediately passed through <see cref="TryUse"/> which consumes it on success.
@@ -127,16 +147,5 @@ public abstract class MCXenoAbilitySystem<TComp, TAction> : EntitySystem where T
             Actions.StartUseDelay((action, action));
             break;
         }
-    }
-
-    protected DamageSpecifier GetDamage(EntityUid uid)
-    {
-        return TryComp<MeleeWeaponComponent>(uid, out var component) ? component.Damage : new DamageSpecifier();
-    }
-
-    protected void RaiseEffect(EntityUid ownerUid, EntityUid targetUid, Color? color = null)
-    {
-        var filter = Filter.Pvs(targetUid, entityManager: EntityManager).RemoveWhereAttachedEntity(uid => uid == ownerUid);
-        ColorFlash.RaiseEffect(color ?? Color.Red, new List<EntityUid> { targetUid }, filter);
     }
 }

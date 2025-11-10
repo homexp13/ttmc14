@@ -4,8 +4,6 @@
   name: melting fire
   description: It feels cold to the touch, yet it burns.
   components:
-  - type: PointLight
-    color: "#069420"
   - type: Sprite
     drawdepth: WallTops
     layers:
@@ -23,7 +21,6 @@
   - type: TileFire
     id: MCTileFireXenoAcid
     duration: 7
-  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.TileFireLayers.Base:
@@ -34,7 +31,6 @@
             state: acid_2
           Three:
             state: acid_3
-  - type: RMCScorchEffectOnSpawn
-    decalTag: burnt
-    tileLimit: 3
   - type: MCXenoIgnoreFriendlyCollision
+  - type: PointLight
+    color: "#069420"
