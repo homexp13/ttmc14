@@ -1,7 +1,7 @@
 - type: entity
   parent: MCSentry
   id: MCSentryMini
-  name: ST-580 point defense sentry
+  name: SMT-580 sentry gun
   description: A deployable, automated turret with AI targeting capabilities. This is a lightweight portable model meant for rapid deployment and point defense. Armed with an light, high velocity machine gun and a 300-round drum magazine.
   components:
   - type: Icon
@@ -28,7 +28,7 @@
   parent: MCMagazine
   id: MCMagazineSentryMini
   name: "M30 box magazine (10x20mm Caseless)"
-  description: "A box of 100 10x20mm caseless rounds for the ST-580 point defense sentry. Just feed it into the sentry gun's ammo port when its ammo is depleted."
+  description: "A box of 100 10x20mm caseless rounds for SMT-580 sentry gun. Just feed it into the sentry gun's ammo port when its ammo is depleted."
   components:
   - type: Tag
     tags:
