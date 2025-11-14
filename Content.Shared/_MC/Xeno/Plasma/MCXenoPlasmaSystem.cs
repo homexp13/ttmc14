@@ -25,7 +25,7 @@ public sealed class MCXenoPlasmaSystem : EntitySystem
         SubscribeLocalEvent<MCXenoPlasmaDamageOnHitComponent, ProjectileHitEvent>(OnDamageHit);
         SubscribeLocalEvent<MCXenoPlasmaDamageOnHitComponent, MeleeHitEvent>(OnDamageHitMelee);
 
-        SubscribeLocalEvent<MCXenoPlasmaOnAttackComponent, MeleeHitEvent>(OnDamage);
+        SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(OnDamage);
         SubscribeLocalEvent<MCXenoPlasmaOnAttackedComponent, DamageChangedEvent>(OnDamaged);
     }
 
@@ -83,21 +83,18 @@ public sealed class MCXenoPlasmaSystem : EntitySystem
         }
     }
 
-    private void OnDamage(Entity<MCXenoPlasmaOnAttackComponent> ent, ref MeleeHitEvent args)
+    private void OnDamage(Entity<MobStateComponent> ent, ref DamageChangedEvent args)
     {
-        if (!args.IsHit)
+        if (ent.Comp.CurrentState == MobState.Dead)
             return;
 
-        foreach (var hit in args.HitEntities)
-        {
-            if (!_mobStateQuery.TryComp(hit, out var mobStateComponent))
-                continue;
+        if (args.Origin is not {} origin)
+            return;
 
-            if (mobStateComponent.CurrentState == MobState.Dead)
-                continue;
+        if (!TryComp<MCXenoPlasmaOnAttackComponent>(origin, out var plasmaOnAttackComponent))
+            return;
 
-            _xenoPlasma.RegenPlasma(ent.Owner, args.BaseDamage.GetTotal() * ent.Comp.Multiplier);
-        }
+        _xenoPlasma.RegenPlasma(origin, args.DamageDelta?.GetTotal() ?? FixedPoint2.Zero * plasmaOnAttackComponent.Multiplier);
     }
 
     private void OnDamaged(Entity<MCXenoPlasmaOnAttackedComponent> ent, ref DamageChangedEvent args)

@@ -16,7 +16,6 @@
     cost: 200
   - type: ActionBlockIfResting
 
-
 - type: entity
   parent: ActionXenoBase
   id: MCActionXenoCharge
@@ -36,4 +35,22 @@
     event: !type:MCXenoPounceActionEvent
   - type: XenoActionPlasma
     cost: 250
+  - type: ActionBlockIfResting
+
+- type: entity
+  parent: ActionXenoBase
+  id: MCActionXenoEndure
+  name: Endure (200)
+  description: For the next few moments you will not go into crit and become resistant to explosives and immune to stagger and slowdown, but you still die if you take damage exceeding your crit health.
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: _MC/Interface/Actions/Xeno/ravager.rsi
+      state: ignore_pain
+    useDelay: 60
+  - type: InstantAction
+    event: !type:MCXenoEndureActionEvent
+  - type: XenoActionPlasma
+    cost: 200
   - type: ActionBlockIfResting

@@ -5,6 +5,7 @@ using Content.Shared.Effects;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._MC.Xeno.Abilities;
 
@@ -33,6 +34,11 @@ public abstract class MCXenoAbilitySystem : EntitySystem
     protected bool IsMob(EntityUid uid)
     {
         return HasComp<MobStateComponent>(uid);
+    }
+
+    protected void RemCompDeferredDelayed<T>(EntityUid uid, TimeSpan duration) where T : IComponent
+    {
+        Timer.Spawn(duration, () => { RemCompDeferred<T>(uid); });
     }
 }
 

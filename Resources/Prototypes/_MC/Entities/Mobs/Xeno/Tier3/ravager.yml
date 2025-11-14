@@ -21,7 +21,7 @@
     thresholds:
       0: Alive
       350: Critical
-      500: Dead
+      525: Dead
   - type: XenoPlasma
     plasma: 800
     maxPlasma: 800
@@ -37,6 +37,7 @@
     # Abilities
     - MCActionXenoRavage
     - MCActionXenoCharge
+    - MCActionXenoEndure
     hudOffset: -0.1,0.1
   - type: XenoDevolve
     devolvesTo:
@@ -79,6 +80,7 @@
   - type: MCXenoPlasmaOnAttacked
     multiplier: 0.5
   # Abilities
+  # Ravage
   - type: MCXenoRavage
   # Pounce (Charge)
   - type: MCXenoPounceEmote
@@ -92,3 +94,6 @@
     hitDamage:
       groups:
         Brute: 10
+  # Endure
+  - type: MCXenoEndure
+    duration: 10
