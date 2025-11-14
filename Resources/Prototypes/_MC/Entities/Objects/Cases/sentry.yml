@@ -36,8 +36,30 @@
 
 - type: entity
   parent: MCCaseSentry
-  id: MCCaseSentryST580
-  name: ST-580 point defense sentry case
+  id: MCCaseSentrySHT573
+  name: SHT-573 sentry case
+  description: A large case containing all you need to set up an automated sentry.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MCSentryShotgun
+    - id: MCMagazineSentryShotgun
+
+- type: entity
+  parent: MCCaseSentry
+  id: MCCaseSentrySST574
+  name: SST-574 sentry case
+  description: A large case containing all you need to set up an automated sentry.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MCSentrySniper
+    - id: MCMagazineSentrySniper
+
+- type: entity
+  parent: MCCaseSentry
+  id: MCCaseSentrySMT580
+  name: SMT-580 sentry case
   description: A large case containing all you need to set up an ST-580 point defense sentry.
   components:
   - type: Sprite
