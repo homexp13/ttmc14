@@ -9,9 +9,27 @@
     icon:
       sprite: _MC/Interface/Actions/Xeno/boiler.rsi
       state: spray_acid
-    event: !type:XenoSprayAcidActionEvent ""
+    event: !type:XenoSprayAcidActionEvent
     useDelay: 9
     range: 15
-  - type: ActionBlockIfResting
+  - type: TargetAction
+    range: 15
+  - type: WorldTargetAction
+    event: !type:XenoSprayAcidActionEvent
   - type: XenoActionPlasma
     cost: 250
+  - type: ActionBlockIfResting
+
+- type: entity
+  parent: ActionXenoBase
+  id: MCActionXenoBoilerLongRange
+  name: Toggle Long Range Sight
+  description: Activates your weapon sight in the direction you are facing. Must remain stationary to use.
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: _MC/Interface/Actions/Xeno/boiler.rsi
+      state: toggle_long_range
+  - type: InstantAction
+    event: !type:MCXenoZoomActionEvent

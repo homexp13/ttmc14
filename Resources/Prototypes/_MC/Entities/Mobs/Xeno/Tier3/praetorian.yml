@@ -35,8 +35,8 @@
     - MCActionXenoRest
     - MCActionXenoPsydrain
     - MCActionXenoDevolve
-    - MCActionXenoAcidStrong
     # Main
+    - MCActionXenoAcidStrong
     - MCActionXenoDash
     - MCActionXenoScatterSpitPraetorian
     - MCActionXenoSprayAcidPraetorian
