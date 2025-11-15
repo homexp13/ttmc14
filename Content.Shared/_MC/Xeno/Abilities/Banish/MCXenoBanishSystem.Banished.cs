@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Buckle.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
+using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -24,6 +25,7 @@ public sealed partial class MCXenoBanishSystem
         SubscribeLocalEvent<MCXenoBanishedComponent, IsUnequippingAttemptEvent>(Cancel);
         SubscribeLocalEvent<MCXenoBanishedComponent, AttackAttemptEvent>(Cancel);
         SubscribeLocalEvent<MCXenoBanishedComponent, UseAttemptEvent>(Cancel);
+        SubscribeLocalEvent<MCXenoBanishedComponent, DropAttemptEvent>(Cancel);
 
         SubscribeLocalEvent<MCXenoBanishedComponent, InteractionAttemptEvent>(CancelInteraction);
         SubscribeLocalEvent<MCXenoBanishedComponent, ConsciousAttemptEvent>(CancelConscious);
