@@ -14,6 +14,13 @@ public sealed class MCConfigVars : CVars
         CVarDef.Create("mc.respawn_marines_action_delay_minutes", 10f, CVar.SERVER | CVar.REPLICATED);
 
     /**
+     * Fire
+     */
+
+    public static readonly CVarDef<bool> MCFireResistOnDeath =
+        CVarDef.Create("mc.fire_resist_on_death", true, CVar.SERVER | CVar.REPLICATED);
+
+    /**
      * Stamina
      */
 
