@@ -99,7 +99,7 @@ public sealed class MCXenoBanishSystem : EntitySystem
         if (entity.Comp.Target is not { } target)
             return;
 
-        RemCompDeferred<MCXenoBanishedComponent>(target);
+        RemComp<MCXenoBanishedComponent>(target);
     }
 
     private void OnShutdown(Entity<MCXenoBanishedComponent> entity, ref ComponentShutdown args)
@@ -111,9 +111,7 @@ public sealed class MCXenoBanishSystem : EntitySystem
         }
 
         _transform.SetMapCoordinates(entity, entity.Comp.Position);
-
         _statusEffects.TryRemoveStatusEffect(entity, "StatusEffectForcedSleeping");
-
         _sleeping.TryWaking(entity.Owner, true);
     }
 
