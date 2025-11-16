@@ -1,5 +1,5 @@
 - type: entity
-  parent: RMCBaseMeleeWeapon
+  parent: MCBaseMeleeWeapon
   id: MCWeaponGun
   abstract: true
   categories: [ MCContent ]
@@ -41,6 +41,16 @@
   - type: InteractionActivateOnClick
 
 - type: entity
+  id: MCWeaponMagazineVisuals
+  categories: [ MCContent ]
+  abstract: true
+  components:
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+
+- type: entity
   id: MCAttachableHolder
   categories: [ MCContent ]
   abstract: true
@@ -59,11 +69,7 @@
         type: AttachmentChooseSlotBui
 
 - type: Tag
-  id: MCMagazineRifle
-
-- type: Tag
   id: MCMagazineShotgun
 
 - type: Tag
   id: MCMagazineHandful
-

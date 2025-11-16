@@ -1,39 +1,45 @@
 - type: entity
   parent: [ MCWeaponRifle, RMCBaseWeaponMagazineVisuals ]
-  id: MCWeaponDMR37
-  name: DMR-37 SCA designated marksman rifle
-  description: The San Cristo Arms DMR-37 is the TerraGov Marine Corps designated marksman rifle. It is rather well-known for it's very consistent target placement at longer than usual range, it however lacks a burst fire mode or an automatic mode. It is mostly used by people who prefer to do more careful shooting than most. Uses 10x27mm caseless caliber.
+  id: MCWeaponSniperBR64
+  name: BR-64 SCA battle rifle
+  description: The San Cristo Arms BR-64 is the TerraGov Marine Corps main battle rifle. It is known for its consistent ability to perform well at most ranges, and medium range stopping power with bursts. It is mostly used by people who prefer a bigger round than the average. Uses 10x26.5smm caseless caliber.
   components:
   - type: Sprite
-    sprite: _MC/Objects/Weapons/Guns/Rifles/dmr37.rsi
+    sprite: _MC/Objects/Weapons/Guns/Rifles/br64.rsi
     layers:
     - state: base
       map: [ "enum.GunVisualLayers.Base" ]
     - state: mag-0
       map: [ "enum.GunVisualLayers.Mag" ]
+    - sprite: _MC/Objects/Weapons/Guns/Attachments/stock.rsi
+      state: br64_rifle
+      offset: -0.59, 0
+      map: [ "stock" ]
     - sprite: _MC/Objects/Weapons/Guns/Attachments/other.rsi
-      state: dmr37_other
+      state: br64_other
       offset: 1, 0
       map: [ "other" ]
   - type: Clothing
-    sprite: _MC/Objects/Weapons/Guns/Rifles/dmr37.rsi
+    sprite: _MC/Objects/Weapons/Guns/Rifles/br64.rsi
   - type: Gun
     selectedMode: FullAuto
     availableModes:
     - FullAuto
+    - Burst
     soundGunshot:
-      path: /Audio/_MC/Weapons/Guns/Gunshots/gun_dmr37.ogg
+      path: /Audio/_MC/Weapons/Guns/Gunshots/gun_br64.ogg
   - type: RMCSelectiveFire
     baseFireModes:
     - FullAuto
-    recoilUnwielded: 2
+    - Burst
     recoilWielded: 1
-    scatterWielded: -8
+    recoilUnwielded: 3
+    scatterWielded: 0
     scatterUnwielded: 26
-    baseFireRate: 1.5
+    baseFireRate: 3.3
     burstScatterMult: 2
   - type: RMCWeaponAccuracy
-    accuracyMultiplier: 1.15
+    accuracyMultiplier: 0.9
     accuracyMultiplierUnwielded: 0.6
   - type: MagazineAmmoProvider
     autoEject: false
@@ -42,19 +48,19 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MCMagazineDMR37
+        startingItem: MCMagazineBR64
         insertSound: /Audio/_MC/Weapons/Guns/Reload/m41a_reload.ogg
         ejectSound: /Audio/_MC/Weapons/Guns/Reload/m41a_unload.ogg
         priority: 2
         whitelist:
           tags:
-          - MCMagazineDMR37
+          - MCMagazineBR64
   - type: GunDamageModifier
     multiplier: 1
   - type: RMCWeaponDamageFalloff
     falloffMultiplier: 0.5
   - type: WieldDelay
-    baseDelay: 1
+    baseDelay: 0.9
   - type: AttachableHolder
     slots:
       rmc-aslot-barrel:
@@ -66,19 +72,17 @@
           - MCAttachmentRecoilCompensator
           # - TODO: Heavy barrel
       rmc-aslot-rail:
+        startingAttachable: MCAttachmentMiniScope
         whitelist:
           tags:
           - MCAttachmentMagneticHarness
           - MCAttachmentRailFlashlight
           - MCAttachmentMiniScope
           - MCAttachmentRedDotSight
+          # - TODO: Tactical sensor
       rmc-aslot-underbarrel:
         whitelist:
           tags:
-          - MCAttachmentBurstFireAssembly
-          - MCAttachmentMiniFlamethrower
-          - MCAttachmentUnderbarrelShotgun
-          - MCAttachmentAngledGrip
           - MCAttachmentVerticalGrip
           - MCAttachmentGyroscopicStabilizer
           - MCAttachmentBipod
@@ -86,29 +90,31 @@
           - MCAttachmentLaserSight
   - type: AttachableHolderVisuals
     offsets:
-      rmc-aslot-barrel: 1.2, 0.1
-      rmc-aslot-rail: 0.25, 0.12
-      rmc-aslot-underbarrel: 0.6, -0.25
+      rmc-aslot-barrel: 1.2, 0.09
+      rmc-aslot-rail: 0.4, 0.25
+      rmc-aslot-underbarrel: 0.5, -0.28
+  - type: MCAimedShoot
+    aimSpeedModifier: 0.5
+    aimFireModifier: 0.6
 
 - type: entity
   parent: CMMagazineRifleBase
-  id: MCMagazineDMR37
-  description: A 10mm DMR magazine.
-  name: "DMR-37 magazine (10x27mm)"
+  id: MCMagazineBR64
+  name: "BR-64 magazine (10x26.5mm)"
   components:
   - type: Tag
     tags:
     - MCMagazineRifle
-    - MCMagazineDMR37
+    - MCMagazineBR64
   - type: BallisticAmmoProvider
     mayTransfer: True
     whitelist:
       tags:
-      - MCCartridgeDMR37
-    proto: MCCartridgeDMR37
-    capacity: 20
+      - MCCartridgeBR64
+    proto: MCCartridgeBR64
+    capacity: 36
   - type: Sprite
-    sprite: _MC/Objects/Weapons/Guns/Ammunition/Magazines/dmr37.rsi
+    sprite: _MC/Objects/Weapons/Guns/Ammunition/Magazines/br64_rifle.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -118,39 +124,32 @@
 
 - type: entity
   parent: CMBaseCartridgeRifle
-  id: MCCartridgeDMR37
-  name: Cartridge (10x27mm)
-  description: A 10x27mm rifle cartridge
+  id: MCCartridgeBR64
+  name: Cartridge (10x26.5mm)
+  description: A 10x26.5mm rifle cartridge
   components:
   - type: Tag
     tags:
     - Cartridge
-    - MCCartridgeDMR37
+    - MCCartridgeBR64
   - type: CartridgeAmmo
-    proto: MCBulletDMR37
+    proto: MCBulletBR64
 
 - type: entity
   parent: BulletRifle10x24mm
-  id: MCBulletDMR37
+  id: MCBulletBR64
   components:
   - type: Projectile
     damage:
       groups:
-        Brute: 65
-  - type: RMCProjectileAccuracy
-    thresholds:
-    - range: 25
-      falloff: 10
+        Brute: 32.5
   - type: CMArmorPiercing
-    amount: 17
+    amount: 15
   - type: MCXenoSunderDamageOnHit
-    amount: 2
-  - type: RMCProjectileDamageFalloff
-    thresholds:
-    - falloff: 0.5
+    amount: 1.25
 
 - type: Tag
-  id: MCMagazineDMR37
+  id: MCMagazineBR64
 
 - type: Tag
-  id: MCCartridgeDMR37
+  id: MCCartridgeBR64

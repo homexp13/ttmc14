@@ -8,6 +8,8 @@
     tags:
     - MCWeaponSidearm
     - MCWeaponPistol
+  - type: MCAimedShoot
+    aimSpeedModifier: 0.65
 
 - type: entity
   parent: RMCWeaponRevolverBase
@@ -19,6 +21,8 @@
     tags:
     - MCWeaponSidearm
     - MCWeaponRevolver
+  - type: MCAimedShoot
+    aimSpeedModifier: 0.65
 
 - type: Tag
   id: MCWeaponSidearm

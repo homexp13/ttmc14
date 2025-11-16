@@ -29,6 +29,11 @@
       path: /Audio/_MC/Weapons/Guns/Gunshots/gun_mosin.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/sniper_empty.ogg
+  - type: MeleeWeapon
+    attackRate: 0.8
+    damage:
+      groups:
+        Brute: 30
   - type: ShootUseDelay
   - type: RMCSelectiveFire
     baseFireModes:
@@ -70,7 +75,9 @@
     offsets:
       rmc-aslot-barrel: 1.0, 0.03
       rmc-aslot-rail: 0.1, 0.0
-  - type: GunRequiresWield
+  - type: MCAimedShoot
+    aimSpeedModifier: 0.8
+    aimFireModifier: 0.7
 
 - type: entity
   parent: BulletRifle10x24mm
