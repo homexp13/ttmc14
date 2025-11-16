@@ -160,7 +160,10 @@ public sealed class RMCProjectileSystem : EntitySystem
             accuracy -= threshold.Falloff * pastRange;
         }
 
-        if (!_examine.InRangeUnOccluded(_transform.ToMapCoordinates(projectile.Comp.ShotFrom.Value), _transform.ToMapCoordinates(targetCoords), distance, null))
+        var mapId = _transform.GetMapId(args.OtherEntity);
+        var shootCoordinates = new MapCoordinates(projectile.Comp.ShotFrom.Value, mapId);
+        var targetCoordinates = new MapCoordinates(targetCoords, mapId);
+        if (!_examine.InRangeUnOccluded(shootCoordinates, targetCoordinates, distance, null))
             accuracy += (int)AccuracyModifiers.TargetOccluded;
 
         if (!projectile.Comp.IgnoreFriendlyEvasion && IsProjectileTargetFriendly(projectile.Owner, args.OtherEntity))
