@@ -3,7 +3,7 @@
     xmlns:ui="clr-namespace:Content.Client._MC.ASRS.Ui"
     Orientation="Horizontal">
 
-    <BoxContainer Orientation="Horizontal" Margin="0 0 16">
+    <BoxContainer Orientation="Horizontal" Margin="0 0 0 16">
         <Button Text="-" Name="RemoveSingleButton" Access="Public" StyleClasses="ButtonSquare" />
         <Label Text="0"
                Name="CountLabel"
