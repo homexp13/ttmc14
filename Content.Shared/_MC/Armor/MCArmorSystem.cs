@@ -127,7 +127,7 @@ public sealed class MCArmorSystem : EntitySystem
 
     private void OnArmorVerbExamine(Entity<MCArmorComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess || HasComp<XenoComponent>(entity))
+        if (!args.CanInteract || !args.CanAccess)
             return;
 
         var examineMarkup = GetArmorExamine(entity);
