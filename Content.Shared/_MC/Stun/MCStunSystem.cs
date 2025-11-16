@@ -29,7 +29,7 @@ public sealed class MCStunSystem : EntitySystem
 
     private void OnMapInit(Entity<MCStunOnHitComponent> entity, ref MapInitEvent args)
     {
-        entity.Comp.ShotFrom = _transform.GetMapCoordinates(entity.Owner);
+        entity.Comp.ShotFrom = _transform.GetWorldPosition(entity.Owner);
         Dirty(entity);
     }
 
@@ -38,7 +38,7 @@ public sealed class MCStunSystem : EntitySystem
         if (entity.Comp.ShotFrom is not {} shotFrom)
             return;
 
-        var direction = _transform.GetMoverCoordinates(args.Target).Position - shotFrom.Position;
+        var direction = _transform.GetWorldPosition(args.Target) - shotFrom;
         var distance = direction.Length();
         if (distance > entity.Comp.MaxDistance)
             return;

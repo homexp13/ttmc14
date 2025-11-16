@@ -80,7 +80,7 @@ public sealed class RMCProjectileSystem : EntitySystem
 
     private void OnFalloffProjectileMapInit(Entity<RMCProjectileDamageFalloffComponent> projectile, ref MapInitEvent args)
     {
-        projectile.Comp.ShotFrom = _transform.GetMoverCoordinates(projectile.Owner);
+        projectile.Comp.ShotFrom = _transform.GetWorldPosition(projectile.Owner);
         Dirty(projectile);
     }
 
@@ -89,7 +89,7 @@ public sealed class RMCProjectileSystem : EntitySystem
         if (projectile.Comp.ShotFrom == null || projectile.Comp.MinRemainingDamageMult < 0)
             return;
 
-        var distance = (_transform.GetMoverCoordinates(args.Target).Position - projectile.Comp.ShotFrom.Value.Position).Length();
+        var distance = (_transform.GetWorldPosition(args.Target) - projectile.Comp.ShotFrom.Value).Length();
         var minDamage = args.Damage.GetTotal() * projectile.Comp.MinRemainingDamageMult;
         foreach (var threshold in projectile.Comp.Thresholds)
         {
