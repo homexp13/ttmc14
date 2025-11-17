@@ -187,7 +187,7 @@
   id: MCXenoWeedsSticky
   components:
   - type: Sprite
-    sprite: _MC/Structures/Xeno/Weeds/blue.rsi
+    sprite: _MC/Structures/Xeno/Weeds/green.rsi
   - type: XenoWeeds
     spawns: MCXenoWeedsSticky
     speedMultiplierOutsider: 0.333
@@ -198,7 +198,7 @@
   id: MCXenoWeedsNodeSticky
   components:
   - type: Sprite
-    sprite: _MC/Structures/Xeno/Weeds/blue.rsi
+    sprite: _MC/Structures/Xeno/Weeds/green.rsi
   - type: XenoWeeds
     spawns: MCXenoWeedsSticky
     speedMultiplierOutsider: 0.333
@@ -209,7 +209,7 @@
   id: MCXenoWeedsResting
   components:
   - type: Sprite
-    sprite: _MC/Structures/Xeno/Weeds/green.rsi
+    sprite: _MC/Structures/Xeno/Weeds/white.rsi
   - type: XenoWeeds
     spawns: MCXenoWeedsResting
   - type: MCXenoWeedsRegeneration
@@ -222,7 +222,7 @@
   id: MCXenoWeedsNodeResting
   components:
   - type: Sprite
-    sprite: _MC/Structures/Xeno/Weeds/green.rsi
+    sprite: _MC/Structures/Xeno/Weeds/white.rsi
   - type: XenoWeeds
     spawns: MCXenoWeedsResting
   - type: MCXenoWeedsRegeneration
