@@ -25,13 +25,16 @@
     - Turf
     - Xeno
   - type: Sprite
-    sprite: _RMC14/Structures/Xenos/xeno_resin_wall.rsi
+    sprite: _MC/Structures/Xeno/walls.rsi
+    layers:
+    - state: resin0
   - type: Icon
-    sprite: _RMC14/Structures/Xenos/xeno_resin_wall.rsi
-    state: thickresin
+    sprite: _MC/Structures/Xeno/walls.rsi
+    state: resin0
   - type: IconSmooth
     key: walls
-    base: thickresin
+    base: resin
+    mode: CardinalFlags
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
