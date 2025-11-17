@@ -34,8 +34,8 @@
     event: !type:MCXenoSpitToggleActionEvent
       projectileId: MCXenoProjectileHeavyPassthrough
       plasmaCost: 70
-      delay: 1
-      speed: 30
+      delay: 1.2
+      speed: 40
 
 - type: entity
   parent: MCXenoProjectile
@@ -74,8 +74,8 @@
     event: !type:MCXenoSpitToggleActionEvent
       projectileId: MCXenoProjectileHeavyToxLoss
       plasmaCost: 180
-      delay: 1.2
-      speed: 30
+      delay: 1
+      speed: 40
 
 # accurate_range = 5
 # accuracy_var_low = 3
@@ -93,15 +93,16 @@
     impactEffect: null
     damage:
       groups:
-        Burn: 10
         Toxin: 20
+  - type: MCStaminaDamageOnCollide
+    damage: 15
   - type: XenoProjectile
     deleteOnFriendlyXeno: false
   - type: ProjectileMaxRange
     max: 10
   - type: XenoSlowingSpitProjectile
     armorResistsKnockdown: false
-    slow: 0.5
+    slow: 1.5
     paralyze: 0
 
 - type: entity
