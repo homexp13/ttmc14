@@ -107,7 +107,7 @@
   components:
   - type: Tag
     tags:
-    - CMMagazineSmg
+    - MCMagazineSmg
     - MCMagazineSMG45
   - type: BallisticAmmoProvider
     mayTransfer: True
