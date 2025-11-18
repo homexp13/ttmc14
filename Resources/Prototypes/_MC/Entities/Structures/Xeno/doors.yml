@@ -53,7 +53,7 @@
   - type: PlacementReplacement
     key: walls
   - type: IconSmooth
-    key: walls
+    key: xenoWalls
     mode: NoSprite
   - type: AccessReader
     access: [ [ "CMAccessXeno" ] ]

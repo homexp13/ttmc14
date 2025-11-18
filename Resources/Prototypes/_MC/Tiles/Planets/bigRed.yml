@@ -1,0 +1,18 @@
+- type: tile
+  parent: CMPlanetBase
+  id: MCPlanetMarsSand
+  name: tiles-mc-sand
+  weedsSpreadable: true
+  semiWeedable: true
+  sprite: /Textures/_MC/Tiles/Planet/BigRed/mars_sand.png
+  minimapColor: "#aa5f44cc"
+  variants: 8
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0

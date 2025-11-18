@@ -5,6 +5,7 @@
   id: MCWallXenoResinRegenerating
   name: thick resin wall
   description: Weird slime solidified into a thick wall.
+  categories: [ MCContent ]
   abstract: true
   placement:
     mode: SnapgridCenter
@@ -32,7 +33,7 @@
     sprite: _MC/Structures/Xeno/walls.rsi
     state: resin0
   - type: IconSmooth
-    key: walls
+    key: xenoWalls
     base: resin
     mode: CardinalFlags
   - type: Destructible
