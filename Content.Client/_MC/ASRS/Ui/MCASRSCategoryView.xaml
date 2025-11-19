@@ -28,17 +28,30 @@
                 <cc:HSeparator Color="#4972A1" Margin="8 0" />
 
                 <BoxContainer Orientation="Vertical" Access="Public" Margin="8">
-                    <Button Text="Pending Order" Name="PendingOrderButton" StyleClasses="ButtonSquare" HorizontalExpand="True" Access="Public" />
-                    <Button Text="Previous Purchases" Name="PreviousPurchasesButton" StyleClasses="ButtonSquare" HorizontalExpand="True" Access="Public" />
-                    <Button Text="Export History" Name="ExportHistoryButton" StyleClasses="ButtonSquare" HorizontalExpand="True" Access="Public" />
+                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                        <Button Text="Pending Order" Name="PendingOrderButton" StyleClasses="ButtonSquare" HorizontalExpand="True" Disabled="True" Access="Public" />
+
+                        <BoxContainer Orientation="Horizontal" Align="Center" Margin="8 0">
+                            <RichTextLabel Text="0" Name="ItemsLabel" Access="Public" />
+                            <RichTextLabel Text=" items" />
+                        </BoxContainer>
+
+                        <BoxContainer Orientation="Horizontal" Align="End" Margin="8 0">
+                            <RichTextLabel Text="Cost:" />
+                            <RichTextLabel Text="0" Name="CostLabel" Access="Public" />
+                        </BoxContainer>
+                    </BoxContainer>
+
+                    <Button Text="Previous Purchases" Name="PreviousPurchasesButton" StyleClasses="ButtonSquare" HorizontalExpand="True" Disabled="True" Access="Public" />
+                    <Button Text="Export History" Name="ExportHistoryButton" StyleClasses="ButtonSquare" HorizontalExpand="True" Disabled="True" Access="Public" />
                 </BoxContainer>
 
                 <cc:HSeparator Color="#4972A1" Margin="8 0" />
 
                 <BoxContainer Orientation="Vertical" Access="Public" Margin="8">
-                    <Button Text="Requests" Name="RequestsButton" StyleClasses="ButtonSquare" HorizontalExpand="True" Access="Public" />
-                    <Button Text="Approved Requests" Name="ApprovedRequestsButton" StyleClasses="ButtonSquare" HorizontalExpand="True" Access="Public" />
-                    <Button Text="Denied Requests" Name="DeniedRequestsButton" StyleClasses="ButtonSquare" HorizontalExpand="True" Access="Public" />
+                    <Button Text="Requests" Name="RequestsButton" StyleClasses="ButtonSquare" HorizontalExpand="True" Disabled="True" Access="Public" />
+                    <Button Text="Approved Requests" Name="ApprovedRequestsButton" StyleClasses="ButtonSquare" HorizontalExpand="True" Disabled="True" Access="Public" />
+                    <Button Text="Denied Requests" Name="DeniedRequestsButton" StyleClasses="ButtonSquare" HorizontalExpand="True" Disabled="True" Access="Public" />
                 </BoxContainer>
 
                 <cc:HSeparator Color="#4972A1" Margin="8 0" />

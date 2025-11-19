@@ -2,7 +2,5 @@
     xmlns="https://spacestation14.io"
     xmlns:ui="clr-namespace:Content.Client._MC.ASRS.Ui"
     Orientation="Horizontal">
-
     <Button Name="Button" Access="Public" StyleClasses="ButtonSquare" HorizontalExpand="True" />
-
 </ui:MCASRSCategoryButton>

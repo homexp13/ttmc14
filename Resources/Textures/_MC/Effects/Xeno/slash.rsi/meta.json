@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": null,
+  "size": {
+    "x": 200,
+    "y": 200
+  },
+  "states": [
+    {
+      "name": "ravager_slash"
+    },
+    {
+      "name": "ravager_charge"
+    }
+  ]
+}

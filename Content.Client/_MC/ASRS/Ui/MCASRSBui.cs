@@ -8,11 +8,17 @@ namespace Content.Client._MC.ASRS.Ui;
 [UsedImplicitly]
 public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    [Dependency] private readonly IEntityManager _entity = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly IEntityManager _entity = null!;
+    [Dependency] private readonly IPrototypeManager _prototypes = null!;
 
     [ViewVariables]
     private MCASRSWindow? _window;
+
+    private readonly StoreDictionary _store = new();
+    private int _storeCount;
+    private int _storeCost;
+
+    private bool StoreEmpty => _store.Count == 0;
 
     protected override void Open()
     {
@@ -46,9 +52,52 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
         foreach (var entry in category.Entries)
         {
             var categoryButton = new MCASRSOrderButton();
-            categoryButton.OrderNameLabel.SetMessage($"{entry.Name ?? "Unknown"} ({entry.Cost})");
+            categoryButton.SetLabel(entry);
+            categoryButton.SetCount(_store.GetValueOrDefault(entry));
+            categoryButton.OnCountChanged += value => OnOrderCountChanged(entry, value);
 
             view.Container.Children.Add(categoryButton);
         }
     }
+
+    private void OnOrderCountChanged(MCASRSEntry entry, int value)
+    {
+        try
+        {
+            if (value == 0)
+            {
+                _store.Remove(entry);
+                return;
+            }
+
+            if (_store.TryAdd(entry, value))
+                return;
+
+            _store[entry] = value;
+        }
+        finally
+        {
+            RefreshStore();
+        }
+    }
+
+    private void RefreshStore()
+    {
+        if (_window is null)
+            return;
+
+        _storeCost = 0;
+        _storeCount = 0;
+        foreach (var (entry, count) in _store)
+        {
+            _storeCost += entry.Cost * count;
+            _storeCount += count;
+        }
+
+        _window.CategoryView.PendingOrderButton.Disabled = StoreEmpty;
+        _window.CategoryView.CostLabel.SetMessage(_storeCost.ToString());
+        _window.CategoryView.ItemsLabel.SetMessage(_storeCount.ToString());
+    }
+
+    private sealed class StoreDictionary : Dictionary<MCASRSEntry, int>;
 }
