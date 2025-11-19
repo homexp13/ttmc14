@@ -5,6 +5,7 @@
     MinSize="1000 700">
     <BoxContainer Orientation="Horizontal">
         <ui:MCASRSCategoryView Name="CategoryView" HorizontalAlignment="Left" VerticalExpand="True" MaxWidth="450" Access="Public" />
-        <ui:MCASRSOrdersView Name="OrdersView" HorizontalExpand="True" VerticalExpand="True" Access="Public" />
+        <ui:MCASRSOrdersView Name="OrdersView" HorizontalExpand="True" VerticalExpand="True" Visible="False" Access="Public" />
+        <ui:MCASRSPendingOrdersView Name="PendingOrdersView" HorizontalExpand="True" VerticalExpand="True" Visible="False" Access="Public" />
     </BoxContainer>
 </ui:MCASRSWindow>

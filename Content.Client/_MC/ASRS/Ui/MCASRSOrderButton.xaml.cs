@@ -33,7 +33,7 @@ public sealed partial class MCASRSOrderButton : BoxContainer
     public void SetCount(int count)
     {
         Count = Math.Max(count, 0);
-        CountLabel.Text = Count.ToString();
+        CountLabel.Text = Count == 0 ? string.Empty : Count.ToString();
         OnCountChanged?.Invoke(Count);
     }
 }

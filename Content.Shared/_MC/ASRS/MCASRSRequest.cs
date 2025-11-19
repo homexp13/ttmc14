@@ -13,8 +13,5 @@ public sealed partial class MCASRSRequest
     public string Reason;
 
     [DataField]
-    public int Cost;
-
-    [DataField]
-    public List<MCASRSEntry> Contents;
+    public Dictionary<MCASRSEntry, int> Contents;
 }
