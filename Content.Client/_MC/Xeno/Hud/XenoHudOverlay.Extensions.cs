@@ -31,7 +31,7 @@ public sealed partial class XenoHudOverlay
 
         DrawBar($"plasma{plasmaName}", xeno, sprite, handle, path: "/Textures/_MC/Interface/Xeno/hud.rsi");
 
-        if (comp.PlasmaRegenLimit == -1 || plasma <= plasmaRegenLimit)
+        if (comp.PlasmaRegenLimit <= 0 || plasma <= plasmaRegenLimit)
             return;
 
         var overPlasmaLevel = ContentHelpers.RoundToLevels(plasma - plasmaRegenLimit, plasmaRegenLimit, 11);

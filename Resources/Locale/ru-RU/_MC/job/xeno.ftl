@@ -1,4 +1,8 @@
-mc-job-name-xeno-larva = Личинка
+mc-job-name-xeno-baneling = Бейлинг
+mc-job-name-xeno-beetle = Жук
+mc-job-name-xeno-mantis = Богомол
+mc-job-name-xeno-nymph = Нимф
+mc-job-name-xeno-scorpion = Скорпион
 mc-job-name-selectable-xenonid = Ксеноморф
 mc-job-name-xeno-defender = Защитник
 mc-job-name-xeno-drone = Дрон
@@ -18,6 +22,7 @@ mc-job-name-xeno-defiler = Осквернитель
 mc-job-name-xeno-gorger = Поглотитель
 mc-job-name-xeno-praetorian = Преторианец
 mc-job-name-xeno-ravager = Опустошитель
+mc-job-name-xeno-ravager-bloodthirster = Жнец
 mc-job-name-xeno-warlock = Варлок
 mc-job-name-xeno-shrike = Принцесса
 mc-job-name-xeno-queen = Королева

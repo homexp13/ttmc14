@@ -29,6 +29,19 @@ public sealed class MCXenoPlasmaSystem : EntitySystem
         SubscribeLocalEvent<MCXenoPlasmaOnAttackedComponent, DamageChangedEvent>(OnDamaged);
     }
 
+    public bool TryRemovePlasma(EntityUid uid, float plasma)
+    {
+        if (!_query.TryComp(uid, out var plasmaComponent))
+            return false;
+
+        var previousPlasma = plasmaComponent.Plasma;
+        if (previousPlasma == FixedPoint2.Zero)
+            return false;
+
+        _xenoPlasma.RemovePlasma((uid, plasmaComponent), plasma);
+        return previousPlasma >= plasma;
+    }
+
     private void OnDamageHit(Entity<MCXenoPlasmaDamageOnHitComponent> entity, ref ProjectileHitEvent args)
     {
         if (!_query.TryComp(args.Target, out var plasmaComponent))
