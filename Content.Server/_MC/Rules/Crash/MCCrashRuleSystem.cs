@@ -56,7 +56,7 @@ public sealed partial class MCCrashRuleSystem : MCRuleSystem<MCCrashRuleComponen
     [Dependency] private readonly MCXenoHiveSystem _mcXenoHive = default!;
     [Dependency] private readonly MCXenoSpawnSystem _mcXenoSpawn = default!;
 
-    private readonly TimeSpan _updateSpawnXenosDelay = TimeSpan.FromMilliseconds(10);
+    private readonly TimeSpan _updateSpawnXenosDelay = TimeSpan.FromSeconds(10);
     private TimeSpan _nextUpdateSpawnXenos;
 
     public override void Initialize()
@@ -134,6 +134,11 @@ public sealed partial class MCCrashRuleSystem : MCRuleSystem<MCCrashRuleComponen
             return;
 
         var ration = GetJobPointDifference() / 10f;
+
+#if !FULL_RELEASE
+        Log.Info($"Ration {ration}");
+#endif
+
         if (ration >= 1)
         {
             _mcXenoHive.AddBurrowedLarva(hive, 1);
@@ -141,7 +146,7 @@ public sealed partial class MCCrashRuleSystem : MCRuleSystem<MCCrashRuleComponen
         }
 
         var totalXenos = _mcXenoHive.GetLiving(hive, 0) + _mcXenoHive.GetBurrowedLarvaCount(hive);
-        if (totalXenos >= 2)
+        if (totalXenos >= 1)
             return;
 
         _mcXenoHive.AddBurrowedLarva(hive, 1);
@@ -152,9 +157,16 @@ public sealed partial class MCCrashRuleSystem : MCRuleSystem<MCCrashRuleComponen
         if (_mcXenoHive.DefaultHive is not {} hive)
             return 0;
 
-        var totalXenos = _mcXenoHive.GetLiving(hive, 0) + _mcXenoHive.GetBurrowedLarvaCount(hive);
-        var marinePoints = GetLiving<MarineComponent>() * 3.25f;
-        return marinePoints - totalXenos * 10;
+        var burrowed = _mcXenoHive.GetBurrowedLarvaCount(hive);
+        var xenos = _mcXenoHive.GetLiving(hive, 0);
+        var marines = GetLiving<MarineComponent>();
+        var marinePoints = marines * 3.25f;
+
+#if !FULL_RELEASE
+        Log.Info($"Burrowed: {burrowed}, Xenos {xenos}, Marines {marines}, Marines points {marinePoints}");
+#endif
+
+        return marinePoints - (xenos + burrowed) * 10f;
     }
 
     private void OnRoundEndMessage(RoundEndMessageEvent ev)
