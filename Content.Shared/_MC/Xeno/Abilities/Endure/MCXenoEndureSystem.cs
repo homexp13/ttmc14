@@ -1,15 +1,19 @@
-﻿using Content.Shared._RMC14.Aura;
+﻿using Content.Shared._MC.Armor;
+using Content.Shared._MC.Stun.Events;
+using Content.Shared._RMC14.Aura;
 using Content.Shared._RMC14.Emote;
 using Content.Shared._RMC14.Xenonids.Pheromones;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Shared._MC.Xeno.Abilities.Endure;
 
 public sealed class MCXenoEndureSystem : MCXenoAbilitySystem
 {
     [Dependency] private readonly INetManager _net = null!;
+    [Dependency] private readonly IGameTiming _timing = null!;
     [Dependency] private readonly MobStateSystem _mobState = null!;
     [Dependency] private readonly SharedAuraSystem _rmcAura = null!;
     [Dependency] private readonly SharedRMCEmoteSystem _rmcEmote = null!;
@@ -21,13 +25,24 @@ public sealed class MCXenoEndureSystem : MCXenoAbilitySystem
         SubscribeLocalEvent<MCXenoEndureComponent, MCXenoEndureActionEvent>(OnAction);
 
         SubscribeLocalEvent<MCXenoEndureActiveComponent, ComponentRemove>(OnActiveRemove);
+        SubscribeLocalEvent<MCXenoEndureActiveComponent, MCStunAttemptEvent>(OnActiveTryStun);
+        SubscribeLocalEvent<MCXenoEndureActiveComponent, MCArmorGetEvent>(OnActiveArmorGet);
         SubscribeLocalEvent<MCXenoEndureActiveComponent, UpdateMobStateEvent>(OnActiveUpdateMobState,
             after: [typeof(MobThresholdSystem), typeof(SharedXenoPheromonesSystem)]);
     }
 
-    private void OnActiveRemove(Entity<MCXenoEndureActiveComponent> entity, ref ComponentRemove args)
+    public override void Update(float frameTime)
     {
-        _mobState.UpdateMobState(entity);
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<MCXenoEndureActiveComponent>();
+        while (query.MoveNext(out var uid, out var activeComponent))
+        {
+            if (_timing.CurTime < activeComponent.EndTime)
+                continue;
+
+            RemCompDeferred<MCXenoEndureActiveComponent>(uid);
+        }
     }
 
     private void OnAction(Entity<MCXenoEndureComponent> entity, ref MCXenoEndureActionEvent args)
@@ -40,15 +55,30 @@ public sealed class MCXenoEndureSystem : MCXenoAbilitySystem
 
         args.Handled = true;
 
-        _rmcAura.GiveAura(entity, entity.Comp.ActivationAuraColor, entity.Comp.Duration);
+        if (!HasComp<AuraComponent>(entity))
+            _rmcAura.GiveAura(entity, entity.Comp.ActivationAuraColor, entity.Comp.Duration);
+
         _rmcEmote.TryEmoteWithChat(entity, entity.Comp.ActivationEmote);
 
-        EnsureComp<MCXenoEndureActiveComponent>(entity);
+        var activeComponent = EnsureComp<MCXenoEndureActiveComponent>(entity);
+        activeComponent.EndTime = _timing.CurTime + entity.Comp.Duration;
+    }
 
-        if (_net.IsClient)
-            return;
+    private void OnActiveTryStun(Entity<MCXenoEndureActiveComponent> ent, ref MCStunAttemptEvent args)
+    {
+        args.Canceled = true;
+    }
 
-        RemCompDeferredDelayed<MCXenoEndureActiveComponent>(entity, entity.Comp.Duration);
+    private void OnActiveRemove(Entity<MCXenoEndureActiveComponent> entity, ref ComponentRemove args)
+    {
+        _mobState.UpdateMobState(entity);
+    }
+
+    private void OnActiveArmorGet(Entity<MCXenoEndureActiveComponent> entity, ref MCArmorGetEvent args)
+    {
+        args.Bomb += 20;
+        args.Melee += 40;
+        args.Fire += 30;
     }
 
     private void OnActiveUpdateMobState(Entity<MCXenoEndureActiveComponent> entity, ref UpdateMobStateEvent args)

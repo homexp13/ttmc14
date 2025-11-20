@@ -556,6 +556,7 @@ public sealed partial class XenoHudOverlay : Overlay // mc-changes
         handle.DrawTexture(texture, position);
     }
 
+    /*
     private void UpdatePlasma(Entity<XenoComponent, SpriteComponent> ent, DrawingHandleWorld handle)
     {
         var (uid, xeno, sprite) = ent;
@@ -580,6 +581,7 @@ public sealed partial class XenoHudOverlay : Overlay // mc-changes
         var position = new Vector2(xOffset, yOffset);
         handle.DrawTexture(texture, position);
     }
+    */
 
     private void UpdateShields(Entity<XenoComponent, SpriteComponent> ent, DrawingHandleWorld handle)
     {

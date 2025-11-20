@@ -2,5 +2,9 @@
 
 namespace Content.Shared._MC.Xeno.Abilities.Endure;
 
-[RegisterComponent, NetworkedComponent]
-public sealed partial class MCXenoEndureActiveComponent : Component;
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class MCXenoEndureActiveComponent : Component
+{
+    [DataField, AutoNetworkedField]
+    public TimeSpan EndTime;
+}

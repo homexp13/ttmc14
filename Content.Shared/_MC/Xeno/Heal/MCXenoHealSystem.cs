@@ -32,6 +32,7 @@ public sealed class MCXenoHealSystem : MCEntitySystemSingleton<MCXenoHealSinglet
     [Dependency] private readonly MCSharedXenoHiveSystem _mcXenoHive = null!;
     [Dependency] private readonly SharedRMCDamageableSystem _rmcDamageable = null!;
 
+    private EntityQuery<DamageableComponent> _damageableQuery;
     private EntityQuery<AffectableByWeedsComponent> _rmcAffectableQuery;
     private EntityQuery<XenoRecoveryPheromonesComponent> _rmcXenoRecoveryPheromonesQuery;
     private EntityQuery<MCXenoWeedsRegenerationComponent> _mcWeedsRegenerationQuery;
@@ -41,6 +42,7 @@ public sealed class MCXenoHealSystem : MCEntitySystemSingleton<MCXenoHealSinglet
     {
         base.Initialize();
 
+        _damageableQuery = GetEntityQuery<DamageableComponent>();
         _rmcAffectableQuery = GetEntityQuery<AffectableByWeedsComponent>();
         _rmcXenoRecoveryPheromonesQuery = GetEntityQuery<XenoRecoveryPheromonesComponent>();
         _mcWeedsRegenerationQuery = GetEntityQuery<MCXenoWeedsRegenerationComponent>();
@@ -69,7 +71,6 @@ public sealed class MCXenoHealSystem : MCEntitySystemSingleton<MCXenoHealSinglet
                 continue;
 
             xenoHealComponent.RegenerationTimeNext = _timing.CurTime + TimeSpan.FromSeconds(UpdateFrequency);
-
 
             var affectable = _rmcAffectableQuery.CompOrNull(uid);
             if (!affectable?.OnXenoWeeds ?? false)
@@ -140,26 +141,50 @@ public sealed class MCXenoHealSystem : MCEntitySystemSingleton<MCXenoHealSinglet
         _damageable.TryChangeDamage(uid, -damage, true);
     }
 
+    public float GetHealth(EntityUid uid)
+    {
+        return _damageableQuery.TryComp(uid, out var damageableComponent)
+            ? GetHealthAlive(uid) - damageableComponent.TotalDamage.Float()
+            : 0;
+    }
+
     public float GetRecoveryAura(EntityUid uid)
     {
         return _rmcXenoRecoveryPheromonesQuery.CompOrNull(uid)?.Multiplier.Float() ?? 0;
     }
 
-    public float GetMaxHealth(EntityUid uid)
+    public float GetHealthAlive(EntityUid uid)
     {
-        if (_mcXenoHealthCacheQuery.TryGetComponent(uid, out var mcXenoHealthCacheComponent))
-            return mcXenoHealthCacheComponent.MaxHealth;
-
-        var maxHealth = GetMaxThreshold(uid);
-
-        var healCacheComponent = EnsureComp<MCXenoHealCacheComponent>(uid);
-        healCacheComponent.MaxHealth = maxHealth;
-        Dirty(uid, healCacheComponent);
-
-        return maxHealth;
+        return _mcXenoHealthCacheQuery.TryGetComponent(uid, out var mcXenoHealthCacheComponent)
+            ? mcXenoHealthCacheComponent.Health
+            : HealCache(uid).Health;
     }
 
-    private float GetMaxThreshold(EntityUid uid)
+    public float GetMaxHealth(EntityUid uid)
+    {
+        return _mcXenoHealthCacheQuery.TryGetComponent(uid, out var mcXenoHealthCacheComponent)
+            ? mcXenoHealthCacheComponent.MaxHealth
+            : HealCache(uid).MaxHealth;
+    }
+
+    private MCXenoHealCacheComponent HealCache(EntityUid uid)
+    {
+        var healCacheComponent = EnsureComp<MCXenoHealCacheComponent>(uid);
+        healCacheComponent.Health = GetHealthThreshold(uid);
+        healCacheComponent.MaxHealth = GetMaxHealthThreshold(uid);
+        Dirty(uid, healCacheComponent);
+        return healCacheComponent;
+    }
+
+    private float GetHealthThreshold(EntityUid uid)
+    {
+        if (_mobThresholds.TryGetThresholdForState(uid, MobState.Critical, out var criticalThreshold))
+            return criticalThreshold.Value.Float();
+
+        return 0;
+    }
+
+    private float GetMaxHealthThreshold(EntityUid uid)
     {
         if (_mobThresholds.TryGetThresholdForState(uid, MobState.Dead, out var deadThreshold))
             return deadThreshold.Value.Float();

@@ -79,7 +79,7 @@ public sealed class MCXenoPsychicCureSystem : MCXenoAbilitySystem
 
         args.Handled = true;
 
-        _mcXenoHeal.HealWounds(target, 10);
+        _mcXenoHeal.HealWounds(target, 10, powerScaling: false);
         _mcXenoSunder.AddSunder(target, 10);
 
         if (entity.Comp.Sound is not null)

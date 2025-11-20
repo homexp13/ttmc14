@@ -6,5 +6,8 @@ namespace Content.Shared._MC.Xeno.Heal;
 public sealed partial class MCXenoHealCacheComponent : Component
 {
     [DataField, AutoNetworkedField]
+    public float Health;
+
+    [DataField, AutoNetworkedField]
     public float MaxHealth;
 }

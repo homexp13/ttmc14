@@ -13,6 +13,32 @@ public sealed partial class XenoHudOverlay
 {
     private readonly EntityQuery<MCXenoSunderComponent> _mcXenoSunderQuery;
 
+    private void UpdatePlasma(Entity<XenoComponent, SpriteComponent> ent, DrawingHandleWorld handle)
+    {
+        var (uid, xeno, sprite) = ent;
+        if (!_xenoPlasmaQuery.TryComp(uid, out var comp) || comp.MaxPlasma == 0)
+            return;
+
+        var plasmaFixedPoint = comp.Plasma;
+        var plasma = plasmaFixedPoint.Double();
+        var plasmaMax = comp.MaxPlasma;
+        var plasmaRegenLimit = comp.PlasmaRegenLimit == -1
+            ? 0
+            : comp.PlasmaRegenLimit;
+
+        var plasmaLevel = ContentHelpers.RoundToLevels(plasma, plasmaMax - plasmaRegenLimit, 11);
+        var plasmaName = plasmaLevel > 0 ? $"{plasmaLevel * 10}" : "0";
+
+        DrawBar($"plasma{plasmaName}", xeno, sprite, handle, path: "/Textures/_MC/Interface/Xeno/hud.rsi");
+
+        if (comp.PlasmaRegenLimit == -1 || plasma <= plasmaRegenLimit)
+            return;
+
+        var overPlasmaLevel = ContentHelpers.RoundToLevels(plasma - plasmaRegenLimit, plasmaRegenLimit, 11);
+        var overPlasmaName = overPlasmaLevel > 0 ? $"{overPlasmaLevel * 10}" : "0";
+        DrawBar($"over_plasma{overPlasmaName}", xeno, sprite, handle, path: "/Textures/_MC/Interface/Xeno/hud.rsi");
+    }
+
     private void UpdateSunder(Entity<XenoComponent, SpriteComponent> entity, DrawingHandleWorld handle)
     {
         var (uid, xeno, sprite) = entity;
@@ -21,8 +47,12 @@ public sealed partial class XenoHudOverlay
 
         var level = ContentHelpers.RoundToLevels(sunderComponent.Value, 100, 11);
         var name = level > 0 ? $"{level * 10}" : "0";
-        var state = $"xenoarmor{name}";
-        var icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/_RMC14/Interface/xeno_hud.rsi"), state);
+        DrawBar($"xenoarmor{name}", xeno, sprite, handle);
+    }
+
+    private void DrawBar(string state, XenoComponent xeno, SpriteComponent sprite, DrawingHandleWorld handle, string path = "/Textures/_RMC14/Interface/xeno_hud.rsi")
+    {
+        var icon = new SpriteSpecifier.Rsi(new ResPath(path), state);
         var texture = _sprite.GetFrame(icon, _timing.CurTime);
 
         var bounds = sprite.Bounds;

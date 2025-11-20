@@ -79,6 +79,7 @@
     multiplier: 1.5
   - type: MCXenoPlasmaOnAttacked
     multiplier: 0.5
+  - type: MCXenoRage
   # Abilities
   # Ravage
   - type: MCXenoRavage

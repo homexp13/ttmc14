@@ -1,4 +1,5 @@
 ﻿using Content.Shared._RMC14.Actions;
+using Content.Shared._RMC14.Armor;
 using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.Effects;
@@ -15,14 +16,22 @@ public abstract class MCXenoAbilitySystem : EntitySystem
     /// Reference to the central actions system used for validating and consuming ability actions.
     /// Automatically injected by dependency resolution.
     /// </summary>
-    [Dependency] protected readonly RMCActionsSystem RMCActions = default!;
+    [Dependency] protected readonly RMCActionsSystem RMCActions = null!;
 
-    [Dependency] protected readonly SharedActionsSystem Actions = default!;
-    [Dependency] protected readonly SharedColorFlashEffectSystem ColorFlash = default!;
+    [Dependency] protected readonly SharedActionsSystem Actions = null!;
+    [Dependency] protected readonly SharedColorFlashEffectSystem ColorFlash = null!;
+    [Dependency] protected readonly SharedMeleeWeaponSystem MeleeWeapon = null!;
 
     protected DamageSpecifier GetDamage(EntityUid uid)
     {
-        return TryComp<MeleeWeaponComponent>(uid, out var component) ? component.Damage : new DamageSpecifier();
+        return MeleeWeapon.GetDamage(uid, uid);
+    }
+
+    protected int GetArmorPiercing(EntityUid uid)
+    {
+        return TryComp<CMArmorPiercingComponent>(uid, out var comp)
+            ? comp.Amount
+            : 0;
     }
 
     protected void RaiseEffect(EntityUid ownerUid, EntityUid targetUid, Color? color = null)
@@ -39,6 +48,15 @@ public abstract class MCXenoAbilitySystem : EntitySystem
     protected void RemCompDeferredDelayed<T>(EntityUid uid, TimeSpan duration) where T : IComponent
     {
         Timer.Spawn(duration, () => { RemCompDeferred<T>(uid); });
+    }
+
+    protected void ClearUseDelay<T>(EntityUid uid) where T : BaseActionEvent
+    {
+        foreach (var action in RMCActions.GetActionsWithEvent<T>(uid))
+        {
+            Actions.ClearCooldown((action, action));
+            break;
+        }
     }
 }
 

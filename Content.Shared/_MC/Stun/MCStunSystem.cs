@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Content.Shared._MC.Stun.Events;
 using Content.Shared._RMC14.Pulling;
 using Content.Shared._RMC14.Slow;
 using Content.Shared._RMC14.Stun;
@@ -67,6 +68,12 @@ public sealed class MCStunSystem : EntitySystem
 
     public void Stun(EntityUid uid, TimeSpan duration)
     {
+        var ev = new MCStunAttemptEvent();
+        RaiseLocalEvent(uid, ref ev);
+
+        if (ev.Canceled)
+            return;
+
         if (HasComp<XenoComponent>(uid))
             duration *= 0.5f;
 
@@ -88,7 +95,11 @@ public sealed class MCStunSystem : EntitySystem
 
     public void Stagger(EntityUid uid, TimeSpan duration)
     {
+        var ev = new MCStaggerAttemptEvent();
+        RaiseLocalEvent(uid, ref ev);
 
+        if (ev.Canceled)
+            return;
     }
 
     public bool IsStun(EntityUid uid)
