@@ -23,6 +23,9 @@ public sealed partial class MCXenoHiveComponent : Component
     public bool CanCollapse = true;
 
     [DataField, AutoNetworkedField]
+    public bool CanLarvaPoints = true;
+
+    [DataField, AutoNetworkedField]
     public bool CanEvolveWithoutLeader;
 
     [DataField, AutoNetworkedField]

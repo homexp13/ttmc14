@@ -93,6 +93,9 @@ public partial class SharedXenoHiveSystem
 
     public void SetLarvaPoints(Entity<HiveComponent> entity, int value)
     {
+        if (!entity.Comp.CanLarvaPoints)
+            return;
+
         if (value >= entity.Comp.LarvaPointsPerBurrowedLarva)
         {
             IncreaseBurrowedLarva(entity, value / entity.Comp.LarvaPointsPerBurrowedLarva);

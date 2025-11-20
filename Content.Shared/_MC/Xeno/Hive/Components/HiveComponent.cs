@@ -19,6 +19,9 @@ public sealed partial class HiveComponent
     public bool CanCollapse = true;
 
     [DataField, AutoNetworkedField]
+    public bool CanLarvaPoints = true;
+
+    [DataField, AutoNetworkedField]
     public bool CanEvolveWithoutRuler;
 
     [DataField, AutoNetworkedField]

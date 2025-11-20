@@ -1,5 +1,6 @@
 ﻿using Content.Shared._RMC14.Xenonids;
 using Content.Shared._RMC14.Xenonids.Hive;
+using Content.Shared.Chat;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -9,6 +10,8 @@ namespace Content.Shared._MC.Xeno.Hive.Systems;
 public abstract partial class MCSharedXenoHiveSystem : MCEntitySystemSingleton<MCXenoHiveSingletonComponent>
 {
     [Dependency] private readonly MobStateSystem _mobState = null!;
+    [Dependency] private readonly SharedChatSystem _chat = null!;
+    [Dependency] private readonly SharedXenoHiveSystem _rmcHive = null!;
 
     [ViewVariables]
     public EntityUid? DefaultHive => Inst.Comp.DefaultHive;
@@ -45,6 +48,15 @@ public abstract partial class MCSharedXenoHiveSystem : MCEntitySystemSingleton<M
         Dirty(entity);
     }
 
+    public void SetCanLarvaPoints(Entity<HiveComponent?> entity, bool value)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+
+        entity.Comp.CanLarvaPoints = value;
+        Dirty(entity);
+    }
+
     public Dictionary<int, int> GetTiers(EntityUid hive)
     {
         if (!_hiveQuery.TryComp(hive, out var component))
@@ -62,6 +74,21 @@ public abstract partial class MCSharedXenoHiveSystem : MCEntitySystemSingleton<M
         }
 
         return result;
+    }
+
+    public void AddBurrowedLarva(EntityUid hive, int count)
+    {
+        if (!TryComp<HiveComponent>(hive, out var hiveComponent))
+            return;
+
+        _rmcHive.AddBurrowedLarvaCount((hive, hiveComponent), count);
+    }
+
+    public int GetBurrowedLarvaCount(EntityUid hive)
+    {
+        return TryComp<HiveComponent>(hive, out var hiveComponent)
+            ? hiveComponent.BurrowedLarva
+            : 0;
     }
 
     public int GetLiving(EntityUid hive, int minTier = 1)
