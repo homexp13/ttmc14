@@ -314,22 +314,22 @@
   - type: Projectile
     damage:
       groups:
-        Brute: 50
+        Brute: 17
   - type: CMArmorPiercing
     amount: 15
   - type: MCXenoSunderDamageOnHit
-    amount: 7
+    amount: 1.5
   - type: ProjectileSpread
     proto: MCBulletShotgunFlechetteSpread
-    count: 2
-    spread: 3
+    count: 4
+    spread: 2
   - type: RMCProjectileDamageFalloff
     thresholds:
     - range: 15
       falloff: 9999
       ignoreModifiers: true
     - range: 0
-      falloff: 1
+      falloff: 0.25
 
 - type: entity
   parent: MCBulletShotgunFlechette
