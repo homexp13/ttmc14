@@ -6,6 +6,7 @@ using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Mind;
 using Content.Server.Players.PlayTimeTracking;
+using Content.Server.Preferences.Managers;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
@@ -39,6 +40,7 @@ public sealed partial class MCCrashRuleSystem : MCRuleSystem<MCCrashRuleComponen
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IServerPreferencesManager _preferences = default!;
 
     [Dependency] private readonly XenoSystem _rmcXeno = default!;
     [Dependency] private readonly SharedXenoHiveSystem _rmcHive = default!;
@@ -71,6 +73,37 @@ public sealed partial class MCCrashRuleSystem : MCRuleSystem<MCCrashRuleComponen
 
         SubscribeLocalEvent<MarineComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<MarineComponent, ComponentRemove>(OnCompRemove);
+    }
+
+    protected override void OnStartAttempt(Entity<MCCrashRuleComponent, GameRuleComponent> gameRule, RoundStartAttemptEvent ev)
+    {
+        if (ev.Forced || ev.Cancelled)
+            return;
+
+        var query = QueryAllRules();
+        while (query.MoveNext(out _, out var distress, out _))
+        {
+            var xenoCandidates = 0;
+            foreach (var player in ev.Players)
+            {
+                if (!_preferences.TryGetCachedPreferences(player.UserId, out var preferences))
+                    continue;
+
+                var profile = (HumanoidCharacterProfile) preferences.GetProfile(preferences.SelectedCharacterIndex);
+                if (profile.JobPriorities.TryGetValue(distress.XenoSelectableJob, out var xenoPriority) && xenoPriority > JobPriority.Never
+                    || profile.JobPriorities.TryGetValue(distress.ShrikeJob, out var shrikePriority) && shrikePriority > JobPriority.Never)
+                    xenoCandidates++;
+            }
+
+            if (xenoCandidates >= 1)
+                continue;
+
+            var msg = $"Невозможно запустить крушение. Требуется как минимум 1 ксено-игрок, но у нас есть {xenoCandidates}.";
+
+            ChatManager.SendAdminAnnouncement(msg);
+            ChatManager.DispatchServerAnnouncement(msg);
+            ev.Cancel();
+        }
     }
 
     protected override void ActiveTick(EntityUid uid, MCCrashRuleComponent component, GameRuleComponent gameRule, float frameTime)
