@@ -43,6 +43,7 @@
     - MCActionXenoToggleXenoSpitPassthroughPraetorian
     - MCActionXenoToggleXenoSpitToxLossPraetorian
     - MCActionXenoPlaceTrap
+    - MCActionXenoPheromones
     hudOffset: -0.15,0.25
   - type: XenoDevolve
     devolvesTo:
@@ -89,6 +90,9 @@
   - type: AcidTrap
     trapLevel: 3
     spray: XenoAcidSprayTrapStrong
+  - type: XenoPheromones
+    pheromonesMultiplier: 3.5
+    pheroSuffix: strong
   # Pounce (Dash)
   - type: MCXenoPounce
     maxDistance: 6
