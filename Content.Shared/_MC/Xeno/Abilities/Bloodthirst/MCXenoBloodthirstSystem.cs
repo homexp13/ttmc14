@@ -79,6 +79,9 @@ public sealed class MCXenoBloodthirstSystem : EntitySystem
 
     private void OnDamageChanged(Entity<MCXenoBloodthirstComponent> entity, ref DamageChangedEvent args)
     {
+        if (!args.DamageIncreased)
+            return;
+
         entity.Comp.LastFightTime = _timing.CurTime;
     }
 
