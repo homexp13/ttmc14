@@ -54,7 +54,7 @@
   - type: XenoProjectile
     deleteOnFriendlyXeno: false
   - type: ProjectileMaxRange
-    max: 8
+    max: 5
   - type: MCXenoSpawnAcidSprayOnTerminating
     spawn: MCXenoAcidSpraySpit
   - type: MCXenoProjectileTargetingTurf
@@ -99,7 +99,7 @@
   - type: XenoProjectile
     deleteOnFriendlyXeno: false
   - type: ProjectileMaxRange
-    max: 10
+    max: 7
   - type: XenoSlowingSpitProjectile
     armorResistsKnockdown: false
     slow: 1.5
