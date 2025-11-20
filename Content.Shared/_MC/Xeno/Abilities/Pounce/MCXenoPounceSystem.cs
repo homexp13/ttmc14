@@ -125,7 +125,10 @@ public sealed class MCXenoPounceSystem : MCXenoAbilitySystem
             return;
         }
 
-        if (_mobState.IsAlive(target) && _rmcXenoHive.FromSameHive(entity.Owner, target))
+        if (_mobState.IsDead(target))
+            return;
+
+        if (_rmcXenoHive.FromSameHive(entity.Owner, target))
         {
             Stop(entity);
             return;
