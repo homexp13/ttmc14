@@ -55,14 +55,15 @@
     baseSprintSpeed: 5
   # - type: MCXenoLayEgg
   - type: MCArmor
-    melee: 50
-    bullet: 50
-    laser: 50
-    energy: 50
-    bomb: 10
-    bio: 40
-    fire: 40
-    acid: 40
+    soft:
+      melee: 50
+      bullet: 50
+      laser: 50
+      energy: 50
+      bomb: 10
+      bio: 40
+      fire: 40
+      acid: 40
   - type: MeleeWeapon
     damage:
       groups:

@@ -92,9 +92,9 @@ public sealed class MCXenoEndureSystem : MCXenoAbilitySystem
 
     private void OnActiveArmorGet(Entity<MCXenoEndureActiveComponent> entity, ref MCArmorGetEvent args)
     {
-        args.Bomb += 20;
-        args.Melee += 40;
-        args.Fire += 30;
+        args.ArmorDefinition.Bomb += 20;
+        args.ArmorDefinition.Melee += 40;
+        args.ArmorDefinition.Fire += 30;
     }
 
     private void OnActiveUpdateMobState(Entity<MCXenoEndureActiveComponent> entity, ref UpdateMobStateEvent args)

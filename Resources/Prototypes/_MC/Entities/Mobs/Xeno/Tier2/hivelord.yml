@@ -78,14 +78,15 @@
     - MCXenoSentinel
   - type: MCXenoRecycle
   - type: MCArmor
-    melee: 35
-    bullet: 35
-    laser: 35
-    energy: 35
-    bomb: 0
-    bio: 20
-    fire: 30
-    acid: 20
+    soft:
+      melee: 35
+      bullet: 35
+      laser: 35
+      energy: 35
+      bomb: 0
+      bio: 20
+      fire: 30
+      acid: 20
   - type: XenoAcid
   - type: XenoPheromones
     pheromonesMultiplier: 3

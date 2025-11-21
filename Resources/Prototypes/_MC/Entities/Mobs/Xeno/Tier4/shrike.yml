@@ -66,14 +66,15 @@
     devolvesTo:
     - MCXenoDrone
   - type: MCArmor
-    melee: 45
-    bullet: 45
-    laser: 45
-    energy: 45
-    bomb: 20
-    bio: 25
-    fire: 45
-    acid: 20
+    soft:
+      melee: 45
+      bullet: 45
+      laser: 45
+      energy: 45
+      bomb: 20
+      bio: 25
+      fire: 45
+      acid: 20
   - type: MeleeWeapon
     damage:
       groups:

@@ -1,7 +1,5 @@
 ﻿using Content.Shared._MC.Xeno.Sunder;
-using Content.Shared._RMC14.Armor;
 using Content.Shared._RMC14.Weapons.Ranged;
-using Content.Shared._RMC14.Xenonids;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Explosion;
@@ -36,7 +34,9 @@ public sealed class MCArmorSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MCArmorComponent, MCArmorGetEvent>(OnGet);
-        SubscribeLocalEvent<MCArmorComponent, InventoryRelayedEvent<MCArmorGetEvent>>(OnGetRelayed);
+        SubscribeLocalEvent<MCArmorComponent, InventoryRelayedEvent<MCArmorGetEvent>>(OnInventoryGetRelayed);
+
+
         SubscribeLocalEvent<MCArmorComponent, GetExplosionResistanceEvent>(OnGetExplosionResistance);
         SubscribeLocalEvent<MCArmorComponent, InventoryRelayedEvent<GetExplosionResistanceEvent>>(OnGetExplosionResistanceRelayed);
 
@@ -46,38 +46,24 @@ public sealed class MCArmorSystem : EntitySystem
         SubscribeLocalEvent<InventoryComponent, MCArmorGetEvent>(_inventory.RelayEvent);
     }
 
-    private void OnGet(Entity<MCArmorComponent> entity, ref MCArmorGetEvent args)
+    private static void OnGet(Entity<MCArmorComponent> entity, ref MCArmorGetEvent args)
     {
-        args.Melee += entity.Comp.Melee;
-        args.Bullet += entity.Comp.Bullet;
-        args.Laser += entity.Comp.Laser;
-        args.Energy += entity.Comp.Energy;
-        args.Bomb += entity.Comp.Bomb;
-        args.Bio += entity.Comp.Bio;
-        args.Fire += entity.Comp.Fire;
-        args.Acid += entity.Comp.Acid;
+        args.ArmorDefinition += entity.Comp.Soft;
     }
 
-    private void OnGetRelayed(Entity<MCArmorComponent> entity, ref InventoryRelayedEvent<MCArmorGetEvent> args)
+    private static void OnInventoryGetRelayed(Entity<MCArmorComponent> entity, ref InventoryRelayedEvent<MCArmorGetEvent> args)
     {
-        args.Args.Melee += entity.Comp.Melee;
-        args.Args.Bullet += entity.Comp.Bullet;
-        args.Args.Laser += entity.Comp.Laser;
-        args.Args.Energy += entity.Comp.Energy;
-        args.Args.Bomb += entity.Comp.Bomb;
-        args.Args.Bio += entity.Comp.Bio;
-        args.Args.Fire += entity.Comp.Fire;
-        args.Args.Acid += entity.Comp.Acid;
+        args.Args.ArmorDefinition += entity.Comp.Soft;
     }
 
     private void OnGetExplosionResistance(Entity<MCArmorComponent> entity, ref GetExplosionResistanceEvent args)
     {
-        args.DamageCoefficient *= ArmorToValue(entity.Comp.Bomb, 0, _mcXenoSunder.GetSunder(entity.Owner));
+        args.DamageCoefficient *= ArmorToValue(entity.Comp.Soft.Bomb, 0, _mcXenoSunder.GetSunder(entity.Owner));
     }
 
     private void OnGetExplosionResistanceRelayed(Entity<MCArmorComponent> entity, ref InventoryRelayedEvent<GetExplosionResistanceEvent> args)
     {
-        args.Args.DamageCoefficient *= ArmorToValue(entity.Comp.Bomb, 0, _mcXenoSunder.GetSunder(entity.Owner));
+        args.Args.DamageCoefficient *= ArmorToValue(entity.Comp.Soft.Bomb, 0, _mcXenoSunder.GetSunder(entity.Owner));
     }
 
     private void OnDamageModify(Entity<MCArmorComponent> entity, ref DamageModifyEvent args)
@@ -87,7 +73,7 @@ public sealed class MCArmorSystem : EntitySystem
 
     private void DamageModify(EntityUid entityUid, ref DamageModifyEvent args)
     {
-        var ev = new MCArmorGetEvent(SlotFlags.OUTERCLOTHING | SlotFlags.INNERCLOTHING);
+        var ev = new MCArmorGetEvent(SlotFlags.OUTERCLOTHING | SlotFlags.INNERCLOTHING, new MCArmorDefinition());
         RaiseLocalEvent(entityUid, ref ev);
 
         var sunderModifier = _mcXenoSunder.GetSunder(entityUid);
@@ -97,25 +83,49 @@ public sealed class MCArmorSystem : EntitySystem
 
         if (_tag.HasTag(tool, TagMelee) || HasComp<MeleeWeaponComponent>(tool))
         {
-            args.Damage *= ArmorToValue(ev.Melee, args.ArmorPiercing, sunderModifier);
+            args.Damage *= ArmorToValue(ev.ArmorDefinition.Melee, args.ArmorPiercing, sunderModifier);
             return;
         }
 
         if (_tag.HasTag(tool, TagBullet) || HasComp<RMCBulletComponent>(tool))
         {
-            args.Damage *= ArmorToValue(ev.Bullet, args.ArmorPiercing, sunderModifier);
+            args.Damage *= ArmorToValue(ev.ArmorDefinition.Bullet, args.ArmorPiercing, sunderModifier);
             return;
         }
 
         if (_tag.HasTag(tool, TagAcid))
         {
-            args.Damage *= ArmorToValue(ev.Acid, args.ArmorPiercing, sunderModifier);
+            args.Damage *= ArmorToValue(ev.ArmorDefinition.Acid, args.ArmorPiercing, sunderModifier);
             return;
         }
 
         if (_tag.HasTag(tool, TagFire))
         {
-            args.Damage *= ArmorToValue(ev.Fire, args.ArmorPiercing, sunderModifier);
+            args.Damage *= ArmorToValue(ev.ArmorDefinition.Fire, args.ArmorPiercing, sunderModifier);
+            return;
+        }
+
+        if (_tag.HasTag(tool, TagLaser))
+        {
+            args.Damage *= ArmorToValue(ev.ArmorDefinition.Laser, args.ArmorPiercing, sunderModifier);
+            return;
+        }
+
+        if (_tag.HasTag(tool, TagEnergy))
+        {
+            args.Damage *= ArmorToValue(ev.ArmorDefinition.Energy, args.ArmorPiercing, sunderModifier);
+            return;
+        }
+
+        if (_tag.HasTag(tool, TagBomb))
+        {
+            args.Damage *= ArmorToValue(ev.ArmorDefinition.Bomb, args.ArmorPiercing, sunderModifier);
+            return;
+        }
+
+        if (_tag.HasTag(tool, TagBio))
+        {
+            args.Damage *= ArmorToValue(ev.ArmorDefinition.Bio, args.ArmorPiercing, sunderModifier);
             return;
         }
     }
@@ -127,10 +137,10 @@ public sealed class MCArmorSystem : EntitySystem
 
     private void OnArmorVerbExamine(Entity<MCArmorComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract || !args.CanAccess || !entity.Comp.ShowExamine)
             return;
 
-        var examineMarkup = GetArmorExamine(entity);
+        var examineMarkup = GetArmorExamine(args.User);
         _examine.AddDetailedExamineVerb(
             args,
             entity,
@@ -141,21 +151,24 @@ public sealed class MCArmorSystem : EntitySystem
         );
     }
 
-    private FormattedMessage GetArmorExamine(MCArmorComponent armorComponent)
+    private FormattedMessage GetArmorExamine(EntityUid entityUid)
     {
+        var ev = new MCArmorGetEvent(SlotFlags.OUTERCLOTHING | SlotFlags.INNERCLOTHING, new MCArmorDefinition());
+        RaiseLocalEvent(entityUid, ref ev);
+
         var msg = new FormattedMessage();
         msg.AddMarkupOrThrow(Loc.GetString("mc-armor-examine-title"));
 
         var armorRatings = new[]
         {
-            (Loc.GetString("mc-armor-melee"), armorComponent.Melee),
-            (Loc.GetString("mc-armor-bullet"), armorComponent.Bullet),
-            (Loc.GetString("mc-armor-laser"), armorComponent.Laser),
-            (Loc.GetString("mc-armor-energy"), armorComponent.Energy),
-            (Loc.GetString("mc-armor-bomb"), armorComponent.Bomb),
-            (Loc.GetString("mc-armor-bio"), armorComponent.Bio),
-            (Loc.GetString("mc-armor-fire"), armorComponent.Fire),
-            (Loc.GetString("mc-armor-acid"), armorComponent.Acid),
+            (Loc.GetString("mc-armor-melee"), ev.ArmorDefinition.Melee),
+            (Loc.GetString("mc-armor-bullet"), ev.ArmorDefinition.Bullet),
+            (Loc.GetString("mc-armor-laser"), ev.ArmorDefinition.Laser),
+            (Loc.GetString("mc-armor-energy"), ev.ArmorDefinition.Energy),
+            (Loc.GetString("mc-armor-bomb"), ev.ArmorDefinition.Bomb),
+            (Loc.GetString("mc-armor-bio"), ev.ArmorDefinition.Bio),
+            (Loc.GetString("mc-armor-fire"), ev.ArmorDefinition.Fire),
+            (Loc.GetString("mc-armor-acid"), ev.ArmorDefinition.Acid),
         };
 
         foreach (var (text, value) in armorRatings)

@@ -51,14 +51,15 @@
     - MCXenoBull
     - MCXenoSpitter
   - type: MCArmor
-    melee: 50
-    bullet: 80
-    laser: 65
-    energy: 75
-    bomb: 130
-    bio: 100
-    fire: 10
-    acid: 100
+    soft:
+      melee: 50
+      bullet: 80
+      laser: 65
+      energy: 75
+      bomb: 130
+      bio: 100
+      fire: 10
+      acid: 100
   - type: MeleeWeapon
     damage:
       groups:

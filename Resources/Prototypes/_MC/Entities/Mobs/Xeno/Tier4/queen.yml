@@ -61,14 +61,15 @@
     id: MCXenoQueen
     max: 1
   - type: MCArmor
-    melee: 65
-    bullet: 65
-    laser: 65
-    energy: 65
-    bomb: 30
-    bio: 60
-    fire: 60
-    acid: 60
+    soft:
+      melee: 65
+      bullet: 65
+      laser: 65
+      energy: 65
+      bomb: 30
+      bio: 60
+      fire: 60
+      acid: 60
   - type: MeleeWeapon
     damage:
       groups:

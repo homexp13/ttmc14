@@ -33,14 +33,15 @@
       groups:
         Brute: 20
   - type: MCArmor
-    melee: 15
-    bullet: 5
-    laser: 5
-    energy: 0
-    bomb: 0
-    bio: 0
-    fire: 5
-    acid: 0
+    soft:
+      melee: 15
+      bullet: 5
+      laser: 5
+      energy: 0
+      bomb: 0
+      bio: 0
+      fire: 5
+      acid: 0
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.941
     baseSprintSpeed: 4.166

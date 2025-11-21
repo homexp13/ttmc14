@@ -43,14 +43,15 @@
     - MCXenoLarva
     canBeDevolvedByOther: false
   - type: MCArmor
-    melee: 30
-    bullet: 25
-    laser: 25
-    energy: 30
-    bomb: 0
-    bio: 15
-    fire: 10
-    acid: 15
+    soft:
+      melee: 30
+      bullet: 25
+      laser: 25
+      energy: 30
+      bomb: 0
+      bio: 15
+      fire: 10
+      acid: 15
   - type: XenoPheromones
     pheromonesMultiplier: 2
   - type: MCXenoRecycle

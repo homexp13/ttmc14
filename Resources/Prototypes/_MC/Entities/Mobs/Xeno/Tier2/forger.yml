@@ -63,14 +63,15 @@
     - MCXenoRunner
     - MCXenoSentinel
   - type: MCArmor
-    melee: 40
-    bullet: 40
-    laser: 40
-    energy: 40
-    bomb: 0
-    bio: 30
-    fire: 200
-    acid: 30
+    soft:
+      melee: 40
+      bullet: 40
+      laser: 40
+      energy: 40
+      bomb: 0
+      bio: 30
+      fire: 200
+      acid: 30
   - type: MeleeWeapon
     damage:
       groups:

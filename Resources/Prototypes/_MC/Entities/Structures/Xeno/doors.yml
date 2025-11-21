@@ -85,13 +85,14 @@
   description: A thick resin door, which is more durable.
   components:
   - type: MCArmor
-    melee: 45
-    bullet: 45
-    laser: 45
-    energy: 45
-    bomb: 30
-    bio: 30
-    fire: 40
-    acid: 30
+    soft:
+      melee: 45
+      bullet: 45
+      laser: 45
+      energy: 45
+      bomb: 30
+      bio: 30
+      fire: 40
+      acid: 30
   - type: XenoConstructionPlasmaCost
     plasma: 50
