@@ -45,7 +45,14 @@ public sealed class MCXenoPsydrainSystem : EntitySystem
         SubscribeLocalEvent<MCXenoPsydrainComponent, MCXenoPsydrainActionEvent>(OnAction);
         SubscribeLocalEvent<MCXenoPsydrainComponent, MCXenoPsydrainDoAfterEvent>(OnDoAfter);
 
+        SubscribeLocalEvent<MCXenoPsydrainableComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<MCXenoPsydrainableComponent, MobStateChangedEvent>(OnPsydrainableStateChanged);
+    }
+
+    private void OnStartup(Entity<MCXenoPsydrainableComponent> entity, ref ComponentStartup args)
+    {
+        entity.Comp.Available = !_mobState.IsDead(entity.Owner);
+        Dirty(entity);
     }
 
     private void OnAction(Entity<MCXenoPsydrainComponent> entity, ref MCXenoPsydrainActionEvent args)
