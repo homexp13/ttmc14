@@ -15,8 +15,8 @@
     sprite: _MC/Objects/Weapons/Guns/Pistols/p17.rsi
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 8
+      types:
+        MCBrute: 8
   - type: Gun
     shotsPerBurst: 1
     availableModes:
@@ -118,8 +118,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 22.5
+      types:
+        MCBrute: 23
   - type: RMCProjectileDamageFalloff
     thresholds:
     - range: 22

@@ -76,8 +76,8 @@
       shader: unshaded
   - type: Projectile
     damage:
-      groups:
-        Brute: 25
+      types:
+        MCBrute: 25
   - type: CMArmorPiercing
     amount: 20
   - type: MCXenoSunderDamageOnHit

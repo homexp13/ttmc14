@@ -134,6 +134,7 @@
           probability: 0.2
         - !type:HealthChange # Эта хуйня по факту должна инфекции уничтожать.
           damage:
-            groups:
-              Toxin: 3
-              Burn: 2
+            types:
+              MCBurn: 2
+              MCToxin: 3
+

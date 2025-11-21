@@ -32,8 +32,8 @@
   - type: MeleeWeapon
     attackRate: 0.8
     damage:
-      groups:
-        Brute: 30
+      types:
+        MCBrute: 30
   - type: ShootUseDelay
   - type: RMCSelectiveFire
     baseFireModes:
@@ -86,8 +86,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 75
+      types:
+        MCBrute: 75
   - type: CMArmorPiercing
     amount: 35
   - type: MCXenoSunderDamageOnHit

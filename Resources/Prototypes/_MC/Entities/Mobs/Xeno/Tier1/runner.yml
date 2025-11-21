@@ -114,10 +114,10 @@
       fire: 20
       acid: 5
   - type: MeleeWeapon
-    attackRate: 1.67
+    attackRate: 1.7
     damage:
-      groups:
-        Brute: 23
+      types:
+        MCBrute: 20
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.846
     baseSprintSpeed: 6.25
@@ -128,6 +128,6 @@
   - type: MCXenoPounce
     hitSound: /Audio/_RMC14/Xeno/alien_pounce.ogg
     hitDamage:
-      groups:
-        Brute: 25
+      types:
+        MCBrute: 25
   - type: MCXenoEvasion

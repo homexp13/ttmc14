@@ -136,8 +136,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 30
+      types:
+        MCBrute: 30
   - type: CMArmorPiercing
     amount: 10
   - type: MCXenoSunderDamageOnHit

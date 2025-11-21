@@ -27,8 +27,8 @@
   - type: Door
     canPry: false
     crushDamage:
-      groups:
-        Brute: 15
+      types:
+        MCBrute: 15
     openSpriteState: resinopen
     closedSpriteState: resin
     openingSpriteState: resinopening
@@ -67,8 +67,8 @@
     plasma: 120
   - type: MeleeReceivedMultiplier
     xenoDamage:
-      groups:
-        Brute: 600
+      types:
+        MCBrute: 600
     otherMultiplier: 1
   - type: XenoConstructionRequiresSupport
   - type: XenoConstruct

@@ -66,8 +66,8 @@
       acid: 40
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 26
+       types:
+        MCBrute: 27
   - type: XenoPheromones
     pheromonesMultiplier: 2.6
     pheroSuffix: hivelord

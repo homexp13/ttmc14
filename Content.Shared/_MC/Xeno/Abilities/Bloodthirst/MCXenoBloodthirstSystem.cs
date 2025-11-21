@@ -74,7 +74,7 @@ public sealed class MCXenoBloodthirstSystem : EntitySystem
         var maxHealth = _mcXenoHeal.GetHealthAlive(entity);
         var damage = float.Min(entity.Comp.DamagePerDisintegrating, health + maxHealth - entity.Comp.LowestHealthAllowed);
 
-        _damageable.TryChangeDamage(entity, new DamageSpecifier(_prototype.Index<DamageGroupPrototype>("Brute"), FixedPoint2.New(damage)), ignoreResistances: true, interruptsDoAfters: false);
+        _damageable.TryChangeDamage(entity, new DamageSpecifier(_prototype.Index<DamageGroupPrototype>("MCBrute"), FixedPoint2.New(damage)), ignoreResistances: true, interruptsDoAfters: false);
     }
 
     private void OnDamageChanged(Entity<MCXenoBloodthirstComponent> entity, ref DamageChangedEvent args)

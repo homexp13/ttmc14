@@ -18,8 +18,8 @@
     baseDelay: 0.2
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 6
+      types:
+        MCBrute: 6
   - type: Gun
     projectileSpeed: 40
     selectedMode: SemiAuto

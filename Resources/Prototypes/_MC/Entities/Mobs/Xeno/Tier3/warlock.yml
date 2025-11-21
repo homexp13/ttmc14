@@ -56,8 +56,8 @@
       acid: 35
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 18
+      types:
+        MCBrute: 15
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.857
     baseSprintSpeed: 4

@@ -83,7 +83,7 @@ public sealed class MCStaminaSystem : EntitySystem
             {
                 DamageDict =
                 {
-                    ["Asphyxiation"] = component.DamageMultiplier * frameTime,
+                    ["MCOxygen"] = component.DamageMultiplier * frameTime,
                 },
             };
 

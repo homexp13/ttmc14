@@ -29,8 +29,8 @@
       400: Dead
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 18
+      types:
+        MCBrute: 20
   - type: Xeno
     role: MCXenoDrone
     hudOffset: 0,0.15

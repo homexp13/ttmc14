@@ -30,8 +30,8 @@
     - Back
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 20
+      types:
+        MCBrute: 20
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -538,8 +538,8 @@
       shader: unshaded
   - type: Projectile
     damage:
-      groups:
-        Brute: 40
+      types:
+        MCBrute: 40
   - type: CMArmorPiercing
     amount: 30
   - type: MCXenoSunderDamageOnHit
@@ -569,8 +569,8 @@
       shader: unshaded
   - type: Projectile
     damage:
-      groups:
-        Brute: 50
+      types:
+        MCBrute: 50
   - type: CMArmorPiercing
     amount: 25
   - type: MCXenoSunderDamageOnHit
@@ -589,8 +589,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 10
+      types:
+        MCBrute: 10
   - type: MCXenoSunderDamageOnHit
     amount: 0.5
   - type: MCStunOnHit
@@ -604,8 +604,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 10
+      types:
+        MCBrute: 10
   - type: MCXenoSunderDamageOnHit
     amount: 0.5
   - type: MCStunOnHit
@@ -619,8 +619,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 10
+      types:
+        MCBrute: 10
   - type: MCXenoSunderDamageOnHit
     amount: 0.5
   - type: MCXenoPlasmaDamageOnHit
@@ -633,8 +633,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 10
+      types:
+        MCBrute: 10
   - type: MCXenoSunderDamageOnHit
     amount: 0.5
   - type: MCStunOnHit
@@ -648,8 +648,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 10
+      types:
+        MCBrute: 10
   - type: MCXenoSunderDamageOnHit
     amount: 0.5
   - type: IgniteOnProjectileHit
@@ -662,8 +662,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 60
+      types:
+        MCBrute: 10
   - type: MCXenoSunderDamageOnHit
     amount: 0.5
   - type: RMCAreaDamage

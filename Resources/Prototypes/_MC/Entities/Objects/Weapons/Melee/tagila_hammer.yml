@@ -12,8 +12,8 @@
     wideAnimationRotation: -135
     attackRate: 0.9
     damage:
-      groups:
-        Brute: 40
+      types:
+        MCBrute: 40
   - type: Item
     size: Large
   - type: Clothing
@@ -26,5 +26,5 @@
     path: null
   - type: IncreaseDamageOnWield
     damage:
-      groups:
-        Brute: 110
+      types:
+        MCBrute: 110

@@ -61,9 +61,9 @@
       acid: 35
   - type: MeleeWeapon
     damage:
-      groups:
-        Toxin: 10
-        Brute: 20
+      types:
+        MCBrute: 20
+        MCToxin: 10
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.439
     baseSprintSpeed: 3.225
@@ -80,8 +80,8 @@
     range: 7
     doAfter: 0.5
     barricadeDamage:
-      groups:
-        Burn: 5
+      types:
+        MCBurn: 5
   - type: MCXenoZoom
     zoom: 1.5, 1.5
     offsetLength: 5

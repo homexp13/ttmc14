@@ -20,8 +20,8 @@
   - type: Flammable
     fireSpread: false
     damage:
-      groups:
-        Burn: 3
+      types:
+        MCBurn: 3
   - type: Sprite
     sprite: _MC/Objects/Xeno/resin_jelly.rsi
     state: icon

@@ -62,8 +62,8 @@
       acid: 100
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 24
+      types:
+        MCBrute: 25
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.564
     baseSprintSpeed: 3.448
@@ -78,14 +78,14 @@
   # Abilities
   - type: MCXenoCrestToss
     damage:
-      groups:
-        Brute: 36 # distance * 6 (36)
+      types:
+        MCBrute: 36 # distance * 6 (36)
     speed: 10
   - type: MCXenoStomp
     throwSpeed: 2
     damage:
-      groups:
-        Brute: 60
+      types:
+        MCBrute: 60
   - type: MCXenoZoom
     zoom: 1.5,1.5
     offsetLength: 11

@@ -18,8 +18,8 @@
   - type: MeleeWeapon
     attackRate: 1
     damage:
-      groups:
-        Brute: 5
+      types:
+        MCBrute: 5
     soundHit:
       collection: GenericHit
   - type: EmitSoundOnPickup

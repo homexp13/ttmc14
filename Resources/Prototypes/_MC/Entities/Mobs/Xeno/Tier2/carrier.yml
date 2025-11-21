@@ -49,8 +49,8 @@
   - type: XenoDevour
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 22
+      types:
+        MCBrute: 20
   - type: TunnelRenamer
   - type: MovementSpeedModifier
     baseWalkSpeed: 2

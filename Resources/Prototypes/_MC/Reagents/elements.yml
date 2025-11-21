@@ -17,17 +17,17 @@
         - !type:ReagentThreshold
           min: 30
         damage:
-          groups:
-            Toxin: 1
-            Burn: 1
+          types:
+            MCBurn: 1
+            MCToxin: 1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 50
         damage:
-          groups:
-            Toxin: 1
-            Burn: 1
+          types:
+            MCBurn: 1
+            MCToxin: 1
 
 - type: reagent
   parent: MCReagentElement
@@ -231,9 +231,9 @@
       effects:
         - !type:HealthChange
           damage:
-            groups:
-              Toxin: 0.5
-              Burn: 1
+            types:
+              MCBurn: 1
+              MCToxin: 0.5
 
 - type: reagent
   parent: MCReagentElement

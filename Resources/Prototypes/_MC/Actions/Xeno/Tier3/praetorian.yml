@@ -49,8 +49,8 @@
   - type: Projectile
     impactEffect: null
     damage:
-      groups:
-        Burn: 30
+      types:
+        MCBurn: 30
   - type: XenoProjectile
     deleteOnFriendlyXeno: false
   - type: ProjectileMaxRange
@@ -158,8 +158,8 @@
   - type: Projectile
     impactEffect: null
     damage:
-      groups:
-        Burn: 15
+      types:
+        MCBurn: 15
   - type: XenoProjectile
     deleteOnFriendlyXeno: false
   - type: ProjectileMaxRange
@@ -176,8 +176,8 @@
     lifetime: 0.5
   - type: DamageOnCollide
     damage:
-      groups:
-        Burn: 14
+      types:
+        MCBurn: 20
     chainDamage:
-      groups:
-        Burn: 14
+      types:
+        MCBurn: 20

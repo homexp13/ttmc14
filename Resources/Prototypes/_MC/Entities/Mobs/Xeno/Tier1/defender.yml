@@ -68,17 +68,17 @@
   - type: XenoCrest
   - type: XenoHeadbutt
     damage:
-      groups:
-        Brute: 30
+      types:
+        MCBrute: 30
     crestedDamageReduction:
-      groups:
-        Brute: -10
+      types:
+        MCBrute: 0
   - type: XenoAnimateMovement
   - type: XenoFortify
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 22
+      types:
+        MCBrute: 22
   - type: Fixtures
     fixtures:
       fix1:
@@ -104,13 +104,13 @@
     name: mc-job-name-xeno-defender
   - type: XenoTailSweep
     damage:
-      groups:
-        Brute: 30
+      types:
+        MCBrute: 30
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.941
     baseSprintSpeed: 4.166
   - type: MCXenoRegenerateSkin
     heal:
-      groups:
-        Brute: 75 # 25 per type
-        Burn: 100 # 25 per type
+      types:
+        MCBrute: 25
+        MCBurn: 25

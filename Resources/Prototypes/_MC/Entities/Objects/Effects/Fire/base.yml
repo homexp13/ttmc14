@@ -33,14 +33,14 @@
   - type: RMCIgniteOnCollide
     maxStacks: 20
     tileDamage:
-      groups:
-        Burn: 0.5
+      types:
+        MCBurn: 0.5
   - type: DamageOnCollide
     damageDead: false
     fire: true
     damage:
-      groups:
-        Burn: 45
+      types:
+        MCBurn: 45
   - type: TileFire
     id: MCFire
     extinguishInstantly: false

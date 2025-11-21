@@ -16,8 +16,8 @@
     resistDuration: 1
     # per second, scales with number of fire 'stacks'
     damage:
-      groups:
-        Burn: 1
+      types:
+        MCBurn: 1
   - type: RMCSize
     size: Xeno
   - type: Tag
@@ -168,11 +168,11 @@
   components:
   - type: MCXenoCharge
     damage:
-      groups:
-        Brute: 37
+      types:
+        MCBrute: 37
     structureDamage:
-      groups:
-        Brute: 240
+      types:
+        MCBrute: 240
 
 - type: entity
   id: MCXenoHide

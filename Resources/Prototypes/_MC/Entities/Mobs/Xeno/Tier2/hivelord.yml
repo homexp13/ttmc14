@@ -94,8 +94,8 @@
   - type: XenoResinWalker
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 20
+      types:
+        MCBrute: 20
   - type: TunnelRenamer
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.125

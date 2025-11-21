@@ -291,8 +291,8 @@
   - type: ShortExamine
   - type: DamageMobState
     critDamage:
-      groups:
-        Brute: 1.25
+      types:
+        MCBrute: 1.25
   - type: AffectableByWeeds
   - type: ComplexInteraction
   - type: UserLimitHits
@@ -410,8 +410,8 @@
       collection: RCMXenoClaw
     animation: RMCWeaponArcXenoClaw
     damage:
-      groups:
-        Brute: 12
+      types:
+        MCBrute: 12
     soundSwing:
       path: /Audio/_RMC14/Weapons/alien_claw_swipe.ogg
       params:
@@ -483,8 +483,8 @@
   components:
   - type: XenoTailStab
     tailDamage:
-      groups:
-        Brute: 30
+      types:
+        MCBrute: 30
     tailRange: 2.5
 
 - type: entity

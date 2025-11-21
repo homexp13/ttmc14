@@ -236,8 +236,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 80
+      types:
+        MCBrute: 80
   - type: RMCProjectileAccuracy
     thresholds:
     - range: 25
@@ -260,8 +260,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 40
+      types:
+        MCBrute: 40
   - type: RMCProjectileAccuracy
     thresholds:
     - range: 25

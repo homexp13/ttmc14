@@ -181,8 +181,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 27.5
+      types:
+        MCBrute: 27.5
   - type: MCXenoSunderDamageOnHit
     amount: 1
   - type: RMCProjectileDamageFalloff
@@ -215,8 +215,8 @@
   components:
   - type: Projectile
     damage:
-      groups:
-        Brute: 15
+      types:
+        MCBrute: 15
   - type: MCXenoSunderDamageOnHit
     amount: 1
   - type: RMCProjectileDamageFalloff

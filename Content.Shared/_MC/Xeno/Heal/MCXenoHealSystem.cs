@@ -20,9 +20,9 @@ public sealed class MCXenoHealSystem : MCEntitySystemSingleton<MCXenoHealSinglet
     private const float XenoRestingHeal = 1;
     private const float UpdateFrequency = 1;
 
-    private static readonly ProtoId<DamageGroupPrototype> BruteGroup = "Brute";
-    private static readonly ProtoId<DamageGroupPrototype> BurnGroup = "Burn";
-    private static readonly ProtoId<DamageGroupPrototype> ToxinGroup = "Toxin";
+    private static readonly ProtoId<DamageGroupPrototype> BruteGroup = "MCBrute";
+    private static readonly ProtoId<DamageGroupPrototype> BurnGroup = "MCBurn";
+    private static readonly ProtoId<DamageGroupPrototype> ToxinGroup = "MCToxin";
 
     [Dependency] private readonly IGameTiming _timing = null!;
 

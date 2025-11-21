@@ -12,12 +12,12 @@
   - type: RMCIgniteOnCollide
     maxStacks: 10
     tileDamage:
-      groups:
-        Burn: 1
+      types:
+        MCBurn: 1
   - type: DamageOnCollide
     damage:
-      groups:
-        Burn: 2
+      types:
+        MCBurn: 2
   - type: TileFire
     id: MCTileFireXenoAcid
     duration: 7

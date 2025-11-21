@@ -74,8 +74,8 @@
       acid: 30
   - type: MeleeWeapon
     damage:
-      groups:
-        Burn: 22
+      types:
+        MCBurn: 22
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.225
     baseSprintSpeed: 4.761
@@ -89,8 +89,8 @@
   # Abilities
   - type: MCXenoInferno
     damage:
-      groups:
-        Burn: 30
+      types:
+        MCBurn: 30
   - type: MCXenoFireball
   - type: MCXenoWhirlwind
     fire: MCTileFireXenoAcid
@@ -98,15 +98,15 @@
     doAfter: 0.6
     delay: 0.3
     barricadeDamage:
-      groups:
-        Burn: 5
+      types:
+        MCBurn: 5
   # Pounce (FireCharge)
   - type: MCXenoPounceEmote
     emote: XenoRoar
   - type: MCXenoPounceFireCharge
     damagePerFireStack:
-      groups:
-        Burn: 5
+      types:
+        MCBurn: 5
   - type: MCXenoPounce
     maxDistance: 3
     strength: 30
@@ -114,8 +114,8 @@
     hitKnockdownTime: 0
     stopOnHit: false
     hitDamage:
-      groups:
-        Burn: 10
+       types:
+        MCBurn: 10
   # Light
   - type: PointLight
     color: "#069420"

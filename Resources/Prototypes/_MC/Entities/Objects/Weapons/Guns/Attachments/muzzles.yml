@@ -36,12 +36,12 @@
     wideAnimationRotation: -135
     attackRate: 1
     damage:
-      groups:
-        Brute: 40
+      types:
+        MCBrute: 40
   - type: DamageOtherOnHit
     damage:
-      groups:
-        Brute: 50
+      types:
+        MCBrute: 50
   - type: Item
     size: Small
     sprite: _MC/Objects/Weapons/Guns/Attachments/muzzle.rsi
@@ -53,8 +53,8 @@
   - type: AttachableWeaponMeleeMods
     modifiers:
     - bonusDamage:
-        groups:
-          Brute: 50
+        types:
+          MCBrute: 50
   - type: AttachableWeaponRangedMods
     modifiers:
     - conditions:

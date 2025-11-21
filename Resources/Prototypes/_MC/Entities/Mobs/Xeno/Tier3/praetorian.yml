@@ -66,8 +66,8 @@
       acid: 40
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 23
+      types:
+        MCBrute: 25
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.8
     baseSprintSpeed: 3.8
@@ -83,8 +83,8 @@
     acid: MCXenoAcidSprayPraetorian
     range: 5
     barricadeDamage:
-      groups:
-        Burn: 5
+      types:
+        MCBurn: 5
   - type: MCXenoScatterSpit
     count: 3
     projectileId: MCXenoProjectileHeavyScatterPraetorian

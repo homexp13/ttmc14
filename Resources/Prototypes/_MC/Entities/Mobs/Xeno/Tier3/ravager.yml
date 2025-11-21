@@ -62,8 +62,8 @@
   # Melee
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 25
+      types:
+        MCBrute: 25
   - type: CMArmorPiercing
     amount: 15
   # ...
@@ -95,8 +95,8 @@
     hitKnockdownTime: 2
     stopOnHit: false
     hitDamage:
-      groups:
-        Brute: 10
+      types:
+        MCBrute: 30
   # Endure
   - type: MCXenoEndure
     duration: 10

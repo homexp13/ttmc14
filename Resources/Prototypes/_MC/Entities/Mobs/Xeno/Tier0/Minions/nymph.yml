@@ -36,8 +36,8 @@
     plasmaRegenOnWeeds: 20
   - type: MeleeWeapon
     damage:
-      groups:
-        Brute: 8
+      types:
+        MCBrute: 8
   - type: MCArmor
     soft:
       melee: 10

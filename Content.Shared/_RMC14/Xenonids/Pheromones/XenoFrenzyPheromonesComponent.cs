@@ -27,5 +27,5 @@ public sealed partial class XenoFrenzyPheromonesComponent : Component
     public FixedPoint2 PullMovementSpeedModifier = 0.05;
 
     [DataField, AutoNetworkedField]
-    public ProtoId<DamageGroupPrototype> DamageGroup = "Brute";
+    public ProtoId<DamageGroupPrototype> DamageGroup = "MCBrute"; // mc-changes
 }
