@@ -140,7 +140,7 @@ public sealed class MCArmorSystem : EntitySystem
         if (!args.CanInteract || !args.CanAccess || !entity.Comp.ShowExamine)
             return;
 
-        var examineMarkup = GetArmorExamine(args.User);
+        var examineMarkup = GetArmorExamine(entity);
         _examine.AddDetailedExamineVerb(
             args,
             entity,

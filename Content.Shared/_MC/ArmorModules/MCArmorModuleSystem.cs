@@ -66,9 +66,12 @@ public sealed class MCArmorModuleSystem : EntitySystem
         _item.VisualsChanged(clothing);
     }
 
-    private void OnInteract(Entity<MCArmorModularClothingComponent> clothing, ref InteractUsingEvent args)
+    private void OnInteract(Entity<MCArmorModularClothingComponent> entity, ref InteractUsingEvent args)
     {
-        Attach(clothing, args.Used, args.User, out var handled);
+        if (TryGetModule((entity, entity), out _))
+            return;
+
+        Attach(entity, args.Used, args.User, out var handled);
         args.Handled = handled;
     }
 
@@ -95,7 +98,7 @@ public sealed class MCArmorModuleSystem : EntitySystem
         {
             Text = Loc.GetString("mc-armor-remove-module"),
             Act = () => Detach(entity, user),
-            IconEntity = GetNetEntity(module),
+            IconEntity = GetNetEntity(entity),
         });
     }
 
@@ -112,7 +115,7 @@ public sealed class MCArmorModuleSystem : EntitySystem
         {
             Text = Loc.GetString("mc-armor-remove-module"),
             Act = () => Detach(entity, user),
-            IconEntity = GetNetEntity(module),
+            IconEntity = GetNetEntity(entity),
         });
     }
 
