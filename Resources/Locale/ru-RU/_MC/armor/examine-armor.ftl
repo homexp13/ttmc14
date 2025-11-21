@@ -1,9 +1,7 @@
 mc-armor-examinable-verb-text = Броня
 mc-armor-examinable-verb-message = Изучить показатели брони.
-
 mc-armor-examine-title = Обеспечивает следующую защиту:
 mc-armor-examine-armor = - [color=yellow]{ $text }[/color] оценивается в [color=lightblue]{ $value }[/color].
-
 mc-armor-melee = защита от ударов
 mc-armor-bullet = защита от пуль
 mc-armor-laser = защита от лазеров

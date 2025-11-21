@@ -1,4 +1,4 @@
-﻿mc-job-name-squad-pmc-standart = Боец ЧВК
+mc-job-name-squad-pmc-standart = Боец ЧВК
 mc-job-description-squad-pmc-standart = Стандартный боец ЧВК NanoTrasen. Помогает в сложных ситуациях.
 mc-job-prefix-pmc-standart = Опер.
 mc-ghost-name-pmc-gunner = Стрелок ЧВК NT

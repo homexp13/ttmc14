@@ -2,7 +2,7 @@ rmc-bioscan-ares-announcement = [color=white][font size=16][bold]ARES v3.2 — �
     { $message }[/bold][/font][/color]
 rmc-bioscan-ares =
     Биоскан завершён.
-
+    
     Сенсоры показывают { $shipUncontained ->
         [0] отсутствие
        *[other] { $shipUncontained }

@@ -1,1 +1,1 @@
-﻿chat-radio-pmc = ЧВК NT
+chat-radio-pmc = ЧВК NT

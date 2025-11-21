@@ -5,7 +5,6 @@ attack-order-callout-4 = ПОКОНЧИТЕ С НИМИ!
 attack-order-callout-5 = АТАКУЙТЕ СЮДА!
 attack-order-callout-6 = ПЕРЕЕЗЖАЙТЕ ИХ!
 attack-order-callout-7 = В АТАКУ!
-
 defend-order-callout-1 = НАКЛОНИТЕСЬ И ПРИКРОЙТЕСЬ!
 defend-order-callout-2 = ДЕРЖИТЕ ЛИНИЮ!
 defend-order-callout-3 = УДЕРЖИВАЙТЕ ПОЗИЦИЮ!
@@ -17,14 +16,12 @@ defend-order-callout-8 = ГОТОВЬТЕСЬ К ПРИКРЫТИЮ!
 defend-order-callout-9 = ГОТОВЬТЕСЬ!
 defend-order-callout-10 = ПРИЛЕТАЮТ!
 defend-order-callout-11 = НЕ ПРОДВИГАЙТЕСЬ! ОСТАВАЙТЕСЬ ЗДЕСЬ!
-
 retreat-order-callout-1 = ОТСТУПАЙТЕ! ОТСТУПАЙТЕ!
 retreat-order-callout-2 = УБИРАЙТЕСЬ ОТСЮДА!
 retreat-order-callout-3 = НЕ УМИРАЙТЕ ЗДЕСЬ! БЕГИТЕ!
 retreat-order-callout-4 = БЕГИТЕ! СПАСАЙТЕ ЖИЗНЬ!
 retreat-order-callout-5 = ОТСТУПАЙТЕ! ПОВТОРЯЮ, ОТСТУПАЙТЕ!
 retreat-order-callout-6 = СДАВАЙТЕ ПОЗИЦИИ! ОТДАЙТЕ ИХ!
-
 rally-order-callout-1 = КО МНЕ, МОИ БОЙЦЫ!
 rally-order-callout-2 = ПЕРЕГРУППИРУЙТЕСЬ У МЕНЯ!
 rally-order-callout-3 = ИДИТЕ ЗА МОИМ ПРИМЕРОМ!
