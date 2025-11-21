@@ -14,4 +14,7 @@ public sealed partial class MCASRSRequest
 
     [DataField]
     public Dictionary<MCASRSEntry, int> Contents;
+
+    [DataField]
+    public int TotalCost;
 }

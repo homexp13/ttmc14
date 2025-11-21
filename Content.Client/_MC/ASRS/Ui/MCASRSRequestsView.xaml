@@ -13,24 +13,20 @@
             </PanelContainer.PanelOverride>
 
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="8">
-                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Align="Center">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="4">
+
                     <RichTextLabel Text="Requests" Margin="0 0 16 0"  />
 
                     <BoxContainer Orientation="Horizontal" Align="End">
-                        <Button Text="Approve all" Name="ApproveAllButton" TextAlign="Left" Access="Public" />
-                        <Button Text="Deny all" Name="DenyAllButton" TextAlign="Left" Access="Public" />
+                        <Button Text="Approve all" Name="ApproveAllButton" StyleClasses="ButtonSquare" TextAlign="Left" Access="Public" />
+                        <Button Text="Deny all" Name="DenyAllButton" StyleClasses="ButtonSquare" TextAlign="Left" Access="Public" />
                     </BoxContainer>
                 </BoxContainer>
 
-                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-                    <RichTextLabel Text="Reason: " Margin="0 0 16 0" />
-                    <LineEdit PlaceHolder="Reason" Name="ReasonBar" HorizontalExpand="True" Margin="8 8" Access="Public" />
-                </BoxContainer>
-
-                <cc:HSeparator />
+                <cc:HSeparator Margin="0 0 0 16" />
 
                 <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
-                    <BoxContainer Orientation="Vertical" Name="Container" Access="Public" HorizontalExpand="True" VerticalExpand="True" Margin="8"/>
+                    <BoxContainer Orientation="Vertical" Name="Container" Access="Public" HorizontalExpand="True" VerticalExpand="True" />
                 </ScrollContainer>
             </BoxContainer>
         </PanelContainer>

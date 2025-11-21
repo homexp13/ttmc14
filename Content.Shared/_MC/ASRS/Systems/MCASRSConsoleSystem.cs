@@ -33,12 +33,19 @@ public sealed class MCASRSConsoleSystem : EntitySystem
         if (!ValidateRequestMessage(entity, args))
             return;
 
+        var totalCost = 0;
+        foreach (var (entry, count) in args.Contents)
+        {
+            totalCost += entry.Cost * count;
+        }
+
         var name = GetRequesterName(args.Actor);
         var request = new MCASRSRequest
         {
             Requester = name,
             Reason = args.Reason,
             Contents = args.Contents,
+            TotalCost = totalCost,
         };
 
         entity.Comp.Requests.Add(request);

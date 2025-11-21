@@ -3,6 +3,7 @@ using Content.Shared._MC.ASRS.Components;
 using Content.Shared._MC.ASRS.Ui;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client._MC.ASRS.Ui;
 
@@ -119,6 +120,32 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
         _window.PendingOrdersView.Visible = false;
 
         var view = _window.RequestsView;
+        view.Visible = true;
+        view.Container.Children.Clear();
+
+        foreach (var request in _requests)
+        {
+            var req = new MCASRSRequestButton();
+            req.RequesterLabel.SetMessage(request.Requester);
+            req.ReasonLabel.SetMessage(request.Reason);
+            req.TotalCostLabel.SetMessage(request.TotalCost.ToString());
+
+            foreach (var (entry, count) in request.Contents)
+            {
+                var label = new RichTextLabel();
+                var message = string.Empty;
+
+                if (count > 0)
+                    message += $"{count}x";
+
+                message += $"{entry.Name} ({entry.Cost * count})";
+                label.SetMessage(message);
+
+                req.Container.Children.Add(label);
+            }
+
+            view.Container.Children.Add(req);
+        }
     }
 
     private void SendSubmitRequest()
