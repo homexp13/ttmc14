@@ -309,8 +309,8 @@
         - !type:ReagentThreshold
           min: 50
         damage:
-          groups:
-            Toxin: 3
+          types:
+            MCToxin: 3
 
 - type: reagent
   parent: MCReagentMedicine

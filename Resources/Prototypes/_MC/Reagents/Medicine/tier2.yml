@@ -168,15 +168,15 @@
         - !type:ReagentThreshold
           min: 30
         damage:
-          groups:
-            Toxin: 1
+          types:
+            MCToxin: 1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 50
         damage:
-          groups:
-            Toxin: 3
+          types:
+            MCToxin: 3
 
 - type: reagent
   parent: MCReagentMedicine
@@ -332,8 +332,8 @@
         amount: 2.4
       - !type:HealthChange
         damage:
-          groups:
-            Toxin: 1
+          types:
+            MCToxin: 1
       - !type:MCStamina
         potence: -6
       - !type:HealthChange
@@ -341,15 +341,15 @@
         - !type:ReagentThreshold
           min: 6
         damage:
-          groups:
-            Toxin: 1.5
+          types:
+            MCToxin: 1.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 10
         damage:
-          groups:
-            Toxin: 3
+          types:
+            MCToxin: 3
 
 - type: reagent
   parent: MCReagentMedicine
@@ -373,15 +373,15 @@
         - !type:ReagentThreshold
           min: 30
         damage:
-          groups:
-            Toxin: 1
+          types:
+            MCToxin: 1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 50
         damage:
-          groups:
-            Genetic: 3
+          types:
+            MCClone: 3
 
 - type: reagent
   parent: MCReagentMedicine
@@ -476,8 +476,8 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Toxin: 0.2
+          types:
+            MCToxin: 0.2
       #- !type:MCStamina
       #  potence: -20 Пока не будет условия он-инжект я хуй это добавлю
       # Buff
@@ -524,8 +524,8 @@
         - !type:ReagentThreshold
           min: 25
         damage:
-          groups:
-            Toxin: 3
+          types:
+            MCToxin: 3
       - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold

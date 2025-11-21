@@ -92,8 +92,8 @@
   - type: Projectile
     impactEffect: null
     damage:
-      groups:
-        Toxin: 20
+      types:
+        MCToxin: 20
   - type: MCStaminaDamageOnCollide
     damage: 15
   - type: XenoProjectile

@@ -104,15 +104,15 @@
           - !type:ReagentThreshold
             min: 30
           damage:
-            groups:
-              Toxin: 1
+            types:
+              MCToxin: 1
         - !type:HealthChange
           conditions:
           - !type:ReagentThreshold
             min: 50
           damage:
-            groups:
-              Toxin: 1
+            types:
+              MCToxin: 1
 
 - type: reagent
   id: MCSterilizine
