@@ -14,6 +14,12 @@ public sealed partial class MCASRSConsoleComponent : Component
     [DataField, AutoNetworkedField, AlwaysPushInheritance]
     public List<MCASRSRequest> Requests = new();
 
+    [DataField, AutoNetworkedField, AlwaysPushInheritance]
+    public List<MCASRSRequest> ApprovedRequests = new();
+
+    [DataField, AutoNetworkedField, AlwaysPushInheritance]
+    public List<MCASRSRequest> DenyRequests = new();
+
     [AutoNetworkedField]
     public List<MCASRSEntry> CachedEntries = new();
 }
@@ -45,7 +51,7 @@ public sealed partial class MCASRSEntry
 
     private bool Equals(MCASRSEntry other)
     {
-        return Name == other.Name && Cost == other.Cost && Nullable.Equals(Crate, other.Crate) && Entities.SequenceEqual(other.Entities);
+        return Name == other.Name && Cost == other.Cost && Crate == other.Crate && Entities.SequenceEqual(other.Entities);
     }
 
     public override bool Equals(object? obj)
@@ -56,7 +62,18 @@ public sealed partial class MCASRSEntry
     public override int GetHashCode()
     {
         // ReSharper disable NonReadonlyMemberInGetHashCode
-        return HashCode.Combine(Name, Cost, Crate, Entities);
+        var hash = new HashCode();
+
+        hash.Add(Name);
+        hash.Add(Cost);
+        hash.Add(Crate);
+
+        foreach (var v in Entities)
+        {
+            hash.Add(v);
+        }
+
+        return hash.ToHashCode();
         // ReSharper restore NonReadonlyMemberInGetHashCode
     }
 }

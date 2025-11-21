@@ -3,4 +3,4 @@
 namespace Content.Shared._MC.ASRS.Ui;
 
 [Serializable, NetSerializable]
-public sealed class MCASRSConsoleAcceptAllMessage : BoundUserInterfaceMessage;
+public sealed class MCASRSConsoleApproveAllMessage : BoundUserInterfaceMessage;

@@ -1,4 +1,5 @@
-﻿using Content.Shared._MC.ASRS;
+﻿using System.Linq;
+using Content.Shared._MC.ASRS;
 using Content.Shared._MC.ASRS.Components;
 using Content.Shared._MC.ASRS.Ui;
 using JetBrains.Annotations;
@@ -17,6 +18,11 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
 
     private readonly Dictionary<MCASRSEntry, int> _store = new();
     private readonly List<MCASRSRequest> _requests = new();
+    private readonly Dictionary<MCASRSRequest, MCASRSRequestButton> _requestsButtons = new();
+
+    private int _requestsCost;
+    private int _points;
+
     private int _storeCount;
     private int _storeCost;
 
@@ -48,6 +54,9 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
         _window.PendingOrdersView.SubmitRequestButton.OnPressed += _ => SendSubmitRequest();
         _window.PendingOrdersView.ClearCartButton.OnPressed += _ => ClearStore();
         _window.PendingOrdersView.ReasonBar.OnTextChanged += _ => RefreshStoreReason();
+
+        _window.RequestsView.ApproveAllButton.OnPressed += _ => SendApproveAll();
+        _window.RequestsView.DenyAllButton.OnPressed += _ => SendDenyAll();
     }
 
     protected override void UpdateState(BoundUserInterfaceState uiState)
@@ -57,8 +66,12 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
         if (uiState is not MCASRSConsoleBuiState state)
             return;
 
+        _points = state.Points;
+
         _requests.Clear();
         _requests.AddRange(state.Requests);
+
+        RefreshPoints();
         RefreshRequests();
     }
 
@@ -116,36 +129,15 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
         if (_window is null)
             return;
 
+        _requestsButtons.Clear();
+
         _window.OrdersView.Visible = false;
         _window.PendingOrdersView.Visible = false;
 
         var view = _window.RequestsView;
         view.Visible = true;
-        view.Container.Children.Clear();
 
-        foreach (var request in _requests)
-        {
-            var req = new MCASRSRequestButton();
-            req.RequesterLabel.SetMessage(request.Requester);
-            req.ReasonLabel.SetMessage(request.Reason);
-            req.TotalCostLabel.SetMessage(request.TotalCost.ToString());
-
-            foreach (var (entry, count) in request.Contents)
-            {
-                var label = new RichTextLabel();
-                var message = string.Empty;
-
-                if (count > 0)
-                    message += $"{count}x";
-
-                message += $"{entry.Name} ({entry.Cost * count})";
-                label.SetMessage(message);
-
-                req.Container.Children.Add(label);
-            }
-
-            view.Container.Children.Add(req);
-        }
+        RefreshRequests();
     }
 
     private void SendSubmitRequest()
@@ -158,6 +150,38 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
 
         SendMessage(request);
         ClearStore();
+    }
+
+    private void SendApprove(MCASRSRequest request)
+    {
+        _requests.Remove(request);
+        RefreshRequests();
+        OpenRequest();
+        SendMessage(new MCASRSConsoleApproveMessage(request));
+    }
+
+    private void SendDeny(MCASRSRequest request)
+    {
+        _requests.Remove(request);
+        RefreshRequests();
+        OpenRequest();
+        SendMessage(new MCASRSConsoleDenyMessage(request));
+    }
+
+    private void SendApproveAll()
+    {
+        _requests.Clear();
+        RefreshRequests();
+        OpenRequest();
+        SendMessage(new MCASRSConsoleApproveAllMessage());
+    }
+
+    private void SendDenyAll()
+    {
+        _requests.Clear();
+        RefreshRequests();
+        OpenRequest();
+        SendMessage(new MCASRSConsoleDenyAllMessage());
     }
 
     private void OnOrderCountChanged(MCASRSEntry entry, int value)
@@ -207,11 +231,58 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
         _window.PendingOrdersView.SubmitRequestButton.Disabled = _window.PendingOrdersView.ReasonBar.Text == string.Empty;
     }
 
+    private void RefreshPoints()
+    {
+        if (_window is null)
+            return;
+
+        foreach (var (request, button) in _requestsButtons)
+        {
+            button.ApproveButton.Disabled = _points < request.TotalCost;
+        }
+
+        _window.RequestsView.ApproveAllButton.Disabled =  _points < _requestsCost;
+        _window.CategoryView.PointsLabel.SetMessage(_points.ToString());
+    }
+
     private void RefreshRequests()
     {
         if (_window is null)
             return;
 
+        var view = _window.RequestsView;
+        view.Container.Children.Clear();
+
+        foreach (var request in _requests)
+        {
+            var req = new MCASRSRequestButton();
+            req.ApproveButton.OnPressed +=  _ => SendApprove(request);
+            req.DenyButton.OnPressed +=  _ => SendDeny(request);
+            req.RequesterLabel.SetMessage(request.Requester);
+            req.ReasonLabel.SetMessage(request.Reason);
+            req.TotalCostLabel.SetMessage(request.TotalCost.ToString());
+            req.ApproveButton.Disabled = _points < request.TotalCost;
+
+            foreach (var (entry, count) in request.Contents)
+            {
+                var label = new RichTextLabel();
+                var message = string.Empty;
+
+                if (count > 0)
+                    message += $"{count}x";
+
+                message += $"{entry.Name} ({entry.Cost * count})";
+                label.SetMessage(message);
+
+                req.Container.Children.Add(label);
+            }
+
+            view.Container.Children.Add(req);
+
+            _requestsButtons.Add(request, req);
+        }
+
+        _requestsCost = _requests.Sum(request => request.TotalCost);
         _window.CategoryView.RequestsButton.Disabled = _requests.Count == 0;
     }
 
