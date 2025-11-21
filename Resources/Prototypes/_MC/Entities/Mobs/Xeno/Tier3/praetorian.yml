@@ -92,7 +92,7 @@
     trapLevel: 3
     spray: XenoAcidSprayTrapStrong
   - type: XenoPheromones
-    pheromonesMultiplier: 3.5
+    pheromonesMultiplier: 0.5
     pheroSuffix: strong
   # Pounce (Dash)
   - type: MCXenoPounce
