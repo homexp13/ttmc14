@@ -1,4 +1,5 @@
-﻿using Content.Shared._MC.ASRS.Components;
+﻿using Content.Shared._MC.ASRS;
+using Content.Shared._MC.ASRS.Components;
 using Content.Shared._MC.ASRS.Ui;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -14,6 +15,7 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
     private MCASRSWindow? _window;
 
     private readonly Dictionary<MCASRSEntry, int> _store = new();
+    private readonly List<MCASRSRequest> _requests = new();
     private int _storeCount;
     private int _storeCost;
 
@@ -34,35 +36,63 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
             categoryButton.SetName(category.Name);
             categoryButton.Button.Disabled = category.Entries.Count == 0;
 
-            categoryButton.Button.OnPressed += _ => LoadCategory(category);
+            categoryButton.Button.OnPressed += _ => OpenCategory(category);
 
             _window.CategoryView.CategoriesContainer.AddChild(categoryButton);
         }
 
-        _window.CategoryView.PendingOrderButton.OnPressed += _ => LoadPendingOrders();
+        _window.CategoryView.PendingOrderButton.OnPressed += _ => OpenPendingOrders();
+        _window.CategoryView.RequestsButton.OnPressed += _ => OpenRequest();
+
+        _window.PendingOrdersView.SubmitRequestButton.OnPressed += _ => SendSubmitRequest();
         _window.PendingOrdersView.ClearCartButton.OnPressed += _ => ClearStore();
         _window.PendingOrdersView.ReasonBar.OnTextChanged += _ => RefreshStoreReason();
-        _window.PendingOrdersView.SubmitRequestButton.OnPressed += _ => SubmitRequest();
     }
 
-    private void SubmitRequest()
+    protected override void UpdateState(BoundUserInterfaceState uiState)
+    {
+        base.UpdateState(uiState);
+
+        if (uiState is not MCASRSConsoleBuiState state)
+            return;
+
+        _requests.Clear();
+        _requests.AddRange(state.Requests);
+        RefreshRequests();
+    }
+
+    private void OpenPendingOrders()
     {
         if (_window is null)
             return;
 
-        var reason = _window.PendingOrdersView.ReasonBar.Text;
-        var request = new MCASRSSendRequestMessage(reason, _store);
+        _window.OrdersView.Visible = false;
+        _window.RequestsView.Visible = false;
 
-        SendMessage(request);
-        ClearStore();
+        var view = _window.PendingOrdersView;
+        view.Visible = true;
+        view.Container.Children.Clear();
+
+        foreach (var (entry, count) in _store)
+        {
+            var categoryButton = new MCASRSOrderButton();
+            categoryButton.SetLabel(entry);
+            categoryButton.SetCount(count);
+            categoryButton.OnCountChanged += value => OnOrderCountChanged(entry, value);
+
+            view.Container.Children.Add(categoryButton);
+        }
+
+        RefreshStoreReason();
     }
 
-    private void LoadCategory(MCASRSCategory category)
+    private void OpenCategory(MCASRSCategory category)
     {
         if (_window is null)
             return;
 
         _window.PendingOrdersView.Visible = false;
+        _window.RequestsView.Visible = false;
 
         var view = _window.OrdersView;
         view.Visible = true;
@@ -80,28 +110,27 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
         }
     }
 
-    private void LoadPendingOrders()
+    private void OpenRequest()
     {
         if (_window is null)
             return;
 
         _window.OrdersView.Visible = false;
+        _window.PendingOrdersView.Visible = false;
 
-        var view = _window.PendingOrdersView;
-        view.Visible = true;
-        view.Container.Children.Clear();
+        var view = _window.RequestsView;
+    }
 
-        foreach (var (entry, count) in _store)
-        {
-            var categoryButton = new MCASRSOrderButton();
-            categoryButton.SetLabel(entry);
-            categoryButton.SetCount(count);
-            categoryButton.OnCountChanged += value => OnOrderCountChanged(entry, value);
+    private void SendSubmitRequest()
+    {
+        if (_window is null)
+            return;
 
-            view.Container.Children.Add(categoryButton);
-        }
+        var reason = _window.PendingOrdersView.ReasonBar.Text;
+        var request = new MCASRSConsoleSendRequestMessage(reason, _store);
 
-        RefreshStoreReason();
+        SendMessage(request);
+        ClearStore();
     }
 
     private void OnOrderCountChanged(MCASRSEntry entry, int value)
@@ -151,6 +180,14 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
         _window.PendingOrdersView.SubmitRequestButton.Disabled = _window.PendingOrdersView.ReasonBar.Text == string.Empty;
     }
 
+    private void RefreshRequests()
+    {
+        if (_window is null)
+            return;
+
+        _window.CategoryView.RequestsButton.Disabled = _requests.Count == 0;
+    }
+
     private void ClearStore()
     {
         if (_window is null)
@@ -159,6 +196,6 @@ public sealed class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserInterface(
         _store.Clear();
 
         RefreshStore();
-        LoadPendingOrders();
+        OpenPendingOrders();
     }
 }

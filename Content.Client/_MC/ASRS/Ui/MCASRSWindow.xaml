@@ -7,5 +7,6 @@
         <ui:MCASRSCategoryView Name="CategoryView" HorizontalAlignment="Left" VerticalExpand="True" MaxWidth="450" Access="Public" />
         <ui:MCASRSOrdersView Name="OrdersView" HorizontalExpand="True" VerticalExpand="True" Visible="False" Access="Public" />
         <ui:MCASRSPendingOrdersView Name="PendingOrdersView" HorizontalExpand="True" VerticalExpand="True" Visible="False" Access="Public" />
+        <ui:MCASRSRequestsView Name="RequestsView" HorizontalExpand="True" VerticalExpand="True" Visible="False" Access="Public" />
     </BoxContainer>
 </ui:MCASRSWindow>

@@ -51,8 +51,8 @@ public sealed class MCXenoPsydrainSystem : EntitySystem
 
     private void OnStartup(Entity<MCXenoPsydrainableComponent> entity, ref ComponentStartup args)
     {
-        entity.Comp.Available = !_mobState.IsDead(entity.Owner);
-        Dirty(entity);
+        // entity.Comp.Available = !_mobState.IsDead(entity.Owner);
+        // Dirty(entity);
     }
 
     private void OnAction(Entity<MCXenoPsydrainComponent> entity, ref MCXenoPsydrainActionEvent args)

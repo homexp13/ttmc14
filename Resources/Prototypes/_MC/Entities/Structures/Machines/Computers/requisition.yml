@@ -85,3 +85,10 @@
     - name: Imports
     - name: Vehicles
     - name: Factory
+
+- type: entity
+  parent: MCASRSConsole
+  id: MCASRSConsoleCrash
+  components:
+  - type: AccessReader
+    access: []

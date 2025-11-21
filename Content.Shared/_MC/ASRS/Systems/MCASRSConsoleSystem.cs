@@ -16,7 +16,7 @@ public sealed class MCASRSConsoleSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MCASRSConsoleComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<MCASRSConsoleComponent, MCASRSSendRequestMessage>(OnRequestMessage);
+        SubscribeLocalEvent<MCASRSConsoleComponent, MCASRSConsoleSendRequestMessage>(OnRequestMessage);
     }
 
     private void OnInit(Entity<MCASRSConsoleComponent> entity, ref ComponentInit args)
@@ -28,7 +28,7 @@ public sealed class MCASRSConsoleSystem : EntitySystem
         }
     }
 
-    private void OnRequestMessage(Entity<MCASRSConsoleComponent> entity, ref MCASRSSendRequestMessage args)
+    private void OnRequestMessage(Entity<MCASRSConsoleComponent> entity, ref MCASRSConsoleSendRequestMessage args)
     {
         if (!ValidateRequestMessage(entity, args))
             return;
@@ -52,7 +52,7 @@ public sealed class MCASRSConsoleSystem : EntitySystem
         return _rmcRank.GetSpeakerFullRankName(userUid) ?? Name(userUid);
     }
 
-    private static bool ValidateRequestMessage(Entity<MCASRSConsoleComponent> entity, MCASRSSendRequestMessage args)
+    private static bool ValidateRequestMessage(Entity<MCASRSConsoleComponent> entity, MCASRSConsoleSendRequestMessage args)
     {
         return args.Reason != string.Empty
                && args.Contents.Keys.All(entry => entity.Comp.CachedEntries.Contains(entry));
