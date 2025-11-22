@@ -73,7 +73,8 @@
   metabolisms:
     Poison:
       metabolismRate: 0.4
-      effects: []
+      effects:
+      - !type:MCReagentNeurotoxin
 
 - type: reagent
   parent: MCReagentToxins

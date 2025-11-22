@@ -62,7 +62,7 @@ public sealed class MCStaminaActiveSystem : EntitySystem
             }
 
             if (input.Sprinting && !active.Slowed && phys.LinearVelocity.Length() > 0.1f && stamina.Current > 0)
-                _mcStamina.DoStaminaDamage((uid, stamina), active.RunStaminaDamage, false);
+                _mcStamina.Damage((uid, stamina), active.RunStaminaDamage, false);
 
             if (stamina.Current >= active.SlowThreshold && !active.Slowed)
             {
