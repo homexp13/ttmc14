@@ -6,10 +6,13 @@
   name: Urist C.M. McHands
   suffix: RMC14
   components:
+  # mc-changes-start
+  - type: MCSolutionTicker
   - type: MCArmor
     showExamine: false
   - type: MCXenoToxicStacks
   - type: MCXenoPsydrainable
+  # mc-changes-end 
   - type: Fixtures
     fixtures:
       fix1:
