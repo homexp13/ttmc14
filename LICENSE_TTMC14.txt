@@ -2,14 +2,18 @@ All rights reserved.
 
 Copyright (c) 2025 TTMC14
 
-This source code is the exclusive of TornadoTech and is protected by copyright law.
+This source code is the exclusive property of TornadoTech and is protected by
+copyright law.
 
-You granted no rights or permissions to use, modify, distribute, sublicense,
-or reproduce this source code in any form, in whole or in part,
+You are granted no rights or permissions to use, modify, distribute,
+sublicense, or reproduce this source code in any form, in whole or in part,
 without the express written consent of TornadoTech.
 
-Any unauthorized use or reproduction of this source code
-is strictly prohibited and may result in legal action.
+An exception applies only to cases explicitly listed in the file
+APPROVED_MACHINES.md, which defines the machines, hosts, or environments
+approved for third-party deployment or hosting of the TTMC14 server code.
+Any usage outside the scope of those approved machines remains strictly
+prohibited and may result in legal action.
 
-For inquiries or licensing requests,
-please contact TornadoTech at Discord (https://discord.gg/AXz2XqZMNT).
+For inquiries or licensing requests, please contact TornadoTech at:
+Discord — https://discord.gg/AXz2XqZMNT
