@@ -72,10 +72,10 @@ public abstract class SharedRMCFlammableSystem : EntitySystem
 
     private static readonly ProtoId<AlertPrototype> FireAlert = "Fire";
     private static readonly ProtoId<ReagentPrototype> WaterReagent = "Water";
-    private static readonly ProtoId<ReagentPrototype> MCWaterReagent = "MCWater";
+    private static readonly ProtoId<ReagentPrototype> MCWaterReagent = "MCWater"; // mc-changes
     private static readonly ProtoId<TagPrototype> StructureTag = "Structure";
     private static readonly ProtoId<TagPrototype> WallTag = "Wall";
-    private static readonly ProtoId<DamageTypePrototype> HeatDamage = "Heat";
+    private static readonly ProtoId<DamageTypePrototype> HeatDamage = "MCBurn"; // mc-changes
 
     private EntityQuery<BlockTileFireComponent> _blockTileFireQuery;
     private EntityQuery<DoorComponent> _doorQuery;
