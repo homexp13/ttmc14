@@ -1,0 +1,16 @@
+- type: entity
+  parent: MCMeleeWeapon
+  id: MCMeleeWeaponVali
+  abstract: true
+  components:
+  - type: Tag
+    tags: [ MCMeleeWeaponVali ]
+  - type: MCWeaponVali
+    allowedReagents:
+    - MCBicaridine
+    - MCKelotane
+    - MCTricordrazine
+    - MCTramadol
+
+- type: Tag
+  id: MCMeleeWeaponVali

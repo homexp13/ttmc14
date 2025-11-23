@@ -29,6 +29,9 @@ public sealed class MCAimedShootSystem : EntitySystem
 
     private void OnGetItemActions(Entity<MCAimedShootComponent> entity, ref GetItemActionsEvent args)
     {
+        if (!args.InHands)
+            return;
+
         args.AddAction(ref entity.Comp.Action, entity.Comp.ActionId);
         Dirty(entity);
     }
@@ -65,6 +68,9 @@ public sealed class MCAimedShootSystem : EntitySystem
 
     private void OnGotUnequippedHand(Entity<MCAimedShootComponent> entity, ref GotUnequippedHandEvent args)
     {
+        entity.Comp.Active = false;
+        Dirty(entity);
+
         _gun.RefreshModifiers(entity.Owner);
         _movementSpeed.RefreshMovementSpeedModifiers(args.User);
     }

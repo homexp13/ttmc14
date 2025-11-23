@@ -80,6 +80,13 @@
       - id: MCKnifeBayonet
       - id: MCScabbardMacheteFilled
       - id: MCSpear
+    - name: Vali
+      entries:
+      - id: MCScabbardMachete
+      - id: MCMeleeWeaponValiClaymore
+      - id: MCMeleeWeaponValiKnife
+      - id: MCMeleeWeaponValiSpear
+      - id: MCMeleeWeaponValiSword
     - name: Sidearm
       entries:
       - id: MCWeaponP14
