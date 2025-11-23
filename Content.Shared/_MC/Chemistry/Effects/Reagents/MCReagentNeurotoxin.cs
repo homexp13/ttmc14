@@ -1,13 +1,14 @@
 ﻿using Content.Shared._MC.Damage;
 using Content.Shared._MC.Stamina;
-using Content.Shared.Damage;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.Jittering;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared._MC.Chemistry.Effects.Reagents;
 
-public sealed partial class MCReagentNeurotoxin : EntityEffect
+public sealed partial class MCReagentNeurotoxin : MCReagentEffect
 {
     protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
@@ -27,23 +28,14 @@ public sealed partial class MCReagentNeurotoxin : EntityEffect
         """;
     }
 
-    public override void Effect(EntityEffectBaseArgs args)
+    protected override void Effect(EntityEffectReagentArgs args, Solution solution, ReagentPrototype reagent)
     {
-        if (args is not EntityEffectReagentArgs reagentArgs)
-            return;
+        var solutionTicker = args.EntityManager.System<MCSolutionTickerSystem>();
+        var damageable = args.EntityManager.System<MCDamageableSystem>();
+        var stamina = args.EntityManager.System<MCStaminaSystem>();
 
-        var solutionTicker = reagentArgs.EntityManager.System<MCSolutionTickerSystem>();
-        var damageable = reagentArgs.EntityManager.System<MCDamageableSystem>();
-        var stamina = reagentArgs.EntityManager.System<MCStaminaSystem>();
-
-        if (reagentArgs.Reagent is not { } reagent)
-            return;
-
-        if (reagentArgs.Source is not { } source)
-            return;
-
-        var target = reagentArgs.TargetEntity;
-        var tick = solutionTicker.GetTick(target, source, reagent);
+        var target = args.TargetEntity;
+        var tick = solutionTicker.GetTick(target, solution, reagent);
 
         var power = 0f;
         ProcessCycle(args.EntityManager, target, tick, ref power);

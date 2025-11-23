@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -9,4 +10,7 @@ public sealed partial class MCWeaponValiComponent : Component
 {
     [DataField, AutoNetworkedField]
     public List<ProtoId<ReagentPrototype>> AllowedReagents = new();
+
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> Reagents = new();
 }

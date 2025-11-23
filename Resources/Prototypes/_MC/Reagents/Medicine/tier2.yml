@@ -191,8 +191,11 @@
     Medicine:
       metabolismRate: 1
       effects:
-      - !type:MCPurgeAll
+      - !type:MCPurgeGroups
         amount: 5
+        groups:
+        - Medicine
+        - Toxins
       - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold

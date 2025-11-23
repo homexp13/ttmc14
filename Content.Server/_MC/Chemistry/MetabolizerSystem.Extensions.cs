@@ -12,8 +12,10 @@ public partial class MetabolizerSystem
     private readonly ReagentId[] _canTick = new ReagentId[]
     {
         new ("MCNeurotoxin", null),
+        new ("MCNanoMachines", null),
     };
 
+    // ReSharper disable once UseCollectionExpression
     private readonly List<EntityUid> _updated = new();
 
     private void UpdateExtension(float _)
