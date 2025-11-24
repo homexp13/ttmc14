@@ -21,19 +21,19 @@
     - name: Auto Injector
       entries:
       - id: MCAutoInjectorBicaridine
-        amount: 5
+        amount: 1
       - id: MCAutoInjectorKelotane
-        amount: 5
+        amount: 1
       - id: MCAutoInjectorTramadol
-        amount: 5
+        amount: 1
       - id: MCAutoInjectorTricordrazine
-        amount: 5
+        amount: 1
       - id: MCAutoInjectorDylovene
-        amount: 5
+        amount: 1
       - id: MCAutoInjectorCombat
-        amount: 5
+        amount: 1
       - id: MCAutoInjectorHypervene
-        amount: 3
+        amount: 1
       - id: MCAutoInjectorMeralyne
         amount: 1
       - id: MCAutoInjectorDermaline
