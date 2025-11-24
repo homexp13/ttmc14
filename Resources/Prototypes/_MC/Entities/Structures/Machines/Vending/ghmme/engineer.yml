@@ -67,17 +67,15 @@
       choices:
         MCBackpack: 1
       entries:
-      - id: MCSatchelMarineStandard
+      - id: MCSatchelMarineTechnician
         recommended: true
-      # Technician Backpack
+      - id: MCBackpackMarineTechnician
       # Machete scabbard
       # Welderpack
       # Radio Pack
       # Dispenser
       - id: MCBackMortarFull
-        name: Mortar bag
       - id: MCBackFlamethrowerFull
-        name: Flamethrower bag
     - name: Webbing
       choices:
         MCWebbing: 1
