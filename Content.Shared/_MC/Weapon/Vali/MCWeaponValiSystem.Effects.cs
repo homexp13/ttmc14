@@ -1,4 +1,5 @@
-﻿using Content.Shared._MC.Damage;
+﻿using System.Linq;
+using Content.Shared._MC.Damage;
 using Content.Shared._MC.Flammable;
 using Content.Shared._MC.Knockback;
 using Content.Shared._MC.Stun;
@@ -6,6 +7,7 @@ using Content.Shared._MC.Xeno.Plasma;
 using Content.Shared._MC.Xeno.Sunder;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Prototypes;
 
@@ -31,6 +33,9 @@ public sealed partial class MCWeaponValiSystem
 
     private void OnMeleeHit(Entity<MCWeaponValiComponent> entity, ref MeleeHitEvent args)
     {
+        if (!args.HitEntities.Any(HasComp<MobStateComponent>))
+            return;
+
         if (entity.Comp.SelectedReagent is not {} selectedReagent)
             return;
 
@@ -38,6 +43,7 @@ public sealed partial class MCWeaponValiSystem
             return;
 
         entity.Comp.Reagents[selectedReagent] -= entity.Comp.ReagentUsage;
+        Dirty(entity);
 
         switch (selectedReagent)
         {

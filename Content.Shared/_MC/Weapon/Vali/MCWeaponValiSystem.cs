@@ -190,5 +190,7 @@ public sealed partial class MCWeaponValiSystem : EntitySystem
         var parentUid = Transform(entity).ParentUid;
         if (!HasComp<MapGridComponent>(parentUid))
             _appearance.SetData(parentUid, MCWeaponValiVisuals.ReagentId, reagentId?.ToString() ?? string.Empty);
+
+        Dirty(entity);
     }
 }
