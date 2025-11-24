@@ -26,6 +26,7 @@
   - type: StaticPrice
     price: 0
   - type: IconLabel
+    labelMaxSize: 4
     textColor: White
     storedOffset: -3, 12
   - type: Tag
@@ -75,7 +76,7 @@
   suffix: Fill
   components:
   - type: IconLabel
-    labelTextLocId: mc-meralyne-hypo-container-label-text
+    labelTextLocId: mc-meralyne-container-label-text
   - type: SolutionContainerManager
     solutions:
       hypospray:
@@ -92,7 +93,7 @@
   suffix: Fill
   components:
   - type: IconLabel
-    labelTextLocId: mc-dermaline-hypo-container-label-text
+    labelTextLocId: mc-dermaline-container-label-text
   - type: SolutionContainerManager
     solutions:
       hypospray:
@@ -109,7 +110,7 @@
   suffix: Fill
   components:
   - type: IconLabel
-    labelTextLocId: mc-meraderm-hypo-container-label-text
+    labelTextLocId: mc-meraderm-container-label-text
   - type: SolutionContainerManager
     solutions:
       hypospray:
@@ -364,7 +365,7 @@
   suffix: Fill
   components:
   - type: IconLabel
-    labelTextLocId: mc-combat-bighypo-container-label-text
+    labelTextLocId: mc-combat-container-label-text
   - type: SolutionContainerManager
     solutions:
       hypospray:

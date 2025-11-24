@@ -1,3 +1,4 @@
+# Tier 1
 - type: entity
   parent: MCAutoInjector
   id: MCAutoInjectorCombat
@@ -22,6 +23,27 @@
   - type: IconLabel
     labelTextLocId: mc-combat-container-label-text
 
+# Tier 2
+- type: entity
+  parent: MCAutoInjector
+  id: MCAutoInjectorMeraderm
+  name: meraderm auto-injector
+  description: An auto-injector loaded with 2 doses of advanced healing and painkilling chemicals. Intended for use in active combat.
+  components:
+  - type: Hypospray
+    transferAmount: 15
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+        - ReagentId: MCMeralyne
+          Quantity: 15
+        - ReagentId: MCDermaline
+          Quantity: 15
+  - type: IconLabel
+    labelTextLocId: mc-meraderm-container-label-text
+
 - type: entity
   parent: MCAutoInjector
   id: MCAutoInjectorCombatAdv
@@ -42,4 +64,4 @@
         - ReagentId: MCOxycodone
           Quantity: 10
   - type: IconLabel
-    labelTextLocId: mc-combatadv-container-label-text
+    labelTextLocId: mc-combat-advanced-container-label-text

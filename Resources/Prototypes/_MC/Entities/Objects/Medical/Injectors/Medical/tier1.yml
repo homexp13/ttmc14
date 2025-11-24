@@ -1,18 +1,18 @@
 - type: entity
   parent: MCAutoInjector
-  id: MCAutoInjectorDylovene
-  name: dylovene auto-injector
-  description: An auto-injector loaded with 3 doses of dylovene, an anti-toxin agent useful in cases of poisoning, overdoses and toxin build-up.
+  id: MCAutoInjectorBicaridine
+  name: bicaridine auto-injector
+  description: An auto-injector loaded with 3 doses of bicaridine, a common brute and circulatory damage medicine.
   components:
   - type: SolutionContainerManager
     solutions:
       pen:
         maxVol: 30
         reagents:
-        - ReagentId: MCDylovene
+        - ReagentId: MCBicaridine
           Quantity: 30
   - type: IconLabel
-    labelTextLocId: mc-dylovene-container-label-text
+    labelTextLocId: mc-bicaridine-container-label-text
 
 - type: entity
   parent: MCAutoInjector
@@ -32,19 +32,19 @@
 
 - type: entity
   parent: MCAutoInjector
-  id: MCAutoInjectorBicaridine
-  name: bicaridine auto-injector
-  description: An auto-injector loaded with 3 doses of bicaridine, a common brute and circulatory damage medicine.
+  id: MCAutoInjectorDylovene
+  name: dylovene auto-injector
+  description: An auto-injector loaded with 3 doses of dylovene, an anti-toxin agent useful in cases of poisoning, overdoses and toxin build-up.
   components:
   - type: SolutionContainerManager
     solutions:
       pen:
         maxVol: 30
         reagents:
-        - ReagentId: MCBicaridine
+        - ReagentId: MCDylovene
           Quantity: 30
   - type: IconLabel
-    labelTextLocId: mc-bicaridine-container-label-text
+    labelTextLocId: mc-dylovene-container-label-text
 
 - type: entity
   parent: MCAutoInjector
