@@ -13,10 +13,10 @@
     state: icon
   - type: Sprite
     sprite: _MC/Objects/Weapons/Melee/Vali/sword.rsi
-    state: icon
   - type: Item
-    size: Large
+    sprite: _MC/Objects/Weapons/Melee/Vali/sword.rsi
   - type: MeleeWeapon
+    wideAnimationRotation: -90
     attackRate: 0.85
     damage:
       types:

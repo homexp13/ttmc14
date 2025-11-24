@@ -13,9 +13,8 @@
     state: icon
   - type: Sprite
     sprite: _MC/Objects/Weapons/Melee/Vali/rapier.rsi
-    state: icon
   - type: Item
-    size: Large
+    sprite: _MC/Objects/Weapons/Melee/Vali/rapier.rsi
   - type: MeleeWeapon
     attackRate: 2
     damage:

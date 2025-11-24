@@ -42,6 +42,11 @@ public sealed class MCXenoPlasmaSystem : EntitySystem
         return previousPlasma >= plasma;
     }
 
+    public float GetMaxPlasma(EntityUid uid)
+    {
+        return !_query.TryComp(uid, out var plasmaComponent) ? 0 : plasmaComponent.MaxPlasma;
+    }
+
     private void OnDamageHit(Entity<MCXenoPlasmaDamageOnHitComponent> entity, ref ProjectileHitEvent args)
     {
         if (!_query.TryComp(args.Target, out var plasmaComponent))
