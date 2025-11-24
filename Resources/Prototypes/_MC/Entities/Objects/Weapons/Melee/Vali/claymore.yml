@@ -25,11 +25,11 @@
     attackRate: 0.4
     damage:
       types:
-        MCBrute: 32
+        MCBrute: 47
   - type: IncreaseDamageOnWield
     damage:
       types:
-        MCBrute: 28 # Total: 60
+        MCBrute: 43 # Total: 90
   - type: Wieldable
     wieldSound: null
 
