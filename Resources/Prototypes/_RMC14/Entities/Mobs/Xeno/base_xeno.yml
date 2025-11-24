@@ -497,7 +497,7 @@
     damage:
       #per second, scales with number of fire 'stacks'
       types:
-        Heat: 1
+        MCBurn: 1 # mc-changes
 
 - type: entity
   abstract: true

@@ -154,7 +154,7 @@
   - type: Flammable
     damage: #per second, scales with number of fire 'stacks'
       types:
-        Heat: 3
+        MCBurn: 3 # mc-changes
   - type: XenoToggleChargingKnockback
     enabled: false
   - type: XenoToggleChargingStop
