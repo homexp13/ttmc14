@@ -7,22 +7,31 @@ using Content.Shared.Actions;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared._MC.Weapon.Vali;
 
-public sealed class MCWeaponValiSystem : EntitySystem
+public sealed partial class MCWeaponValiSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = null!;
+    [Dependency] private readonly SharedActionsSystem _actions = null!;
     [Dependency] private readonly SharedUserInterfaceSystem _userInterface = null!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = null!;
     [Dependency] private readonly RMCReagentSystem _rmcReagentSystem = null!;
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<MCWeaponValiComponent, MeleeAttackEvent>(OnMeleeAttack);
+        SubscribeLocalEvent<MCWeaponValiComponent, MeleeHitEvent>(OnMeleeHit);
         SubscribeLocalEvent<MCWeaponValiComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<MCWeaponValiComponent, MCWeaponValiSelectReagentAction>(OnSelectReagentAction);
+        SubscribeLocalEvent<MCWeaponValiComponent, MCWeaponValiSelectReagentMessage>(OnSelectReagentMessage);
         SubscribeLocalEvent<MCWeaponValiComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MCWeaponValiComponent, ExaminedEvent>(OnExamine);
     }
@@ -37,6 +46,12 @@ public sealed class MCWeaponValiSystem : EntitySystem
     {
         _userInterface.TryOpenUi(entity.Owner, MCWeaponValiSelectReagentUi.Key, args.Performer);
         args.Handled = true;
+    }
+
+    private void OnSelectReagentMessage(Entity<MCWeaponValiComponent> entity, ref MCWeaponValiSelectReagentMessage args)
+    {
+        _userInterface.CloseUi(entity.Owner, MCWeaponValiSelectReagentUi.Key);
+        SelectReagent(entity, args.ReagentId);
     }
 
     private void OnInteractUsing(Entity<MCWeaponValiComponent> entity, ref InteractUsingEvent args)
@@ -152,5 +167,28 @@ public sealed class MCWeaponValiSystem : EntitySystem
         }
 
         return false;
+    }
+
+    private void SelectReagent(Entity<MCWeaponValiComponent> entity, ProtoId<ReagentPrototype>? reagentId)
+    {
+        if (reagentId is not null)
+        {
+            if (!entity.Comp.AllowedReagents.Contains(reagentId.Value))
+                return;
+
+            if (!entity.Comp.Reagents.TryGetValue(reagentId.Value, out var value) || value == FixedPoint2.Zero)
+                return;
+        }
+
+        entity.Comp.SelectedReagent = reagentId;
+
+        if (entity.Comp.ActionSelectReagent is {} actionUid)
+            _actions.SetIcon(actionUid, reagentId.HasValue ? entity.Comp.ReagentIcons[reagentId.Value] : entity.Comp.ReagentEmptyIcon);
+
+        _appearance.SetData(entity, MCWeaponValiVisuals.ReagentId, reagentId?.ToString() ?? string.Empty);
+
+        var parentUid = Transform(entity).ParentUid;
+        if (!HasComp<MapGridComponent>(parentUid))
+            _appearance.SetData(parentUid, MCWeaponValiVisuals.ReagentId, reagentId?.ToString() ?? string.Empty);
     }
 }

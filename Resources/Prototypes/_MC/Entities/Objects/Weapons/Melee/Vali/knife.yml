@@ -13,9 +13,11 @@
     state: icon
   - type: Sprite
     sprite: _MC/Objects/Weapons/Melee/Vali/knife.rsi
-    state: icon
   - type: Item
+    sprite: _MC/Objects/Weapons/Melee/Vali/knife.rsi
     size: Small
+  - type: MCWeaponVali
+    reagentCapacity: 5
   - type: MeleeWeapon
     attackRate: 1.25
     damage:

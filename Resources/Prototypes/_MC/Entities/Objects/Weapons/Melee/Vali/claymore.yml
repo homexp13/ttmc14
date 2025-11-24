@@ -13,14 +13,15 @@
     state: icon
   - type: Sprite
     sprite: _MC/Objects/Weapons/Melee/Vali/claymore.rsi
-    state: icon
+  - type: Item
+    sprite: _MC/Objects/Weapons/Melee/Vali/claymore.rsi
   - type: Clothing
     sprite: _MC/Objects/Weapons/Melee/Vali/claymore.rsi
     slots:
     - back
     - suitStorage
-  - type: Item
-    size: Large
+  - type: MCWeaponVali
+    reagentCapacity: 60
   - type: MeleeWeapon
     attackRate: 0.4
     damage:
@@ -31,7 +32,6 @@
       types:
         MCBrute: 43 # Total: 90
   - type: Wieldable
-    wieldSound: null
 
 - type: Tag
   id: MCMeleeWeaponValiClaymore
