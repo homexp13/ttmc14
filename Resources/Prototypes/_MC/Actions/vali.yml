@@ -1,0 +1,14 @@
+
+- type: entity
+  id: MCActionValiSelectReagent
+  name: Select Reagent
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: _MC/Interface/Actions/vali.rsi
+      state: empty_backgrounded
+    useDelay: 0.1
+  - type: InstantAction
+    event: !type:MCWeaponValiSelectReagentAction

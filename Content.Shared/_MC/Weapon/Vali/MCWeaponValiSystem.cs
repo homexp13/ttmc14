@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Content.Shared._MC.Utilities;
+using Content.Shared._MC.Weapon.Vali.Ui;
 using Content.Shared._RMC14.Chemistry.Reagent;
+using Content.Shared.Actions;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -13,13 +15,28 @@ namespace Content.Shared._MC.Weapon.Vali;
 
 public sealed class MCWeaponValiSystem : EntitySystem
 {
+    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = null!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = null!;
     [Dependency] private readonly RMCReagentSystem _rmcReagentSystem = null!;
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<MCWeaponValiComponent, GetItemActionsEvent>(OnGetItemActions);
+        SubscribeLocalEvent<MCWeaponValiComponent, MCWeaponValiSelectReagentAction>(OnSelectReagentAction);
         SubscribeLocalEvent<MCWeaponValiComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MCWeaponValiComponent, ExaminedEvent>(OnExamine);
+    }
+
+    private void OnGetItemActions(Entity<MCWeaponValiComponent> entity, ref GetItemActionsEvent args)
+    {
+        args.AddAction(ref entity.Comp.ActionSelectReagent, entity.Comp.ActionSelectReagentId);
+        Dirty(entity);
+    }
+
+    private void OnSelectReagentAction(Entity<MCWeaponValiComponent> entity, ref MCWeaponValiSelectReagentAction args)
+    {
+        _userInterface.TryOpenUi(entity.Owner, MCWeaponValiSelectReagentUi.Key, args.Performer);
+        args.Handled = true;
     }
 
     private void OnInteractUsing(Entity<MCWeaponValiComponent> entity, ref InteractUsingEvent args)
@@ -97,6 +114,8 @@ public sealed class MCWeaponValiSystem : EntitySystem
         {
             solution.RemoveReagent(reagentId, quantity);
         }
+
+        Dirty(entity);
 
         if (!transfer)
             return false;

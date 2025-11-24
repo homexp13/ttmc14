@@ -9,6 +9,15 @@ namespace Content.Shared._MC.Weapon.Vali;
 public sealed partial class MCWeaponValiComponent : Component
 {
     [DataField, AutoNetworkedField]
+    public EntProtoId ActionSelectReagentId = "MCActionValiSelectReagent";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? ActionSelectReagent;
+
+    [DataField, AutoNetworkedField]
+    public ProtoId<ReagentPrototype>? SelectedReagent;
+
+    [DataField, AutoNetworkedField]
     public List<ProtoId<ReagentPrototype>> AllowedReagents = new();
 
     [DataField, AutoNetworkedField]
