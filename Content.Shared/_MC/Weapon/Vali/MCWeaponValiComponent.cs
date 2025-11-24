@@ -13,4 +13,7 @@ public sealed partial class MCWeaponValiComponent : Component
 
     [DataField, AutoNetworkedField]
     public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> Reagents = new();
+
+    [DataField, AutoNetworkedField]
+    public FixedPoint2 ReagentCapacity = 30;
 }
