@@ -28,6 +28,21 @@
   copyright: "Kathy Mar. Converted from MP3 to OGG."
   source: "https://www.youtube.com/watch?v=EslVBQL3Zt8"
 
+- files: ["United_Nations_On_the_March.ogg"]
+  license: null
+  copyright: "Unknown who provided. Converted from MP3 to OGG."
+  source: "https://www.youtube.com/watch?v=mH7MfWXnk-0&list=RDmH7MfWXnk-0"
+
+- files: ["When_Johnny_Comes_Marching_Home.ogg"]
+  license: "CC0-1.0"
+  copyright: "William Wallace. Converted from MP3 to OGG."
+  source: "https://www.youtube.com/watch?v=FZOlZs0u1_Y&list=RDFZOlZs0u1_Y"
+
+- files: ["American_Patriotic_Song_Over_there.ogg"]
+  license: "CC0-1.0"
+  copyright: "William Wallace. Converted from MP3 to OGG."
+  source: "https://www.youtube.com/watch?v=FZOlZs0u1_Y&list=RDFZOlZs0u1_Y"
+
 - files: ["Blood_On_the_Risers.ogg"]
   license: "CC0-1.0"
   copyright: "Traditional U.S. Army Airborne song. Converted from MP3 to OGG."
