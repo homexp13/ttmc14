@@ -1,4 +1,5 @@
-﻿using Content.Shared._MC.ASRS.Components;
+﻿using System.Collections.Frozen;
+using Content.Shared._MC.ASRS.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._MC.ASRS;

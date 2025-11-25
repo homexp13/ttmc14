@@ -11,13 +11,13 @@
     - state: computer
     - state: supply
   - type: ActivatableUI
-    key: enum.MCASRSConsoleUi.Key
+    key: enum.MCASRSConsoleUI.Key
   - type: ActivatableUIRequiresAccess
   - type: AccessReader
     access: [ [ "MCAccessCargo" ] ]
   - type: UserInterface
     interfaces:
-      enum.MCASRSConsoleUi.Key:
+      enum.MCASRSConsoleUI.Key:
         type: MCASRSBui
   - type: MCASRSConsole
     categories:

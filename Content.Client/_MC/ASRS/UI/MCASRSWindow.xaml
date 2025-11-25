@@ -1,0 +1,16 @@
+﻿<ui:MCASRSWindow
+    xmlns="https://spacestation14.io"
+    xmlns:ui="clr-namespace:Content.Client._MC.ASRS.UI"
+    xmlns:views="clr-namespace:Content.Client._MC.ASRS.UI.Views"
+    Title="ASRS console"
+    MinSize="1000 700">
+    <BoxContainer Name="MainContainer" Orientation="Horizontal">
+        <views:MCASRSCategoryView Name="CategoryView" HorizontalAlignment="Left" VerticalExpand="True" MaxWidth="450" Access="Public" />
+        <views:MCASRSOrdersView Name="OrdersView" HorizontalExpand="True" VerticalExpand="True" Access="Public" />
+        <views:MCASRSPendingOrdersView Name="PendingOrdersView" HorizontalExpand="True" VerticalExpand="True" Access="Public" />
+        <views:MCASRSRequestsView Name="RequestsView" HorizontalExpand="True" VerticalExpand="True" Access="Public" />
+        <views:MCASRSRequestsView Name="RequestsAwaitingDeliveryView" HorizontalExpand="True" VerticalExpand="True" Access="Public" />
+        <views:MCASRSRequestsView Name="RequestsApprovedHistoryView" HorizontalExpand="True" VerticalExpand="True" Access="Public" />
+        <views:MCASRSRequestsView Name="RequestsDeniedHistoryView" HorizontalExpand="True" VerticalExpand="True" Access="Public" />
+    </BoxContainer>
+</ui:MCASRSWindow>

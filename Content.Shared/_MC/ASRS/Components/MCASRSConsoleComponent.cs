@@ -11,17 +11,30 @@ public sealed partial class MCASRSConsoleComponent : Component
     [DataField, AutoNetworkedField, AlwaysPushInheritance]
     public List<MCASRSCategory> Categories = new();
 
+    [AutoNetworkedField]
+    public List<MCASRSEntry> CachedEntries = new();
+
+    #region Requests
+
+    [DataField, AutoNetworkedField, AlwaysPushInheritance]
+    public int RequestsLimit = 15;
+
+    [DataField, AutoNetworkedField, AlwaysPushInheritance]
+    public int RequestsHistoryLimit = 25;
+
     [DataField, AutoNetworkedField, AlwaysPushInheritance]
     public List<MCASRSRequest> Requests = new();
 
     [DataField, AutoNetworkedField, AlwaysPushInheritance]
-    public List<MCASRSRequest> ApprovedRequests = new();
+    public List<MCASRSRequest> RequestsAwaitingDelivery = new();
 
     [DataField, AutoNetworkedField, AlwaysPushInheritance]
-    public List<MCASRSRequest> DenyRequests = new();
+    public List<MCASRSRequest> RequestsApprovedHistory = new();
 
-    [AutoNetworkedField]
-    public List<MCASRSEntry> CachedEntries = new();
+    [DataField, AutoNetworkedField, AlwaysPushInheritance]
+    public List<MCASRSRequest> RequestsDenyHistory = new();
+
+    #endregion
 }
 
 [DataDefinition, Serializable, NetSerializable]

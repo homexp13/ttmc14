@@ -1,0 +1,5 @@
+﻿<buttons:MCASRSCategoryButton
+    xmlns="https://spacestation14.io"
+    xmlns:buttons="clr-namespace:Content.Client._MC.ASRS.UI.Buttons">
+    <Button Name="Button" HorizontalExpand="True" />
+</buttons:MCASRSCategoryButton>

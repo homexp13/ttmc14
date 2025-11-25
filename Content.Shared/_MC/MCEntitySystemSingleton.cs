@@ -16,4 +16,9 @@ public abstract class MCEntitySystemSingleton<TComponent> : EntitySystem where T
         var instance = Spawn();
         return (instance, AddComp<TComponent>(instance));
     }
+
+    protected void Dirty()
+    {
+        Dirty(Inst);
+    }
 }

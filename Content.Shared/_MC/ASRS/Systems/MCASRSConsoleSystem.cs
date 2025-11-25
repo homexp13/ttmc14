@@ -1,126 +1,142 @@
 ﻿using System.Linq;
 using Content.Shared._MC.ASRS.Components;
-using Content.Shared._MC.ASRS.Ui;
-using Content.Shared._RMC14.Marines.Roles.Ranks;
 
 namespace Content.Shared._MC.ASRS.Systems;
 
-public sealed class MCASRSConsoleSystem : EntitySystem
+public sealed partial class MCASRSConsoleSystem : EntitySystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = null!;
-
-    [Dependency] private readonly SharedRankSystem _rmcRank = null!;
-
-    [Dependency] private readonly MCASRSSystem _mcAsrs = null!;
+    private event Action<Entity<MCASRSConsoleComponent>>? OnRequestUpdated;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<MCASRSConsoleComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<MCASRSConsoleComponent, MCASRSConsoleSendRequestMessage>(OnRequestMessage);
-        SubscribeLocalEvent<MCASRSConsoleComponent, MCASRSConsoleApproveMessage>(OnApproveMessage);
-        SubscribeLocalEvent<MCASRSConsoleComponent, MCASRSConsoleApproveAllMessage>(OnApproveAllMessage);
-        SubscribeLocalEvent<MCASRSConsoleComponent, MCASRSConsoleDenyMessage>(OnDenyMessage);
-        SubscribeLocalEvent<MCASRSConsoleComponent, MCASRSConsoleDenyAllMessage>(OnDenyAllMessage);
+
+        InitializeBalance();
+        InitializeUI();
     }
 
     private void OnInit(Entity<MCASRSConsoleComponent> entity, ref ComponentInit args)
+    {
+        Cache(entity);
+        Refresh(entity);
+    }
+
+    private void TryAddRequest(Entity<MCASRSConsoleComponent> entity, MCASRSRequest request)
+    {
+        if (entity.Comp.Requests.Count >= entity.Comp.RequestsLimit)
+            return;
+
+        if (!ValidateRequest(entity, request))
+            return;
+
+        entity.Comp.Requests.Add(request);
+        Refresh(entity);
+    }
+
+    private void TryApprove(Entity<MCASRSConsoleComponent> entity, MCASRSRequest request)
+    {
+        if (!ContainsRequest(entity, request))
+            return;
+
+        if (!TryRemoveBalance(request))
+            return;
+
+        Approve(entity, request);
+    }
+
+    private void TryApprove(Entity<MCASRSConsoleComponent> entity, List<MCASRSRequest> requests)
+    {
+        if (!ContainsRequests(entity, requests))
+            return;
+
+        if (!TryRemoveBalance(requests))
+            return;
+
+        Approve(entity, requests);
+    }
+
+    private void Approve(Entity<MCASRSConsoleComponent> entity, MCASRSRequest request)
+    {
+        entity.Comp.Requests.Remove(request);
+        entity.Comp.RequestsAwaitingDelivery.Remove(request);
+        HistoryWrite(entity.Comp.RequestsApprovedHistory, request, entity.Comp.RequestsHistoryLimit);
+        Refresh(entity);
+    }
+
+    private void Approve(Entity<MCASRSConsoleComponent> entity, List<MCASRSRequest> requests)
+    {
+        foreach (var request in new List<MCASRSRequest>(requests))
+        {
+            Approve(entity, request);
+        }
+    }
+
+    private void Deny(Entity<MCASRSConsoleComponent> entity, MCASRSRequest request)
+    {
+        entity.Comp.Requests.Remove(request);
+        HistoryWrite(entity.Comp.RequestsDenyHistory, request, entity.Comp.RequestsHistoryLimit);
+        Refresh(entity);
+    }
+
+    private void Deny(Entity<MCASRSConsoleComponent> entity, List<MCASRSRequest> requests)
+    {
+        foreach (var request in new List<MCASRSRequest>(requests))
+        {
+            Deny(entity, request);
+        }
+    }
+
+    private void RefreshAll(bool dirty = true)
+    {
+        var query = EntityQueryEnumerator<MCASRSConsoleComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            Refresh((uid, component), dirty);
+        }
+    }
+
+    private void Refresh(Entity<MCASRSConsoleComponent> entity, bool dirty = true)
+    {
+        if (dirty)
+            Dirty(entity);
+
+        OnRequestUpdated?.Invoke(entity);
+    }
+
+    private static void HistoryWrite(List<MCASRSRequest> container, MCASRSRequest element, int limit)
+    {
+        if (container.Count > limit)
+        {
+            container.RemoveAt(0);
+            return;
+        }
+
+        container.Add(element);
+    }
+
+    private static bool ContainsRequest(Entity<MCASRSConsoleComponent> entity, MCASRSRequest request)
+    {
+        return entity.Comp.Requests.Contains(request);
+    }
+
+    private static bool ContainsRequests(Entity<MCASRSConsoleComponent> entity, List<MCASRSRequest> requests)
+    {
+        return entity.Comp.Requests.All(requests.Contains);
+    }
+
+    private static bool ValidateRequest(Entity<MCASRSConsoleComponent> entity, MCASRSRequest request)
+    {
+        return request.Reason != string.Empty && request.Contents.Keys.All(entry => entity.Comp.CachedEntries.Contains(entry));
+    }
+
+    private static void Cache(Entity<MCASRSConsoleComponent> entity)
     {
         entity.Comp.CachedEntries.Clear();
         foreach (var category in entity.Comp.Categories)
         {
             entity.Comp.CachedEntries.AddRange(category.Entries);
         }
-
-        RefreshUI(entity);
-    }
-
-    private void OnRequestMessage(Entity<MCASRSConsoleComponent> entity, ref MCASRSConsoleSendRequestMessage args)
-    {
-        if (!ValidateRequestMessage(entity, args))
-            return;
-
-        var totalCost = 0;
-        foreach (var (entry, count) in args.Contents)
-        {
-            totalCost += entry.Cost * count;
-        }
-
-        var name = GetRequesterName(args.Actor);
-        var request = new MCASRSRequest(name, args.Reason, args.Contents, totalCost);
-
-        entity.Comp.Requests.Add(request);
-
-        Dirty(entity);
-        RefreshUI(entity);
-    }
-
-    private void OnApproveAllMessage(Entity<MCASRSConsoleComponent> entity, ref MCASRSConsoleApproveAllMessage args)
-    {
-        var cost = entity.Comp.Requests.Sum(entry => entry.TotalCost);
-        if (_mcAsrs.Points < cost)
-            return;
-
-        _mcAsrs.RemovePoints(cost);
-
-        entity.Comp.ApprovedRequests.AddRange(entity.Comp.Requests);
-        entity.Comp.Requests.Clear();
-        Dirty(entity);
-        RefreshUI(entity);
-    }
-
-    private void OnApproveMessage(Entity<MCASRSConsoleComponent> entity, ref MCASRSConsoleApproveMessage args)
-    {
-        if (!entity.Comp.Requests.Contains(args.Request))
-            return;
-
-        if (_mcAsrs.Points < args.Request.TotalCost)
-            return;
-
-        _mcAsrs.RemovePoints(args.Request.TotalCost);
-
-        entity.Comp.Requests.Remove(args.Request);
-        entity.Comp.ApprovedRequests.Add(args.Request);
-
-        Dirty(entity);
-        RefreshUI(entity);
-    }
-
-    private void OnDenyMessage(Entity<MCASRSConsoleComponent> entity, ref MCASRSConsoleDenyMessage args)
-    {
-        if (!entity.Comp.Requests.Contains(args.Request))
-            return;
-
-        entity.Comp.Requests.Remove(args.Request);
-        entity.Comp.DenyRequests.Add(args.Request);
-
-        Dirty(entity);
-        RefreshUI(entity);
-    }
-
-    private void OnDenyAllMessage(Entity<MCASRSConsoleComponent> entity, ref MCASRSConsoleDenyAllMessage args)
-    {
-        entity.Comp.DenyRequests.AddRange(entity.Comp.Requests);
-        entity.Comp.Requests.Clear();
-
-        Dirty(entity);
-        RefreshUI(entity);
-    }
-
-    private string GetRequesterName(EntityUid userUid)
-    {
-        return _rmcRank.GetSpeakerFullRankName(userUid) ?? Name(userUid);
-    }
-
-    private static bool ValidateRequestMessage(Entity<MCASRSConsoleComponent> entity, MCASRSConsoleSendRequestMessage args)
-    {
-        return args.Reason != string.Empty
-               && args.Contents.Keys.All(entry => entity.Comp.CachedEntries.Contains(entry));
-    }
-
-    private void RefreshUI(Entity<MCASRSConsoleComponent> entity)
-    {
-        _userInterface.SetUiState(entity.Owner, MCASRSConsoleUi.Key, new MCASRSConsoleBuiState(_mcAsrs.Points, entity.Comp.Requests));
     }
 }

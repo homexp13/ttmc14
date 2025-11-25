@@ -1,22 +1,67 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared._MC.ASRS.Events;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared._MC.ASRS.Systems;
 
 public sealed class MCASRSSystem : MCEntitySystemSingleton<MCASRSSingletonComponent>
 {
-    public int Points
+    public const int MinBalance = 0;
+
+    private int Balance
     {
-        get => Inst.Comp.Points;
+        get => Inst.Comp.Balance;
         set
         {
-            Inst.Comp.Points = value;
+            Inst.Comp.Balance = value;
             Dirty(Inst);
         }
     }
 
-    public void RemovePoints(int cost)
+    #region Operations
+
+    public int GetBalance()
     {
-        Points -= cost;
+        return Balance;
+    }
+
+    public bool HasBalance(int required)
+    {
+        return GetBalance() >= required;
+    }
+
+    public void AddBalance(int amount)
+    {
+        var oldBalance = Balance;
+
+        Balance += amount;
+        Refresh(oldBalance);
+    }
+
+    public void RemoveBalance(int amount)
+    {
+        var oldBalance = Balance;
+
+        Balance = int.Max(Balance - amount, MinBalance);
+        Refresh(oldBalance);
+    }
+
+    public bool TryRemoveBalance(int amount)
+    {
+        if (!HasBalance(amount))
+            return false;
+
+        RemoveBalance(amount);
+        return true;
+    }
+
+    #endregion
+
+    private void Refresh(int oldBalance = 0)
+    {
+        Dirty();
+
+        var ev = new MCASRSBalanceChangedEvent(Balance, oldBalance);
+        RaiseLocalEvent(ref ev);
     }
 }
 
@@ -25,9 +70,9 @@ public sealed partial class MCASRSSingletonComponent : Component
 {
 #if FULL_RELEASE
     [DataField, AutoNetworkedField]
-    public int Points;
+    public int Balance;
 #else
     [DataField, AutoNetworkedField]
-    public int Points = 1000000;
+    public int Balance = 1000000;
 #endif
 }
