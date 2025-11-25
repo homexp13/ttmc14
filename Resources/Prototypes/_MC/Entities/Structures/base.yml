@@ -1,10 +1,31 @@
 - type: entity
-  parent: BaseStructure
   id: MCStructure
   categories: [ MCContent ]
   abstract: true
   placement:
     mode: SnapgridCenter
+  components:
+  - type: Tag
+    tags:
+    - Structure
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+  - type: Pullable
 
 - type: entity
   parent:

@@ -1,0 +1,135 @@
+- type: entity
+  id: MCApc
+  name: area power controller
+  description: A control terminal for the area electrical systems.
+  suffix: No Power
+  categories: [ MCContent ]
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: WallMount
+    arc: 360
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Appearance
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: _MC/Structures/Power/apc.rsi
+    offset: 0, -1
+    layers:
+    - state: base
+      map: [ "base" ]
+    - state: panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      visible: false
+    - state: display-charging
+      shader: unshaded
+      map: [ "enum.ApcVisualLayers.ChargeState" ]
+    - state: apcox-0
+      shader: unshaded
+      map: [ "enum.ApcVisualLayers.InterfaceLock" ]
+    - state: apcox-1
+      shader: unshaded
+      map: [ "enum.ApcVisualLayers.PanelLock" ]
+    - state: apco0-2
+      shader: unshaded
+      map: [ "enum.ApcVisualLayers.Equipment" ]
+    - state: apco1-2
+      shader: unshaded
+      map: [ "enum.ApcVisualLayers.Lighting" ]
+    - state: apco2-2
+      shader: unshaded
+      map: [ "enum.ApcVisualLayers.Environment" ]
+  - type: UserInterface
+    interfaces:
+      enum.RMCApcUiKey.Key:
+        type: RMCApcBui
+  - type: ActivatableUI
+    key: enum.RMCApcUiKey.Key
+  - type: ActivatableUIBlacklist
+    blacklist:
+      components:
+      - Xeno
+  - type: Corrodible
+    isCorrodible: false
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+  - type: RMCApc
+    startingCell: RMCPowerCellAPCNoPower
+    skillLevel: 0
+  - type: ContainerContainer
+    containers:
+      rmc_apc_power_cell: !type:ContainerSlot
+  - type: AccessReader
+    access: [ [ "MCAccessEngineering" ] ]
+  - type: PointLight
+    enabled: true
+    castShadows: false
+    radius: 1.5
+  - type: GenericVisualizer
+    visuals:
+      enum.RMCApcVisualsLayers.Layer:
+        base:
+          Working: { state: base }
+          WiresExposed: { state: apcewires }
+          CoverOpenBattery: { state: apc2 }
+          CoverOpenNoBattery: { state: apc1 }
+        enum.WiresVisualLayers.MaintenancePanel:
+          Working: { visible: false }
+          WiresExposed: { visible: false }
+        enum.ApcVisualLayers.ChargeState:
+          Working: { visible: true }
+          WiresExposed: { visible: false }
+          CoverOpenBattery: { visible: false }
+          CoverOpenNoBattery: { visible: false }
+        enum.ApcVisualLayers.InterfaceLock:
+          Working: { visible: true }
+          WiresExposed: { visible: false }
+          CoverOpenBattery: { visible: false }
+          CoverOpenNoBattery: { visible: false }
+        enum.ApcVisualLayers.PanelLock:
+          Working: { visible: true }
+          WiresExposed: { visible: false }
+          CoverOpenBattery: { visible: false }
+          CoverOpenNoBattery: { visible: false }
+        enum.ApcVisualLayers.Equipment:
+          Working: { visible: true }
+          WiresExposed: { visible: false }
+          CoverOpenBattery: { visible: false }
+          CoverOpenNoBattery: { visible: false }
+        enum.ApcVisualLayers.Lighting:
+          Working: { visible: true }
+          WiresExposed: { visible: false }
+          CoverOpenBattery: { visible: false }
+          CoverOpenNoBattery: { visible: false }
+        enum.ApcVisualLayers.Environment:
+          Working: { visible: true }
+          WiresExposed: { visible: false }
+          CoverOpenBattery: { visible: false }
+          CoverOpenNoBattery: { visible: false }
+      enum.RMCApcVisualsLayers.Lock:
+        enum.ApcVisualLayers.InterfaceLock:
+          true: { state: apcox-1 }
+          false: { state: apcox-0 }
+      enum.RMCApcVisualsLayers.Power:
+        enum.ApcVisualLayers.ChargeState:
+          NotCharging: { state: display-lack }
+          Charging: { state: display-charging }
+          FullCharge: { state: display-full }
+
+- type: entity
+  parent: MCApc
+  id: MCApcAlmayer
+  suffix: MC, Almayer
+  components:
+  - type: RMCApc
+    startingCell: RMCPowerCellHigh
