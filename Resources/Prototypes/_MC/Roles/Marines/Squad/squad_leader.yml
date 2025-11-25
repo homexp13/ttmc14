@@ -37,7 +37,11 @@
       points: 45
     - type: Skills
       skills:
-        RMCSkillLeadership: 1
+        RMCSkillLeadership: 3
+        RMCSkillEngineer: 2
+        RMCSkillConstruction: 2
+        RMCSkillMedical: 1
+        RMCSkillSurgery: 1
         RMCSkillSmartGun: 0
         RMCSkillFirearms: 1
         RMCSkillJtac: 1
