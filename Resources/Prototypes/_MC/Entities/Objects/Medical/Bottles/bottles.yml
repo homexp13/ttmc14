@@ -329,8 +329,8 @@
   parent: MCBottleFilled
   id: MCBottleLemoline
   name: lemoline bottle
-  description: A small bottle. Contains 10 units of lemoline, a reagent used in the creation of advanced medicine.
-  suffix: MC, 10
+  description: A small bottle. Contains 60 units of lemoline, a reagent used in the creation of advanced medicine.
+  suffix: MC, 60
   components:
   - type: SolutionContainerManager
     solutions:
@@ -338,10 +338,10 @@
         maxVol: 60
         reagents:
         - ReagentId: MCLemoline
-          Quantity: 10
+          Quantity: 60
   - type: CMRefillableSolution
     reagents:
-      MCLemoline: 10
+      MCLemoline: 60
 
 - type: entity
   parent: MCBottleFilled

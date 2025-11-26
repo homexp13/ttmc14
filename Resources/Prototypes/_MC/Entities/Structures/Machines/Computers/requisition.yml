@@ -22,6 +22,15 @@
   - type: MCASRSConsole
     categories:
     - name: Operations
+      entries:
+      - name: Supply beacon
+        cost: 100
+        entities:
+        - MCBeaconSupply
+      - name: Orbital beacon
+        cost: 50
+        entities:
+        - MCBeaconOrbital
     - name: Weapons
       entries:
       - name: PB-12 pepperball gun
@@ -41,26 +50,91 @@
         cost: 300
         entities:
         - MCTankFlamerBlue
+      - name: Standard backpack fuel tank
+        cost: 200
+        entities:
+        - MCBackpackFlamer
+      - name: X-fuel backpack fuel tank
+        cost: 600
+        entities:
+        - MCBackpackFlamerX
+      - name: SR-127 flak magazine
+        cost: 50
+        entities:
+        - MCMagazineSR127Flak
+      - name: AR-12 armor piercing magazine
+        cost: 30
+        entities:
+        - MCMagazineRifleAR12AP
     - name: Stationary
       entries:
+      # Base
       - name: SBT-571 sentry gun
         cost: 200
         entities:
         - MCSentryBig
+      - name: SBT-571 sentry gun magazine
+        cost: 50
+        entities:
+        - MCMagazineSentryBig
+      # Mini
       - name: SMT-580 sentry gun
         cost: 350
         entities:
         - MCSentryMini
+      - name: SMT-580 sentry gun magazine
+        cost: 50
+        entities:
+        - MCMagazineSentryMini
+      # Sniper
       - name: SST-574 sentry gun
         cost: 350
         entities:
         - MCSentrySniper
+      - name: SBT-571 sentry gun magazine
+        cost: 50
+        entities:
+        - MCMagazineSentrySniper
+      # Shotgun
       - name: SHT-573 sentry gun
         cost: 350
         entities:
         - MCSentryShotgun
+      - name: SHT-573 sentry gun magazine
+        cost: 50
+        entities:
+        - MCMagazineSentryShotgun
     - name: Explosives
     - name: Armor
+      entries:
+      - name: Scout cloak (WIP)
+        cost: 500
+        entities:
+        - RMCBackpackScout
+      - name: Sniper cloak (WIP)
+        cost: 500
+        entities:
+        - CMArmorM45
+      - name: Valkyrie automedical system (WIP)
+        cost: 200
+        entities:
+        - MCArmorModuleValkyrieAutomedical
+      - name: Surt thermal insulation system
+        cost: 120
+        entities:
+        - MCArmorModuleSurtPyrotechnical
+      - name: Tyr Mk.2 armor reinforcement system
+        cost: 120
+        entities:
+        - MCArmorModuleMark2TyrArmor
+      - name: Mimir Mk.2 environmental resistance system
+        cost: 120
+        entities:
+        - MCArmorModuleMark2Mimir
+      - name: hlin explosive compensation module
+        cost: 100
+        entities:
+        - MCArmorModuleHlinExplosive
     - name: Clothing
     - name: Medical
     - name: Engineering
@@ -81,6 +155,112 @@
         cost: 100
         entities:
         - CMSheetGlass
+      - name: 50 phoron Sheets
+        cost: 200
+        entities:
+        - MCSheetPhoron
+    - name: Smartguns
+      entries:
+      # SG-29
+      - name: SG-29 smart machine gun
+        cost: 400
+        entities:
+        - MCWeaponSmartGunSG29
+      - name: SG-29 ammo drum
+        cost: 50
+        entities:
+        - MCMagazineSmartGunSG29
+      # SG-25
+      - name: SG-25 smartrifle
+        cost: 400
+        entities:
+        - MCWeaponSmartGunSG25
+      - name: SG-25 smartrifle magazine
+        cost: 20
+        entities:
+        - MCMagazineSmartGunSG25
+      - name: SG-25 extended magazine
+        cost: 200
+        entities:
+        - MCMagazineSmartGunSG25Extended
+      - name: SG-29 & SG-25 smartrifle ammo box
+        cost: 400
+        entities:
+        - MCBoxBulletsSmartGunSG29
+      # SG-62
+      - name: SG-62 smart target rifle
+        cost: 400
+        entities:
+        - MCWeaponSmartGunSG62
+      - name: SG-62 smart target rifle ammo
+        cost: 35
+        entities:
+        - MCMagazineSmartGunSG62
+      - name: SG-62 smart target rifle ammo box
+        cost: 50
+        entities:
+        - MCBoxBulletsSmartGunSG62
+      # SG-153
+      - name: SG-153 spotting rifle ammo
+        cost: 15
+        entities:
+        - MCMagazineSmartGunSG153
+      - name: SG-153 spotting rifle ammo box
+        cost: 10
+        entities:
+        - MCBoxBulletsSmartGunSG153
+      - name: SG-153 high impact spotting rifle ammo
+        cost: 50
+        entities:
+        - MCMagazineSmartGunSG153Highimpact
+      - name: SG-153 heavy rubber spotting rifle ammo
+        cost: 15
+        entities:
+        - MCMagazineSmartGunSG153Heavyrubber
+      - name: SG-153 tanglefoot spotting rifle ammo
+        cost: 15
+        entities:
+        - MCMagazineSmartGunSG153Plasmaloss
+      - name: SG-153 tungsten spotting rifle ammo
+        cost: 15
+        entities:
+        - MCMagazineSmartGunSG153Tungsten
+      - name: SG-153 flak spotting rifle ammo
+        cost: 15
+        entities:
+        - MCMagazineSmartGunSG153Flak
+      - name: SG-153 incendiary spotting rifle ammo
+        cost: 15
+        entities:
+        - MCMagazineSmartGunSG153Incendiary
+    - name: Medical
+      entries:
+      - name: Lemoline bottle
+        cost: 80
+        entities:
+        - MCBottleLemoline
+      - name: Advanced medical packs
+        cost: 100
+        entities:
+        - MCTraumaKitCombat
+        - MCTraumaKitCombat
+        - MCTraumaKitCombat
+        - MCTraumaKitCombat
+        - MCTraumaKitCombat
+        - MCBurnKitCombat
+        - MCBurnKitCombat
+        - MCBurnKitCombat
+        - MCBurnKitCombat
+        - MCBurnKitCombat
+      - name: Health scanner gloves
+        cost: 60
+        entities:
+        - MCClothingHandsHealthanalyzer
+      - name: Bluespace beakers
+        cost: 60
+        entities:
+        - MCBeakerBluespace
+        - MCBeakerBluespace
     - name: Supplies
     - name: Imports
     - name: Vehicles

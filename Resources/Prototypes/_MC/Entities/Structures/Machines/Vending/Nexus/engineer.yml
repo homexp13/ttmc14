@@ -79,7 +79,8 @@
         points: 4 # Это оправдывает цену
       - id: MCTankFlamer
         points: 2 # КАКИЕ НАХУЙ 4 ПОИНТА НА ЭТУ ХУЙНЮ!?
-      # Supply beacon
+      - id: MCBeaconSupply
+        points: 5
     - name: Mining
       entries: []
     - name: Artillery
@@ -110,6 +111,7 @@
     state: icon
   - type: CMVendorBundle
     bundle:
+    - MCBeaconSupply
     - RMCExplosivePlastic
     - RMCPowerCellHigh
     - CMAPCElectronics
