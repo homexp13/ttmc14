@@ -1,5 +1,5 @@
 - type: entity
-  parent: RMCBaseArmor
+  parent: MCArmor
   id: MCTagilaArmourVest
   name: Tagila armour vest
   description: A lightweight bulletproof vest — it’s surprisingly durable.

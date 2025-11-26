@@ -72,7 +72,7 @@ public sealed class MCXenoAgilitySystem : EntitySystem
 
     private void OnActiveArmorGet(Entity<MCXenoAgilityActiveComponent> entity, ref MCArmorGetEvent args)
     {
-        args.ArmorDefinition -= entity.Comp.ArmorFlat;
+        args.ArmorDefinition += entity.Comp.ArmorFlat;
     }
 
     private bool TryUse(Entity<MCXenoAgilityComponent> entity, ref MCXenoAgilityActionEvent args)

@@ -1,5 +1,5 @@
 - type: entity
-  parent: RMCBaseMarineArmorLight
+  parent: MCArmor
   id: MCArmorPas50
   name: PAS-50 pattern pilot armor
   description: A reused design of a old body armor system from the 21st century.
@@ -21,7 +21,7 @@
     sprintModifier: 0.9
 
 - type: entity
-  parent: RMCBaseMarineArmorLight
+  parent: MCArmor
   id: MCArmorPas13
   name: PAS-13 pattern mech pilot armor
   description: A somewhat sparsely armored but robust armored vest, still in use despite the rise of exoskeleton armor due to ease of use and manufacturing. While the suit is a bit more encumbering to wear with the mech pilot uniform, it offers the them a degree of protection that they otherwise do not enjoy outside their mech.
@@ -43,7 +43,7 @@
     sprintModifier: 0.9
 
 - type: entity
-  parent: RMCBaseMarineArmorLight
+  parent: MCArmor
   id: MCArmorPas73
   name: PAS-73 pattern tanker armor
   description: A somewhat sparsely armored but robust armored vest. Used by tankers, mostly to absorb bumps in the road as they drive over enemies.
@@ -65,7 +65,7 @@
     sprintModifier: 0.9
 
 - type: entity
-  parent: RMCBaseMarineArmorLight
+  parent: MCArmor
   id: MCArmorPas74
   name: PAS-74 pattern transport armor
   description: A somewhat sparsely armored but robust armored vest. Used by transport crewmen so that they can pretend that they may survive when their vehicle is overrun.

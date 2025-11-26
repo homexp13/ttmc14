@@ -98,10 +98,10 @@ public sealed partial class MCWeaponValiSystem : EntitySystem
         if (!TryGetSolutionId(entity, usedUid, out var solutionId, out var shouldDelete))
             return false;
 
-        if (!_solutionContainer.TryGetSolution(usedUid, solutionId, out _, out var solution))
+        if (!_solutionContainer.TryGetSolution(usedUid, solutionId, out var solutionEntity, out var solution))
             return false;
 
-        var removedReagents = new List<(string, FixedPoint2)>();
+        var removedReagents = new List<ReagentQuantity>();
         var transfer = false;
         foreach (var reagent in solution.Contents)
         {
@@ -120,14 +120,13 @@ public sealed partial class MCWeaponValiSystem : EntitySystem
 
             var quantity = reagent.Quantity > entity.Comp.ReagentCapacity + value ? reagent.Quantity - entity.Comp.ReagentCapacity : reagent.Quantity;
             entity.Comp.Reagents[reagentId] = FixedPoint2.Clamp(value + quantity, 0, entity.Comp.ReagentCapacity);
-            removedReagents.Add((reagentId, quantity));
-
+            removedReagents.Add(new ReagentQuantity(reagentId, quantity));
             transfer = true;
         }
 
-        foreach (var (reagentId, quantity) in removedReagents)
+        foreach (var reagent in removedReagents)
         {
-            solution.RemoveReagent(reagentId, quantity);
+            _solutionContainer.RemoveReagent(solutionEntity.Value, reagent);
         }
 
         Dirty(entity);

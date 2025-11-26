@@ -1,24 +1,24 @@
-﻿using Content.Shared._MC.Xeno.Abilities.ToxicStacks;
-using Content.Shared._RMC14.Actions;
+﻿using Content.Shared._MC.Damage;
+using Content.Shared._MC.Stun;
+using Content.Shared._MC.Xeno.Abilities.ToxicStacks;
+using Content.Shared._MC.Xeno.Heal;
 using Content.Shared._RMC14.Emote;
-using Content.Shared._RMC14.Xenonids.Heal;
 using Content.Shared._RMC14.Xenonids.Plasma;
-using Content.Shared.Damage;
 using Content.Shared.Popups;
-using Content.Shared.Stunnable;
 
 namespace Content.Shared._MC.Xeno.Abilities.DrainSting;
 
-public sealed class MCXenoDrainStingSystem : EntitySystem
+public sealed class MCXenoDrainStingSystem : MCXenoAbilitySystem
 {
-    [Dependency] private readonly RMCActionsSystem _rmcActions = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly SharedRMCEmoteSystem _emote = default!;
-    [Dependency] private readonly SharedXenoHealSystem _xenoHeal = default!;
-    [Dependency] private readonly XenoPlasmaSystem _xenoPlasma = default!;
-    [Dependency] private readonly MCXenoToxicStacksSystem _xenoToxicStacks = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = null!;
+
+    [Dependency] private readonly XenoPlasmaSystem _rmcXenoPlasma = null!;
+    [Dependency] private readonly SharedRMCEmoteSystem _rmcEmote = null!;
+
+    [Dependency] private readonly MCXenoToxicStacksSystem _mcXenoToxicStacks = null!;
+    [Dependency] private readonly MCDamageableSystem _mcDamageable = null!;
+    [Dependency] private readonly MCXenoHealSystem _mcXenoHeal = null!;
+    [Dependency] private readonly MCStunSystem _mcStun = null!;
 
     public override void Initialize()
     {
@@ -44,23 +44,29 @@ public sealed class MCXenoDrainStingSystem : EntitySystem
             return;
         }
 
-        if (!_rmcActions.TryUseAction(entity, args.Action, entity))
+        if (!RMCActions.TryUseAction(entity, args.Action, entity))
             return;
 
         args.Handled = true;
 
         var stacks = toxicStacksComponent.Count;
-        var drainPotency = stacks * 6;
+        var drainPotency = stacks * entity.Comp.PotencyMultiplier;
 
         if (stacks > toxicStacksComponent.Max - 10)
-            _emote.TryEmoteWithChat(args.Target, "Scream");
+            _rmcEmote.TryEmoteWithChat(args.Target, "Scream");
 
         // TODO: bonus armor
 
-        _damageable.TryChangeDamage(args.Target, entity.Comp.Damage * drainPotency / 5);
-        _stun.TryKnockdown(args.Target, TimeSpan.FromSeconds(Math.Max(0.1f, (stacks - 10f) / 10f)), true);
-        _xenoHeal.Heal(entity, drainPotency);
-        _xenoPlasma.RegenPlasma(entity.Owner, drainPotency * 3.5f);
-        _xenoToxicStacks.TryAdd(args.Target, (int) -Math.Round(stacks * 0.7f));
+        var damage = entity.Comp.Damage * drainPotency / 5;
+        var paralyzeDuration = TimeSpan.FromSeconds(Math.Max(0.1f, (stacks - 10f) / 10f));
+
+        _mcDamageable.AdjustBurnLoss(args.Target, damage);
+        _mcStun.Paralyze(args.Target, paralyzeDuration);
+
+        _mcXenoHeal.Heal(entity, drainPotency);
+        _rmcXenoPlasma.RegenPlasma(entity.Owner, drainPotency * 3.5f);
+        _mcXenoToxicStacks.TryAdd(args.Target, (int) -float.Round(stacks * 0.7f));
+
+        AnimateHit(entity, args.Target);
     }
 }

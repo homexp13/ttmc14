@@ -1,5 +1,6 @@
 ﻿using Content.Shared._RMC14.Actions;
 using Content.Shared._RMC14.Armor;
+using Content.Shared._RMC14.Weapons.Melee;
 using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.Effects;
@@ -17,6 +18,7 @@ public abstract class MCXenoAbilitySystem : EntitySystem
     /// Automatically injected by dependency resolution.
     /// </summary>
     [Dependency] protected readonly RMCActionsSystem RMCActions = null!;
+    [Dependency] protected readonly SharedRMCMeleeWeaponSystem RMCMelee = null!;
 
     [Dependency] protected readonly SharedActionsSystem Actions = null!;
     [Dependency] protected readonly SharedColorFlashEffectSystem ColorFlash = null!;
@@ -32,6 +34,12 @@ public abstract class MCXenoAbilitySystem : EntitySystem
         return TryComp<CMArmorPiercingComponent>(uid, out var comp)
             ? comp.Amount
             : 0;
+    }
+
+    protected void AnimateHit(EntityUid ownerUid, EntityUid targetUid, Color? color = null)
+    {
+        RMCMelee.DoLunge(ownerUid, targetUid);
+        RaiseEffect(ownerUid, targetUid, color);
     }
 
     protected void RaiseEffect(EntityUid ownerUid, EntityUid targetUid, Color? color = null)

@@ -111,10 +111,10 @@ public sealed class MCDeploySystem : EntitySystem
     {
         args.Handled = true;
 
-        if (!CanDeployPopup(entity, args.User, out _, out _))
+        if (!CanDeployPopup(entity, args.User, out var coordinates, out var angle))
             return;
 
-        var ev = new MCDeployDoAfterEvent();
+        var ev = new MCDeployDoAfterEvent(GetNetCoordinates(coordinates), angle);
         var delay = entity.Comp.DeployTime;
         var doAfter = new DoAfterArgs(EntityManager, args.User, delay, ev, entity, entity, entity)
         {
@@ -131,12 +131,17 @@ public sealed class MCDeploySystem : EntitySystem
             return;
 
         args.Handled = true;
-        if (!CanDeployPopup(entity, args.User, out var coordinates, out var angle))
+
+        var coordinates = GetCoordinates(args.Coordinates);
+        var angle = args.Angle;
+
+        if (!CanDeployPopup(entity, args.User, coordinates))
             return;
 
         SetState(entity, MCDeployState.Deployed);
 
         var xform = Transform(entity);
+
         _transform.SetCoordinates(entity, xform, coordinates, angle);
         _transform.AnchorEntity(entity, xform);
     }
@@ -232,7 +237,15 @@ public sealed class MCDeploySystem : EntitySystem
         var direction = rotation.GetCardinalDir();
         coordinates = coordinates.Offset(direction.ToVec());
 
-        if (_rmcMap.CanBuildOn(coordinates))
+        return CanDeployPopup(entity, user, coordinates);
+    }
+
+    private bool CanDeployPopup(Entity<MCDeployComponent> entity, EntityUid user, EntityCoordinates coordinates)
+    {
+        var ev = new MCDeployAttemptEvent(coordinates);
+        RaiseLocalEvent(entity, ref ev);
+
+        if (!ev.Cancelled && _rmcMap.CanBuildOn(coordinates))
             return true;
 
         _popup.PopupClient(Loc.GetString("rmc-sentry-need-open-area", ("sentry", entity)), user, user, PopupType.SmallCaution);

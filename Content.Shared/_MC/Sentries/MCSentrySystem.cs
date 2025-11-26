@@ -1,4 +1,5 @@
-﻿using Content.Shared._MC.Areas;
+﻿using System.Linq;
+using Content.Shared._MC.Areas;
 using Content.Shared._MC.Chat;
 using Content.Shared._MC.Damage.Integrity.Systems;
 using Content.Shared._MC.Deploy;
@@ -13,12 +14,15 @@ namespace Content.Shared._MC.Sentries;
 
 public sealed class MCSentrySystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = null!;
 
-    [Dependency] private readonly MCAreasSystem _mcArea = default!;
-    [Dependency] private readonly MCIntegritySystem _mcIntegrity = default!;
-    [Dependency] private readonly MCSharedRadioSystem _mcRadio = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = null!;
+    [Dependency] private readonly SharedTransformSystem _transform = null!;
 
+    [Dependency] private readonly MCAreasSystem _mcArea = null!;
+    [Dependency] private readonly MCDeploySystem _mcDeploy = null!;
+    [Dependency] private readonly MCIntegritySystem _mcIntegrity = null!;
+    [Dependency] private readonly MCSharedRadioSystem _mcRadio = null!;
 
     public override void Initialize()
     {
@@ -28,6 +32,7 @@ public sealed class MCSentrySystem : EntitySystem
         SubscribeLocalEvent<MCSentryComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<MCSentryComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<MCSentryComponent, MCDeployChangedStateEvent>(OnDeployChangedState);
+        SubscribeLocalEvent<MCSentryComponent, MCDeployAttemptEvent>(OnDeployAttempt);
     }
 
     private void OnShouldInteract(Entity<MCSentryComponent> entity, ref CombatModeShouldHandInteractEvent args)
@@ -79,5 +84,14 @@ public sealed class MCSentrySystem : EntitySystem
             default:
                 throw new ArgumentOutOfRangeException();
         }
+    }
+
+    private void OnDeployAttempt(Entity<MCSentryComponent> entity, ref MCDeployAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        args.Cancelled = _entityLookup.GetEntitiesInRange<MCSentryComponent>(args.Coordinates, entity.Comp.DefenseCheckRange)
+            .Any(uid => entity != uid && _mcDeploy.Deployed(uid));
     }
 }

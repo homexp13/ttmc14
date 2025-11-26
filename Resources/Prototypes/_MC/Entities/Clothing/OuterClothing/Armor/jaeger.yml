@@ -1,5 +1,5 @@
 - type: entity
-  parent: RMCBaseMarineArmorLight
+  parent: MCArmor
   id: MCArmorModularJaeger
   abstract: true
   components:

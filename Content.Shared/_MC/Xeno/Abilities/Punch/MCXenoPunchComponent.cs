@@ -13,19 +13,19 @@ public sealed partial class MCXenoPunchComponent : Component
     public TimeSpan StaggerTime = TimeSpan.FromSeconds(3);
 
     [DataField, AutoNetworkedField]
-    public float DamageMultiplier = 1.2f;
+    public float DamageMultiplier = 1.5f;
 
     [DataField, AutoNetworkedField]
-    public float EmpowerMultiplier = 1.2f;
+    public float EmpowerMultiplier = 1.5f;
 
     [DataField, AutoNetworkedField]
-    public float GrappledDamageMultiplier = 1.5f;
+    public float GrappledDamageMultiplier = 1.75f;
 
     [DataField, AutoNetworkedField]
-    public float GrappledDebuffMultiplier = 1.5f;
+    public float GrappledDebuffMultiplier = 2f;
 
     [DataField, AutoNetworkedField]
-    public TimeSpan GrappledParalyzeTime = TimeSpan.FromSeconds(0.5);
+    public TimeSpan GrappledParalyzeTime = TimeSpan.FromSeconds(1);
 
     [DataField, AutoNetworkedField]
     public float KnockbackDistance = 1f;

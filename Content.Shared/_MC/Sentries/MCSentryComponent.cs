@@ -26,5 +26,8 @@ public sealed partial class MCSentryComponent : Component
     public ProtoId<RadioChannelPrototype> AlertChannel = "MarineCommon";
 
     [DataField, AutoNetworkedField]
+    public float DefenseCheckRange = 2.5f;
+
+    [DataField, AutoNetworkedField]
     public bool AlertMode = true;
 }

@@ -1,5 +1,5 @@
 - type: entity
-  parent: MCArmorModularJaeger
+  parent: MCArmor
   id: MCArmorModularXenonauten
   abstract: true
   components:

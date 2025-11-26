@@ -1,0 +1,34 @@
+- type: entity
+  parent: RMCBaseMarineArmorLight
+  id: MCArmor
+  categories: [ MCContent ]
+  abstract: true
+  components:
+  - type: AllowSuitStorage
+    whitelist:
+      components:
+      - RMCLighter
+      - Bible
+      - Gun
+      - CassettePlayer
+      tags:
+      - GasTank
+      - Flashlight
+      - DiscreteHealthAnalyzer
+      - CigPack
+      - Knife
+      - RMCG8Pouch
+      - RMCMacheteScabbard
+      - RMCScabbardKatana
+      - MCScabbardKatana
+      - MCScabbardMachete
+      - MCMeleeWeaponVali
+      - RMCM82FHolster
+      - RMCSmartPistolHolster
+      - RMCSMGHolster
+      - RMCSMGPouchHolster
+      - RMCGeneralPistolHolster
+      - RMCGeneralRevolverHolster
+      - RMCXM51Holster
+      - RMCDetector
+      - RMCMatebaHolster

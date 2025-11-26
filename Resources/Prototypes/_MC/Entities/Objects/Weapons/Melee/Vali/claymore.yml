@@ -17,9 +17,6 @@
     sprite: _MC/Objects/Weapons/Melee/Vali/claymore.rsi
   - type: Clothing
     sprite: _MC/Objects/Weapons/Melee/Vali/claymore.rsi
-    slots:
-    - back
-    - suitStorage
   - type: MCWeaponVali
     reagentCapacity: 60
   - type: MeleeWeapon

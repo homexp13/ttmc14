@@ -1,5 +1,4 @@
-﻿using Content.Shared.Damage;
-using Robust.Shared.GameStates;
+﻿using Robust.Shared.GameStates;
 
 namespace Content.Shared._MC.Xeno.Abilities.DrainSting;
 
@@ -7,11 +6,8 @@ namespace Content.Shared._MC.Xeno.Abilities.DrainSting;
 public sealed partial class MCXenoDrainStingComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public DamageSpecifier Damage = new()
-    {
-        DamageDict =
-        {
-            { "MCBurn", 1 },
-        },
-    };
+    public float Damage = 1;
+
+    [DataField, AutoNetworkedField]
+    public float PotencyMultiplier = 6;
 }

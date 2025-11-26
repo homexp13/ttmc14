@@ -14,6 +14,11 @@
       map: [ "enum.MCWeaponValiVisualLayers.Blade" ]
   - type: Item
     size: Large
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Back
   - type: MeleeWeapon
     angle: 0
     wideAnimationRotation: -135

@@ -1,4 +1,5 @@
 ﻿using Content.Shared._MC.Knockback;
+using Content.Shared._MC.Stamina;
 using Content.Shared._MC.Stun;
 using Content.Shared._MC.Xeno.Abilities.Agility;
 using Content.Shared._RMC14.Actions;
@@ -17,24 +18,25 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared._MC.Xeno.Abilities.Punch;
 
-public sealed class MCXenoPunchSystem : EntitySystem
+public sealed class MCXenoPunchSystem : MCXenoAbilitySystem
 {
     private static readonly LocId LocIdTargetDead = "mc-xeno-punch-target-dead";
-    private static readonly LocId LocIdCannotPucnh = "mc-xeno-punch-cannot-punch";
+    private static readonly LocId LocIdCannotPunch = "mc-xeno-punch-cannot-punch";
     private static readonly LocId LocIdCannotDamage = "mc-xeno-punch-cannot-damage";
 
-    [Dependency] private readonly SharedXenoHiveSystem _xenoHive = default!;
-    [Dependency] private readonly RMCActionsSystem _rmcActions = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedJitteringSystem _jittering = default!;
-    [Dependency] private readonly MCStunSystem _mcStun = default!;
-    [Dependency] private readonly RMCCameraShakeSystem _cameraShake = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly RMCStaminaSystem _stamina = default!;
-    [Dependency] private readonly MCKnockbackSystem _mcKnockback = default!;
-    [Dependency] private readonly SharedRMCMeleeWeaponSystem _rmcMelee = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = null!;
+    [Dependency] private readonly SharedPopupSystem _popup = null!;
+    [Dependency] private readonly MobStateSystem _mobState = null!;
+    [Dependency] private readonly SharedJitteringSystem _jittering = null!;
+    [Dependency] private readonly RMCCameraShakeSystem _cameraShake = null!;
+    [Dependency] private readonly DamageableSystem _damageable = null!;
+
+    [Dependency] private readonly SharedRMCMeleeWeaponSystem _rmcMelee = null!;
+    [Dependency] private readonly SharedXenoHiveSystem _rmcXenoHive = null!;
+
+    [Dependency] private readonly MCStunSystem _mcStun = null!;
+    [Dependency] private readonly MCStaminaSystem _mcStamina = null!;
+    [Dependency] private readonly MCKnockbackSystem _mcKnockback = null!;
 
     public override void Initialize()
     {
@@ -50,10 +52,13 @@ public sealed class MCXenoPunchSystem : EntitySystem
 
         // TODO: empower
         const bool empowered = false;
+
         var empowerMultiplier = empowered ? entity.Comp.EmpowerMultiplier : 1;
         var grappled = TryComp<PullerComponent>(entity, out var pullerComponent) && pullerComponent.Pulling == args.Target;
-        var damage = TryComp<MeleeWeaponComponent>(entity, out var meleeWeaponComponent) ? meleeWeaponComponent.Damage : new DamageSpecifier();
+
+        var damage = GetDamage(entity);
         var damageTotal = damage.GetTotal().Float();
+
         var sound = entity.Comp.Sound;
 
         var structureDamageMultiplier = HasComp<MobStateComponent>(args.Target) ? 1 : 4;
@@ -74,17 +79,21 @@ public sealed class MCXenoPunchSystem : EntitySystem
         }
 
         _jittering.DoJitter(args.Target, entity.Comp.ShakeTime, refresh: true);
+
         _cameraShake.ShakeCamera(args.Target, 1, 1);
+
         _mcStun.Slowdown(args.Target, slowdown);
         _mcStun.Stagger(args.Target, stagger);
+
         // TODO: blur
-        // TODO: take into account the bonus from additional damage from pheromones, etc.
+
         _damageable.TryChangeDamage(args.Target, damage * damageMultiplier * empowerMultiplier * structureDamageMultiplier, origin: entity, tool: entity);
-        _stamina.DoStaminaDamage(args.Target, damageTotal * damageMultiplier * empowerMultiplier * structureDamageMultiplier);
+        _mcStamina.Damage(args.Target, damageTotal * damageMultiplier * empowerMultiplier * structureDamageMultiplier);
         _mcKnockback.KnockbackFrom(args.Target, entity, entity.Comp.KnockbackDistance, entity.Comp.KnockbackSpeed);
 
         // Effects
-        _rmcMelee.DoLunge(entity, args.Target);
+        AnimateHit(entity, args.Target);
+
         _audio.PlayPredicted(sound, entity, entity);
     }
 
@@ -99,9 +108,9 @@ public sealed class MCXenoPunchSystem : EntitySystem
             return false;
         }
 
-        if (_xenoHive.FromSameHive(entity.Owner, args.Target))
+        if (_rmcXenoHive.FromSameHive(entity.Owner, args.Target))
         {
-            PopupClient(LocIdCannotPucnh);
+            PopupClient(LocIdCannotPunch);
             return false;
         }
 
@@ -111,7 +120,7 @@ public sealed class MCXenoPunchSystem : EntitySystem
             return false;
         }
 
-        if (!_rmcActions.TryUseAction(entity, args.Action, entity))
+        if (!RMCActions.TryUseAction(entity, args.Action, entity))
             return false;
 
         RemComp<MCXenoAgilityActiveComponent>(entity);

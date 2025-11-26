@@ -123,8 +123,8 @@
   - type: Climbable
   - type: Anchorable
   - type: MeleeSound
-    soundGroups:
-      Brute:
+    soundTypes:
+      MCBrute:
         path:
           "/Audio/_RMC14/Structures/metalhit.ogg"
   - type: Sprite
