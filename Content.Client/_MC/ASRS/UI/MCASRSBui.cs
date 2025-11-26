@@ -1,4 +1,5 @@
 ﻿using Content.Client._MC.ASRS.UI.Views;
+using Content.Client._MC.Beacon.UI;
 using Content.Shared._MC.ASRS.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -13,11 +14,16 @@ public sealed partial class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserIn
     [ViewVariables]
     private MCASRSWindow _window = null!;
 
+    [ViewVariables]
+    private MCBeaconChooseWindow _beaconChooseWindow = null!;
+
     protected override void Open()
     {
         base.Open();
 
         _window = this.CreateWindow<MCASRSWindow>();
+        _beaconChooseWindow = new MCBeaconChooseWindow();
+        _beaconChooseWindow.Selected += OnSelected;
 
         if (!_entity.TryGetComponent<MCASRSConsoleComponent>(Owner, out var component))
             return;
@@ -27,6 +33,13 @@ public sealed partial class MCASRSBui(EntityUid owner, Enum uiKey) : BoundUserIn
         InitializeViewCategory(component);
         InitializeViewPendingOrders();
         InitializeViewRequests();
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        _beaconChooseWindow.Close();
     }
 
     private void OpenView(MCASRSView view)

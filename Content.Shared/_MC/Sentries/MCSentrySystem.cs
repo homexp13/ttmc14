@@ -66,7 +66,7 @@ public sealed class MCSentrySystem : EntitySystem
 
     private void OnDeployChangedState(Entity<MCSentryComponent> entity, ref MCDeployChangedStateEvent args)
     {
-        switch (args.NewState)
+        switch (args.State)
         {
             case MCDeployState.Item:
                 RemCompDeferred<MaxRotationComponent>(entity);

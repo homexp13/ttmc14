@@ -1,7 +1,10 @@
 ﻿using Content.Client._MC.ASRS.UI.Views;
+using Content.Client._MC.Beacon.UI;
 using Content.Shared._MC.ASRS;
 using Content.Shared._MC.ASRS.UI.Messages.Approve;
+using Content.Shared._MC.ASRS.UI.Messages.Delivery;
 using Content.Shared._MC.ASRS.UI.Messages.Deny;
+using Robust.Client.UserInterface;
 
 namespace Content.Client._MC.ASRS.UI;
 
@@ -14,9 +17,11 @@ public sealed partial class MCASRSBui
 
     private void InitializeViewRequests()
     {
-        RequestsAwaitingDeliveryView.Reinitialize(false);
+        RequestsAwaitingDeliveryView.Reinitialize(false, true);
         RequestsApprovedHistoryRequestsView.Reinitialize(false);
         RequestsDenyHistoryRequestsView.Reinitialize(false);
+
+        RequestsAwaitingDeliveryView.Delivered += OnDelivery;
 
         RequestsView.ApprovedAll += SendApproveAll;
         RequestsView.DenyAll += SendDenyAll;
@@ -39,6 +44,12 @@ public sealed partial class MCASRSBui
         view.Refresh(this, requests);
     }
 
+    private void OnDelivery(MCASRSRequest request)
+    {
+        _beaconChooseWindow.OpenCentered();
+        _beaconChooseWindow.Refresh(Beacons, request);
+    }
+
     private void SendApprove(MCASRSRequest request)
     {
         SendMessage(new MCASRSConsoleApproveMessage(request));
@@ -57,5 +68,13 @@ public sealed partial class MCASRSBui
     private void SendDenyAll()
     {
         SendMessage(new MCASRSConsoleDenyAllMessage());
+    }
+
+    private void OnSelected(NetEntity beaconUid, object? payload)
+    {
+        if (payload is not MCASRSRequest request)
+            return;
+
+        SendMessage(new MCASRSConsoleDeliveryMessage(request, beaconUid));
     }
 }

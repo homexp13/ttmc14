@@ -16,6 +16,7 @@ public sealed partial class MCASRSBui
 
         CategoryView.PendingOrderButton.OnPressed += _ => OpenView(_window.PendingOrdersView);
         CategoryView.RequestsButton.OnPressed += _ => OpenView(_window.RequestsView);
+        CategoryView.AwaitingDeliveryButton.OnPressed += _ => OpenView(_window.RequestsAwaitingDeliveryView);
         CategoryView.ApprovedRequestsButton.OnPressed += _ => OpenView(_window.RequestsApprovedHistoryView);
         CategoryView.DeniedRequestsButton.OnPressed += _ => OpenView(_window.RequestsDeniedHistoryView);
 

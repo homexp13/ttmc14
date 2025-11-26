@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Shared._MC.ASRS;
 using Content.Shared._MC.ASRS.Ui;
+using Content.Shared._MC.Beacon;
 
 namespace Content.Client._MC.ASRS.UI;
 
@@ -8,6 +9,7 @@ public sealed partial class MCASRSBui
 {
     private event Action? StateRefreshed;
 
+    public List<MCBeaconSystem.NetBeaconWithName> Beacons = new();
     public List<MCASRSRequest> Requests = new();
     public List<MCASRSRequest> RequestsAwaitingDelivery = new();
     public List<MCASRSRequest> RequestsApprovedHistory = new();
@@ -31,6 +33,8 @@ public sealed partial class MCASRSBui
 
     private void UpdateState(MCASRSConsoleBuiState state)
     {
+        Beacons = state.Beacons;
+
         Requests = state.Requests;
         RequestsAwaitingDelivery = state.RequestsAwaitingDelivery;
         RequestsApprovedHistory = state.RequestsApprovedHistory;

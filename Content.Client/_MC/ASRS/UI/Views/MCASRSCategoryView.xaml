@@ -29,6 +29,19 @@
 
                 <BoxContainer Orientation="Vertical" Margin="8">
                     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                        <Button Text="Awaiting delivery" Name="AwaitingDeliveryButton" StyleClasses="ButtonSquare" TextAlign="Left" HorizontalExpand="True" Disabled="True" Access="Public" />
+
+                        <BoxContainer Orientation="Horizontal" Align="Center" Margin="8 0">
+                            <RichTextLabel Text="0" Name="OrdersLabel" />
+                            <RichTextLabel Text=" orders" />
+                        </BoxContainer>
+                    </BoxContainer>
+                </BoxContainer>
+
+                <cc:HSeparator Color="#4972A1" Margin="8 0" />
+
+                <BoxContainer Orientation="Vertical" Margin="8">
+                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                         <Button Text="Pending Order" Name="PendingOrderButton" StyleClasses="ButtonSquare" TextAlign="Left" HorizontalExpand="True" Disabled="True" Access="Public" />
 
                         <BoxContainer Orientation="Horizontal" Align="Center" Margin="8 0">

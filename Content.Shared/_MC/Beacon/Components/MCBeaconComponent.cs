@@ -8,5 +8,8 @@ namespace Content.Shared._MC.Beacon.Components;
 public sealed partial class MCBeaconComponent : Component
 {
     [DataField, AutoNetworkedField]
+    public string Name = "X1-00";
+
+    [DataField, AutoNetworkedField]
     public ProtoId<MCBeaconCategoryPrototype> Category;
 }

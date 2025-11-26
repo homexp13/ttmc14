@@ -51,6 +51,9 @@ public sealed partial class MCCrashRuleSystem
 
     private void EndRound(Entity<MCCrashRuleComponent> ent, MCCrashRuleResult result, LocId? customMessage = null)
     {
+        if (!RoundCheckEnding)
+            return;
+
         var ruleComponent = ent.Comp;
         if (ruleComponent.Result != MCCrashRuleResult.None)
             return;

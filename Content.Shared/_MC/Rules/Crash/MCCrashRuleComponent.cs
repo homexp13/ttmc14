@@ -42,7 +42,7 @@ public sealed partial class MCCrashRuleComponent : Component, IRulePlanet, IRule
 
 #if !FULL_RELEASE
     [DataField, AutoNetworkedField]
-    public TimeSpan ShuttleCrushTime = TimeSpan.FromSeconds(15);
+    public TimeSpan ShuttleCrushTime = TimeSpan.FromSeconds(30);
 #else
     [DataField, AutoNetworkedField]
     public TimeSpan ShuttleCrushTime = TimeSpan.FromMinutes(10);

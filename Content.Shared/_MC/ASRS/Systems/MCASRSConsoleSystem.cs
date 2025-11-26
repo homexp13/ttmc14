@@ -5,6 +5,8 @@ namespace Content.Shared._MC.ASRS.Systems;
 
 public sealed partial class MCASRSConsoleSystem : EntitySystem
 {
+    [Dependency] private readonly MCASRSDropSystem _mcAsrsDrop = null!;
+
     private event Action<Entity<MCASRSConsoleComponent>>? OnRequestUpdated;
 
     public override void Initialize()
@@ -14,6 +16,7 @@ public sealed partial class MCASRSConsoleSystem : EntitySystem
         SubscribeLocalEvent<MCASRSConsoleComponent, ComponentInit>(OnInit);
 
         InitializeBalance();
+        InitializeBeacon();
         InitializeUI();
     }
 
@@ -33,6 +36,17 @@ public sealed partial class MCASRSConsoleSystem : EntitySystem
 
         entity.Comp.Requests.Add(request);
         Refresh(entity);
+    }
+
+    private void TryDelivery(Entity<MCASRSConsoleComponent> entity, MCASRSRequest request, NetEntity beaconUid)
+    {
+        if (!entity.Comp.RequestsAwaitingDelivery.Contains(request))
+            return;
+
+        if (!_mcBeacon.Active(beaconUid, entity.Comp.DeliveryCategory))
+            return;
+
+        Delivery(entity, request, GetEntity(beaconUid));
     }
 
     private void TryApprove(Entity<MCASRSConsoleComponent> entity, MCASRSRequest request)
@@ -57,10 +71,18 @@ public sealed partial class MCASRSConsoleSystem : EntitySystem
         Approve(entity, requests);
     }
 
+    private void Delivery(Entity<MCASRSConsoleComponent> entity, MCASRSRequest request, EntityUid beaconUid)
+    {
+        entity.Comp.RequestsAwaitingDelivery.Remove(request);
+        Refresh(entity);
+
+        _mcAsrsDrop.Drop(request, beaconUid);
+    }
+
     private void Approve(Entity<MCASRSConsoleComponent> entity, MCASRSRequest request)
     {
         entity.Comp.Requests.Remove(request);
-        entity.Comp.RequestsAwaitingDelivery.Remove(request);
+        entity.Comp.RequestsAwaitingDelivery.Add(request);
         HistoryWrite(entity.Comp.RequestsApprovedHistory, request, entity.Comp.RequestsHistoryLimit);
         Refresh(entity);
     }

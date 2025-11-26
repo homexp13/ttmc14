@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Shared._MC.Beacon.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,30 +12,33 @@ public sealed partial class MCASRSConsoleComponent : Component
     [DataField, AutoNetworkedField, AlwaysPushInheritance]
     public List<MCASRSCategory> Categories = new();
 
-    [AutoNetworkedField]
-    public List<MCASRSEntry> CachedEntries = new();
+    [DataField, AutoNetworkedField]
+    public ProtoId<MCBeaconCategoryPrototype> DeliveryCategory = "Supply";
+
+    [DataField, AutoNetworkedField]
+    public int RequestsLimit = 15;
+
+    [DataField, AutoNetworkedField]
+    public int RequestsHistoryLimit = 25;
 
     #region Requests
 
-    [DataField, AutoNetworkedField, AlwaysPushInheritance]
-    public int RequestsLimit = 15;
-
-    [DataField, AutoNetworkedField, AlwaysPushInheritance]
-    public int RequestsHistoryLimit = 25;
-
-    [DataField, AutoNetworkedField, AlwaysPushInheritance]
+    [ViewVariables, AutoNetworkedField]
     public List<MCASRSRequest> Requests = new();
 
-    [DataField, AutoNetworkedField, AlwaysPushInheritance]
+    [ViewVariables, AutoNetworkedField]
     public List<MCASRSRequest> RequestsAwaitingDelivery = new();
 
-    [DataField, AutoNetworkedField, AlwaysPushInheritance]
+    [ViewVariables, AutoNetworkedField]
     public List<MCASRSRequest> RequestsApprovedHistory = new();
 
-    [DataField, AutoNetworkedField, AlwaysPushInheritance]
+    [ViewVariables, AutoNetworkedField]
     public List<MCASRSRequest> RequestsDenyHistory = new();
 
     #endregion
+
+    [AutoNetworkedField]
+    public List<MCASRSEntry> CachedEntries = new();
 }
 
 [DataDefinition, Serializable, NetSerializable]
@@ -57,14 +61,11 @@ public sealed partial class MCASRSEntry
     public int Cost;
 
     [DataField]
-    public EntProtoId? Crate;
-
-    [DataField]
     public List<EntProtoId> Entities = new();
 
     private bool Equals(MCASRSEntry other)
     {
-        return Name == other.Name && Cost == other.Cost && Crate == other.Crate && Entities.SequenceEqual(other.Entities);
+        return Name == other.Name && Cost == other.Cost && Entities.SequenceEqual(other.Entities);
     }
 
     public override bool Equals(object? obj)
@@ -79,7 +80,6 @@ public sealed partial class MCASRSEntry
 
         hash.Add(Name);
         hash.Add(Cost);
-        hash.Add(Crate);
 
         foreach (var v in Entities)
         {

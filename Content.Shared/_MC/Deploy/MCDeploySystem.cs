@@ -44,12 +44,6 @@ public sealed class MCDeploySystem : EntitySystem
         SubscribeLocalEvent<MCDeployComponent, MCDisassembleDoAfterEvent>(OnDisassembleDoAfter);
     }
 
-    private void OnMapInit(Entity<MCDeployComponent> entity, ref MapInitEvent args)
-    {
-        _toUpdate.Add(entity);
-        UpdateState(entity);
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -65,6 +59,16 @@ public sealed class MCDeploySystem : EntitySystem
         _toUpdate.Clear();
     }
 
+    public bool Deployed(EntityUid uid)
+    {
+        return _deployQuery.TryComp(uid, out var component) && component.State == MCDeployState.Deployed;
+    }
+
+    private void OnMapInit(Entity<MCDeployComponent> entity, ref MapInitEvent args)
+    {
+        _toUpdate.Add(entity);
+        UpdateState(entity);
+    }
 
     private void OnGetVerbs(Entity<MCDeployComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {

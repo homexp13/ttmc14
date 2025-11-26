@@ -13,19 +13,20 @@ public sealed partial class MCASRSRequestButton : BoxContainer
         RobustXamlLoader.Load(this);
     }
 
-    public MCASRSRequestButton(MCASRSRequest request, Action<MCASRSRequest> approved, Action<MCASRSRequest> denied, bool approveDisabled, bool interactable = true) : this()
+    public MCASRSRequestButton(MCASRSRequest request, Action<MCASRSRequest> approved, Action<MCASRSRequest> denied, Action<MCASRSRequest> delivered, bool approveDisabled, bool interactable = true, bool deliverable = false) : this()
     {
         ApproveButton.Disabled = approveDisabled;
 
         ApproveButton.OnPressed += _ => approved.Invoke(request);
         DenyButton.OnPressed += _ => denied.Invoke(request);
+        DeliveryButton.OnPressed += _ => delivered.Invoke(request);
 
         RequesterLabel.SetMessage(request.Requester);
         ReasonLabel.SetMessage(request.Reason);
         TotalCostLabel.SetMessage(request.TotalCost.ToString());
 
         InteractionContainer.Visible = interactable;
-
+        DeliveryInteractionContainer.Visible = deliverable;
 
         foreach (var (entry, count) in request.Contents)
         {

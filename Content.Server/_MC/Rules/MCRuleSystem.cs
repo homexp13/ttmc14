@@ -8,6 +8,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.Mind;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Station.Systems;
+using Content.Shared._MC;
 using Content.Shared._MC.Nuke.Generator.Components;
 using Content.Shared._RMC14.Bioscan;
 using Content.Shared._RMC14.CCVar;
@@ -65,6 +66,8 @@ public abstract partial class MCRuleSystem<T> : GameRuleSystem<T> where T : ICom
     private readonly HashSet<string> _operationPrefixes = new();
     private readonly HashSet<string> _operationSuffixes = new();
 
+    protected bool RoundCheckEnding;
+
     protected float MarinesPerXeno;
     protected float MarinesPerSurvivor;
     protected float MinimumSurvivors;
@@ -77,6 +80,8 @@ public abstract partial class MCRuleSystem<T> : GameRuleSystem<T> where T : ICom
     public override void Initialize()
     {
         base.Initialize();
+
+        Subs.CVar(_config, MCConfigVars.MCRoundCanEnd, v => RoundCheckEnding = v, true);
 
         Subs.CVar(_config, RMCCVars.CMMarinesPerXeno, v => MarinesPerXeno = v, true);
         Subs.CVar(_config, RMCCVars.RMCMarinesPerSurvivor, v => MarinesPerSurvivor = v, true);

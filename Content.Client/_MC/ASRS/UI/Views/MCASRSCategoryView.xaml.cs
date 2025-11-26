@@ -17,10 +17,12 @@ public sealed partial class MCASRSCategoryView : MCASRSView
 
         PointsLabel.SetMessage(bui.Points.ToString());
 
+        OrdersLabel.SetMessage(bui.RequestsAwaitingDelivery.Count.ToString());
         CostLabel.SetMessage(bui.StoreCost.ToString());
         ItemsLabel.SetMessage(bui.StoreCount.ToString());
 
         RequestsButton.Disabled = !bui.HasRequests;
+        AwaitingDeliveryButton.Disabled = !bui.HasRequestsAwaitingDelivery;
         ApprovedRequestsButton.Disabled = !bui.HasRequestsApprovedHistory;
         DeniedRequestsButton.Disabled = !bui.HasRequestsDeniedHistory;
     }

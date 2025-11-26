@@ -7,6 +7,20 @@ namespace Content.Shared._MC;
 public sealed class MCConfigVars : CVars
 {
     /**
+     * Round
+     */
+
+    public static readonly CVarDef<bool> MCRoundCanEnd =
+        CVarDef.Create("mc.round_can_end", true, CVar.REPLICATED | CVar.SERVER);
+
+    /**
+     * ASRS
+     */
+
+    public static readonly CVarDef<int> MCAsrsStartingBalance =
+        CVarDef.Create("mc.asrs_starting_balance", 500, CVar.REPLICATED | CVar.SERVER);
+
+    /**
      * Respawn
      */
 

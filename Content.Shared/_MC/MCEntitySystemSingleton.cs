@@ -14,7 +14,13 @@ public abstract class MCEntitySystemSingleton<TComponent> : EntitySystem where T
         }
 
         var instance = Spawn();
-        return (instance, AddComp<TComponent>(instance));
+        var entity = (instance, AddComp<TComponent>(instance));
+        OnInstanceCreated(entity);
+        return entity;
+    }
+
+    protected virtual void OnInstanceCreated(Entity<TComponent> entity)
+    {
     }
 
     protected void Dirty()

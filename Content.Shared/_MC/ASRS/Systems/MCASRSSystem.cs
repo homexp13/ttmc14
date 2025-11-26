@@ -1,4 +1,5 @@
 ﻿using Content.Shared._MC.ASRS.Events;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared._MC.ASRS.Systems;
@@ -6,6 +7,8 @@ namespace Content.Shared._MC.ASRS.Systems;
 public sealed class MCASRSSystem : MCEntitySystemSingleton<MCASRSSingletonComponent>
 {
     public const int MinBalance = 0;
+
+    [Dependency] private readonly IConfigurationManager _configuration = null!;
 
     private int Balance
     {
@@ -15,6 +18,13 @@ public sealed class MCASRSSystem : MCEntitySystemSingleton<MCASRSSingletonCompon
             Inst.Comp.Balance = value;
             Dirty(Inst);
         }
+    }
+
+    protected override void OnInstanceCreated(Entity<MCASRSSingletonComponent> entity)
+    {
+        base.OnInstanceCreated(entity);
+
+        entity.Comp.Balance = _configuration.GetCVar(MCConfigVars.MCAsrsStartingBalance);
     }
 
     #region Operations
@@ -27,6 +37,12 @@ public sealed class MCASRSSystem : MCEntitySystemSingleton<MCASRSSingletonCompon
     public bool HasBalance(int required)
     {
         return GetBalance() >= required;
+    }
+
+    public void SetBalance(int amount)
+    {
+        Balance = amount;
+        Refresh();
     }
 
     public void AddBalance(int amount)
@@ -68,11 +84,6 @@ public sealed class MCASRSSystem : MCEntitySystemSingleton<MCASRSSingletonCompon
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MCASRSSingletonComponent : Component
 {
-#if FULL_RELEASE
     [DataField, AutoNetworkedField]
     public int Balance;
-#else
-    [DataField, AutoNetworkedField]
-    public int Balance = 1000000;
-#endif
 }

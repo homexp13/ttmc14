@@ -14,6 +14,10 @@
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 8">
                     <RichTextLabel Text="Order" Margin="0 0 16 0" />
 
+                    <BoxContainer Name="DeliveryInteractionContainer" Orientation="Horizontal" HorizontalExpand="True" Align="End">
+                        <Button Text="Delivery" Name="DeliveryButton" StyleClasses="ButtonSquare" Margin="0 0 8 0" />
+                    </BoxContainer>
+
                     <BoxContainer Name="InteractionContainer" Orientation="Horizontal" HorizontalExpand="True" Align="End">
                         <Button Text="Approve" Name="ApproveButton" StyleClasses="ButtonSquare" Margin="0 0 8 0" />
                         <Button Text="Deny" Name="DenyButton" StyleClasses="ButtonSquare" />
