@@ -10,6 +10,7 @@
       - state: equipped-OUTERCLOTHING
       - sprite: _RMC14/Objects/Clothing/OuterClothing/Armor/armor_overlays.rsi
         state: lamp-off
+  - type: MCArmorModularClothing
 
 - type: entity
   parent: MCArmorModularXenonauten

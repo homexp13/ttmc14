@@ -12,6 +12,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 
@@ -33,7 +34,7 @@ public sealed class MCArmorModuleSystem : EntitySystem
         SubscribeLocalEvent<MCArmorModularClothingComponent, EntInsertedIntoContainerMessage>(OnClothingInserted);
         SubscribeLocalEvent<MCArmorModularClothingComponent, EntRemovedFromContainerMessage>(OnClothingRemoved);
 
-        SubscribeLocalEvent<MCArmorModularClothingComponent, InteractUsingEvent>(OnInteract);
+        SubscribeLocalEvent<MCArmorModularClothingComponent, InteractUsingEvent>(OnInteract, before: [ typeof(SharedStorageSystem) ]);
         SubscribeLocalEvent<MCArmorModularClothingComponent, GetVerbsEvent<EquipmentVerb>>(OnGetVerbs);
         SubscribeLocalEvent<MCArmorModularClothingComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerbsInteraction);
 
