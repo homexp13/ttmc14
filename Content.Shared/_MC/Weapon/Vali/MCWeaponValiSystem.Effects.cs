@@ -3,7 +3,7 @@ using Content.Shared._MC.Damage;
 using Content.Shared._MC.Flammable;
 using Content.Shared._MC.Knockback;
 using Content.Shared._MC.Stun;
-using Content.Shared._MC.Xeno.Plasma;
+using Content.Shared._MC.Xeno.Plasma.Systems;
 using Content.Shared._MC.Xeno.Sunder;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;

@@ -118,6 +118,7 @@
     - MCActionXenoSelectWeeds
     - MCActionXenoPlantWeeds
     # Main
+    - MCActionXenoTransferPlasma
     - MCActionXenoPheromones
     - MCActionXenoAcidWeak
     - MCActionXenoCreateResinJelly
@@ -156,3 +157,5 @@
     healValue: 50
     healMaxHealthMultiplier: 0.1
     sunderByHealMultiplier: 1
+  - type: MCXenoTransferPlasma
+    amount: 200

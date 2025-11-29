@@ -49,6 +49,7 @@
     - MCActionXenoSelectWeeds
     - MCActionXenoPlantWeeds
     # Main
+    - MCActionXenoTransferPlasma
     - MCActionXenoPheromones
     - MCActionXenoAcidMedium
     - MCActionXenoToggleXenoSpitStickyResin
@@ -135,3 +136,7 @@
     - PrimordialTierFour
   - type: RMCSize
     size: Big
+  - type: MCXenoTransferPlasma
+    amount: 400
+    delay: 0.5
+    range: 7

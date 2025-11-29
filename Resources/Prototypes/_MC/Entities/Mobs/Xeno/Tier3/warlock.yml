@@ -34,6 +34,7 @@
     - MCActionXenoRest
     - MCActionXenoPsydrain
     - MCActionXenoDevolve
+    - MCActionXenoTransferPlasma
     hudOffset: -0.1,0.1
   - type: XenoDevolve
     devolvesTo:
@@ -65,3 +66,7 @@
     icon:
       sprite: _MC/Interface/Xeno/icons.rsi
       state: warlock
+  - type: MCXenoTransferPlasma
+    amount: 400
+    delay: 0.5
+    range: 7

@@ -1,0 +1,17 @@
+- type: entity
+  parent: ActionXenoBase
+  id: MCActionXenoTransferPlasma
+  name: Transfer Plasma
+  description: Give some of your plasma to a teammate.
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: _MC/Interface/Actions/Xeno/drone.rsi
+      state: transfer_plasma
+    useDelay: 0.1
+  - type: TargetAction
+    range: 15
+  - type: EntityTargetAction
+    event: !type:MCXenoTransferPlasmaActionEvent
+    canTargetSelf: false

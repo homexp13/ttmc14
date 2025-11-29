@@ -17,5 +17,5 @@ public sealed partial class MCXenoAcidicSalveComponent : Component
     public EntProtoId EffectProtoId = "RMCEffectHealHealer";
 
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? Sound;
+    public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/_MC/Voice/drool1.ogg");
 }

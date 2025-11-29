@@ -66,6 +66,15 @@ public abstract class MCXenoAbilitySystem : EntitySystem
             break;
         }
     }
+
+    protected void StartUseDelay<T>(EntityUid uid) where T : BaseActionEvent
+    {
+        foreach (var action in RMCActions.GetActionsWithEvent<T>(uid))
+        {
+            Actions.StartUseDelay((action, action));
+            break;
+        }
+    }
 }
 
 /// <summary>

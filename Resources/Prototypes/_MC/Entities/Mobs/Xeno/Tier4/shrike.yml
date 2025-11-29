@@ -49,6 +49,7 @@
     - MCActionXenoSelectWeeds
     - MCActionXenoPlantWeeds
     # Main
+    - MCActionXenoTransferPlasma
     - MCActionXenoPsychicCure
     - MCActionXenoPsychicFling
     - MCActionXenoUnrelentingForce
@@ -128,3 +129,5 @@
   - type: MCXenoCreateResinJelly
   # Abilities
   - type: MCXenoPsychicCure
+  - type: MCXenoTransferPlasma
+    amount: 200

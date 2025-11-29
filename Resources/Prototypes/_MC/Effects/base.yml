@@ -1,0 +1,12 @@
+﻿- type: entity
+  id: MCEffect
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: RMCNightVisionVisible
+    priority: 1
+  - type: RMCEffect
+  - type: EffectVisuals
