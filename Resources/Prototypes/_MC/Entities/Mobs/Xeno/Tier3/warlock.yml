@@ -2,22 +2,41 @@
   parent:
   # MC
   - MCXenoBase
+  - MCXenoComponentEvolutionTier3
   # RMC
   - CMXenoDeveloped
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
   id: MCXenoWarlock
-  name: Warlock
+  name: warlock
   description: A powerful psychic xeno. The Warlock devastates enemies of the hive with its psychic might, but it's physically very frail.
   components:
-  - type: Sprite
-    sprite: _MC/Mobs/Xenos/warlock.rsi
-    offset: 0,0.2
+  # Name
   - type: FixedIdentity
     name: mc-job-name-xeno-warlock
   - type: GhostRole
     name: mc-job-name-xeno-warlock
+  # Visuals
+  - type: Sprite
+    sprite: _MC/Mobs/Xenos/warlock.rsi
+    offset: 0, 0.2
+  - type: TacticalMapIcon
+    icon:
+      sprite: _MC/Interface/Xeno/icons.rsi
+      state: warlock
+  # Actions
+  - type: Xeno
+    tier: 3
+    role: MCXenoWarlock
+    actionIds:
+    - MCActionXenoRest
+    - MCActionXenoPsydrain
+    - MCActionXenoDevolve
+    # Main
+    - MCActionXenoTransferPlasma
+    hudOffset: -0.1,0.1
+  # Statistics
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -27,24 +46,6 @@
     plasma: 1700
     maxPlasma: 1700
     plasmaRegenOnWeeds: 60
-  - type: Xeno
-    tier: 3
-    role: MCXenoWarlock
-    actionIds:
-    - MCActionXenoRest
-    - MCActionXenoPsydrain
-    - MCActionXenoDevolve
-    - MCActionXenoTransferPlasma
-    hudOffset: -0.1,0.1
-  - type: XenoDevolve
-    devolvesTo:
-    - MCXenoWarrior
-    - MCXenoHivelord
-    - MCXenoCarrier
-    - MCXenoWraith
-    - MCXenoHunter
-    - MCXenoBull
-    - MCXenoSpitter
   - type: MCArmor
     soft:
       melee: 40
@@ -62,10 +63,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.857
     baseSprintSpeed: 4
-  - type: TacticalMapIcon
-    icon:
-      sprite: _MC/Interface/Xeno/icons.rsi
-      state: warlock
+  # Abilities
   - type: MCXenoTransferPlasma
     amount: 400
     delay: 0.5

@@ -2,17 +2,89 @@
   parent:
   # MC
   - MCXenoBase
+  - MCXenoComponentFixtureRunner
+  - MCXenoComponentLayersRunner
+  - MCXenoComponentEvolutionTier1
   # RMC
   - CMXenoDeveloped
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
   id: MCXenoRunner
-  name: Runner
+  name: runner
   description: A fast, four-legged terror. Weak in sustained combat.
   components:
+  # Name
+  - type: FixedIdentity
+    name: mc-job-name-xeno-runner
+  - type: GhostRole
+    name: mc-job-name-xeno-runner
+  # Visuals
   - type: Sprite
     sprite: _MC/Mobs/Xenos/runner.rsi
+    offset: 0, 0.65
+  - type: TacticalMapIcon
+    icon:
+      sprite: _MC/Interface/Xeno/icons.rsi
+      state: runner
+  # Actions
+  - type: Xeno
+    tier: 1
+    role: MCXenoRunner
+    actionIds:
+    # Base
+    - MCActionXenoRest
+    - MCActionXenoPsydrain
+    - MCActionXenoDevolve
+    # Main
+    - MCActionXenoEvasion
+    - MCActionXenoPounce
+    # Utilities
+    - MCActionXenoHide
+    hudOffset: -0.2, 0.3
+  # Statistics
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      240: Critical
+      340: Dead
+  - type: XenoPlasma
+    plasma: 200
+    maxPlasma: 200
+    plasmaRegenOnWeeds: 11
+  - type: MCArmor
+    soft:
+      melee: 30
+      bullet: 30
+      laser: 30
+      energy: 30
+      bomb: 0
+      bio: 5
+      fire: 20
+      acid: 5
+  - type: MeleeWeapon
+    attackRate: 1.7
+    damage:
+      types:
+        MCBrute: 20
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.846
+    baseSprintSpeed: 6.25
+  # Abilities
+  - type: MCXenoPounce
+    hitSound: /Audio/_RMC14/Xeno/alien_pounce.ogg
+    hitDamage:
+      types:
+        MCBrute: 25
+  - type: MCXenoEvasion
+  - type: XenoHide # TODO: Make MC component
+
+# Components (Separated for ease of editing/reading)
+- type: entity
+  id: MCXenoComponentLayersRunner
+  abstract: true
+  components:
+  - type: Sprite
     layers:
     - map: [ "enum.XenoVisualLayers.Base" ]
       state: alive
@@ -25,25 +97,17 @@
     - map: [ "enum.EvasionLayer.Base" ]
       sprite: _MC/Interface/Hud/timer.rsi
       state: "1"
-      offset: 0.5,-0.5
+      offset: 0.5, -0.5
       visible: false
     - map: [ "focused" ]
       sprite: _RMC14/Interface/xeno_hud.rsi
       state: hudeye
       visible: false
-    - map: [ "targetedDirection" ]
-      sprite: _RMC14/Effects/targeted.rsi
-      state: sniper_lockon_direction
-      visible: false
-    - map: [ "targetedDirectionIntense" ]
-      sprite: _RMC14/Effects/targeted.rsi
-      state: sniper_lockon_intense_direction
-      visible: false
-    offset: 0,0.65
-  - type: FixedIdentity
-    name: mc-job-name-xeno-runner
-  - type: GhostRole
-    name: mc-job-name-xeno-runner
+
+- type: entity
+  id: MCXenoComponentFixtureRunner
+  abstract: true
+  components:
   - type: Fixtures
     fixtures:
       fix1:
@@ -64,70 +128,3 @@
         density: 85
         layer:
         - BulletImpassable
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      240: Critical
-      340: Dead
-  - type: XenoPlasma
-    plasma: 200
-    maxPlasma: 200
-    plasmaRegenOnWeeds: 11
-  - type: Xeno
-    tier: 1
-    role: MCXenoRunner
-    actionIds:
-    - MCActionXenoRest
-    - MCActionXenoPsydrain
-    - MCActionXenoHide
-    - MCActionXenoDevolve
-    - MCActionXenoEvasion
-    - MCActionXenoPounce
-    hudOffset: -0.2,0.3
-  - type: XenoEvolution
-    actionId: MCActionXenoEvolve
-    max: 225
-    evolvesTo:
-    - MCXenoWarrior
-    - MCXenoHivelord
-    - MCXenoCarrier
-    - MCXenoWraith
-    - MCXenoHunter
-    - MCXenoBull
-    - MCXenoSpitter
-    - MCXenoForger
-    evolvesToWithoutPoints:
-    - MCXenoShrike
-    - MCXenoQueen
-  - type: XenoDevolve
-    devolvesTo:
-    - MCXenoLarva
-  - type: XenoHide
-  - type: MCArmor
-    soft:
-      melee: 30
-      bullet: 30
-      laser: 30
-      energy: 30
-      bomb: 0
-      bio: 5
-      fire: 20
-      acid: 5
-  - type: MeleeWeapon
-    attackRate: 1.7
-    damage:
-      types:
-        MCBrute: 20
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 3.846
-    baseSprintSpeed: 6.25
-  - type: TacticalMapIcon
-    icon:
-      sprite: _MC/Interface/Xeno/icons.rsi
-      state: runner
-  - type: MCXenoPounce
-    hitSound: /Audio/_RMC14/Xeno/alien_pounce.ogg
-    hitDamage:
-      types:
-        MCBrute: 25
-  - type: MCXenoEvasion

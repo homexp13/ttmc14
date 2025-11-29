@@ -2,31 +2,30 @@
   parent:
   # MC
   - MCXenoBase
+  - MCXenoComponentEvolutionTier3
   # RMC
   - CMXenoDeveloped
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
   id: MCXenoBoiler
-  name: Boiler
+  name: boiler
   description: Gross!
   components:
-  - type: Sprite
-    sprite: _MC/Mobs/Xenos/boiler.rsi
-    offset: 0,0.35
-  - type: GhostRole
-    name: mc-job-name-xeno-boiler
+  # Name
   - type: FixedIdentity
     name: mc-job-name-xeno-boiler
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      325: Critical
-      425: Dead
-  - type: XenoPlasma
-    plasma: 1000
-    maxPlasma: 1000
-    plasmaRegenOnWeeds: 50
+  - type: GhostRole
+    name: mc-job-name-xeno-boiler
+  # Visuals
+  - type: Sprite
+    sprite: _MC/Mobs/Xenos/boiler.rsi
+    offset: 0, 0.35
+  - type: TacticalMapIcon
+    icon:
+      sprite: _MC/Interface/Xeno/icons.rsi
+      state: boiler
+  # Actions
   - type: Xeno
     tier: 3
     role: MCXenoBoiler
@@ -37,18 +36,20 @@
     # Abilities
     - MCActionXenoSprayAcidBoiler
     - MCActionXenoBoilerLongRange
+    # Utilities
     - MCActionXenoAcidStrong
     - MCActionXenoPlaceTrap
-    hudOffset: -0.15,0.25
-  - type: XenoDevolve
-    devolvesTo:
-    - MCXenoWarrior
-    - MCXenoHivelord
-    - MCXenoCarrier
-    - MCXenoWraith
-    - MCXenoHunter
-    - MCXenoBull
-    - MCXenoSpitter
+    hudOffset: -0.15, 0.25
+  # Statistics
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      325: Critical
+      425: Dead
+  - type: XenoPlasma
+    plasma: 1000
+    maxPlasma: 1000
+    plasmaRegenOnWeeds: 50
   - type: MCArmor
     soft:
       melee: 45
@@ -67,22 +68,18 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.439
     baseSprintSpeed: 3.225
-  - type: TacticalMapIcon
-    icon:
-      sprite: _MC/Interface/Xeno/icons.rsi
-      state: boiler
   - type: RMCSize
     size: Big
   # Abilities
-  - type: XenoAcid
-  - type: XenoSprayAcid
+  - type: MCXenoZoom
+    zoom: 1.5, 1.5
+    offsetLength: 5
+    doAfter: 1
+  - type: XenoAcid      # TODO: Make MC component
+  - type: XenoSprayAcid # TODO: Make MC component
     acid: MCXenoAcidSprayBoiler
     range: 7
     doAfter: 0.5
     barricadeDamage:
       types:
         MCBurn: 5
-  - type: MCXenoZoom
-    zoom: 1.5, 1.5
-    offsetLength: 5
-    doAfter: 1

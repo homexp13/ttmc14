@@ -2,10 +2,10 @@
   parent:
   # MC
   - MCXenoBase
-  - MCXenoPlantingWeeds
-  - MCXenoPickupOne
-  - MCXenoCharge
-  - MCXenoSpiting
+  - MCXenoComponentPickup
+  - MCXenoComponentPlantingWeeds
+  - MCXenoComponentCharge
+  - MCXenoComponentSpiting
   # RMC
   - CMXenoDeveloped
   - RMCXenoSpeechSounds

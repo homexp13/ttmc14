@@ -2,22 +2,46 @@
   parent:
   # MC
   - MCXenoBase
+  - MCXenoComponentFixtureRunner
+  - MCXenoComponentEvolutionTier2
   # RMC
   - CMXenoDeveloped
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
   id: MCXenoWraith
-  name: Wraith
+  name: wraith
   description: A strange xeno that utilizes its psychic powers to move out of phase with reality.
   components:
-  - type: Sprite
-    sprite: _MC/Mobs/Xenos/wraith.rsi
-    offset: 0,0.35
+  # Name
   - type: FixedIdentity
     name: mc-job-name-xeno-wraith
   - type: GhostRole
     name: mc-job-name-xeno-wraith
+  # Visuals
+  - type: Sprite
+    sprite: _MC/Mobs/Xenos/wraith.rsi
+    offset: 0, 0.35
+  - type: TacticalMapIcon
+    icon:
+      sprite: _MC/Interface/Xeno/icons.rsi
+      state: wraith
+  # Actions
+  - type: Xeno
+    tier: 2
+    role: MCXenoWraith
+    actionIds:
+    - MCActionXenoRest
+    - MCActionXenoPsydrain
+    - MCActionXenoDevolve
+    # Main
+    - MCActionXenoRewind
+    - MCActionXenoBlink
+    - MCActionXenoPortalPlacer
+    - MCActionXenoBanish
+    - MCActionXenoRecall
+    hudOffset: -0.1, 0.1
+  # Statistics
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -27,39 +51,6 @@
     plasma: 400
     maxPlasma: 400
     plasmaRegenOnWeeds: 35
-  - type: Xeno
-    tier: 2
-    role: MCXenoWraith
-    actionIds:
-    - MCActionXenoRest
-    - MCActionXenoPsydrain
-    - MCActionXenoDevolve
-    - MCActionXenoRewind
-    - MCActionXenoBlink
-    - MCActionXenoPortalPlacer
-    - MCActionXenoBanish
-    - MCActionXenoRecall
-    hudOffset: -0.1,0.1
-  - type: XenoEvolution
-    actionId: MCActionXenoEvolve
-    max: 225
-    evolvesTo:
-    - MCXenoCrusher
-    - MCXenoDefiler
-    - MCXenoGorger
-    - MCXenoWarlock
-    - MCXenoPraetorian
-    - MCXenoBoiler
-    - MCXenoRavager
-    evolvesToWithoutPoints:
-    - MCXenoShrike
-    - MCXenoQueen
-  - type: XenoDevolve
-    devolvesTo:
-    - MCXenoDefender
-    - MCXenoDrone
-    - MCXenoRunner
-    - MCXenoSentinel
   - type: MCArmor
     soft:
       melee: 40
@@ -77,30 +68,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.448
     baseSprintSpeed: 5.263
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PhysShapeCircle
-          radius: 0.35
-        density: 85
-        mask:
-        - Impassable
-        - HighImpassable
-        - LowImpassable
-        - BarbedBarricade
-        - BarricadeImpassable
-        layer:
-        - MobLayer
-      fix2:
-        shape: !type:PhysShapeCircle
-          radius: 0.40
-        density: 85
-        layer:
-        - BulletImpassable
-  - type: TacticalMapIcon
-    icon:
-      sprite: _MC/Interface/Xeno/icons.rsi
-      state: wraith
+  # Abilities
   - type: MCXenoPortalPlacer
     portalFirst:
       id: MCXenoPortalOrange

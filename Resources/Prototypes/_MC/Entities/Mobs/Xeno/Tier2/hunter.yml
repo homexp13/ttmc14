@@ -2,22 +2,39 @@
   parent:
   # MC
   - MCXenoBase
+  - MCXenoComponentEvolutionTier2
   # RMC
   - CMXenoDeveloped
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
   id: MCXenoHunter
-  name: Hunter
+  name: hunter
   description: A fast, powerful front line combatant.
   components:
-  - type: Sprite
-    sprite: _MC/Mobs/Xenos/hunter.rsi
-    offset: 0.25, 0.25
+  # Name
   - type: FixedIdentity
     name: mc-job-name-xeno-hunter
   - type: GhostRole
     name: mc-job-name-xeno-hunter
+  # Visuals
+  - type: Sprite
+    sprite: _MC/Mobs/Xenos/hunter.rsi
+    offset: 0.25, 0.25
+  - type: TacticalMapIcon
+    icon:
+      sprite: _MC/Interface/Xeno/icons.rsi
+      state: hunter
+  # Actions
+  - type: Xeno
+    tier: 2
+    role: MCXenoHunter
+    actionIds:
+    - MCActionXenoRest
+    - MCActionXenoPsydrain
+    - MCActionXenoDevolve
+    hudOffset: -0.1, 0.1
+  # Statistics
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -27,34 +44,6 @@
     plasma: 200
     maxPlasma: 200
     plasmaRegenOnWeeds: 20
-  - type: Xeno
-    tier: 2
-    role: MCXenoHunter
-    actionIds:
-    - MCActionXenoRest
-    - MCActionXenoPsydrain
-    - MCActionXenoDevolve
-    hudOffset: -0.1,0.1
-  - type: XenoEvolution
-    actionId: MCActionXenoEvolve
-    max: 225
-    evolvesTo:
-    - MCXenoCrusher
-    - MCXenoDefiler
-    - MCXenoGorger
-    - MCXenoWarlock
-    - MCXenoPraetorian
-    - MCXenoBoiler
-    - MCXenoRavager
-    evolvesToWithoutPoints:
-    - MCXenoShrike
-    - MCXenoQueen
-  - type: XenoDevolve
-    devolvesTo:
-    - MCXenoDefender
-    - MCXenoDrone
-    - MCXenoRunner
-    - MCXenoSentinel
   - type: MCArmor
     soft:
       melee: 55
@@ -72,7 +61,3 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.846
     baseSprintSpeed: 6.25
-  - type: TacticalMapIcon
-    icon:
-      sprite: _MC/Interface/Xeno/icons.rsi
-      state: hunter

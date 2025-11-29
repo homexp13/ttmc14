@@ -2,23 +2,47 @@
   parent:
   # MC
   - MCXenoBase
-  - MCXenoSpiting
+  - MCXenoComponentSpiting
+  - MCXenoComponentEvolutionTier2
   # RMC
   - CMXenoDeveloped
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
   id: MCXenoSpitter
-  name: Spitter
+  name: spitter
   description: Gotta dodge!
   components:
-  - type: Sprite
-    sprite: _MC/Mobs/Xenos/spitter.rsi
-    offset: 0,0.35
+  # Name
   - type: FixedIdentity
     name: mc-job-name-xeno-spitter
   - type: GhostRole
     name: mc-job-name-xeno-spitter
+  # Visuals
+  - type: Sprite
+    sprite: _MC/Mobs/Xenos/spitter.rsi
+    offset: 0, 0.35
+  - type: TacticalMapIcon
+    icon:
+      sprite: _MC/Interface/Xeno/icons.rsi
+      state: spitter
+  # Actions
+  - type: Xeno
+    tier: 2
+    role: MCXenoSpitter
+    actionIds:
+    - MCActionXenoRest
+    - MCActionXenoPsydrain
+    - MCActionXenoDevolve
+    # Main
+    - MCActionXenoSprayAcid
+    - MCActionXenoToggleXenoSpit
+    - MCActionXenoScatterSpit
+    # Utilities
+    - MCActionXenoAcidMedium
+    - MCActionXenoPlaceTrap
+    hudOffset: -0.1,0.1
+  # Statistics
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -28,39 +52,6 @@
     plasma: 925
     maxPlasma: 925
     plasmaRegenOnWeeds: 50
-  - type: Xeno
-    tier: 2
-    role: MCXenoSpitter
-    actionIds:
-    - MCActionXenoRest
-    - MCActionXenoPsydrain
-    - MCActionXenoDevolve
-    - MCActionXenoSprayAcid
-    - MCActionXenoToggleXenoSpit
-    - MCActionXenoAcidMedium
-    - MCActionXenoScatterSpit
-    - MCActionXenoPlaceTrap
-    hudOffset: -0.1,0.1
-  - type: XenoEvolution
-    actionId: MCActionXenoEvolve
-    max: 225
-    evolvesTo:
-    - MCXenoCrusher
-    - MCXenoDefiler
-    - MCXenoGorger
-    - MCXenoWarlock
-    - MCXenoPraetorian
-    - MCXenoBoiler
-    - MCXenoRavager
-    evolvesToWithoutPoints:
-    - MCXenoShrike
-    - MCXenoQueen
-  - type: XenoDevolve
-    devolvesTo:
-    - MCXenoDefender
-    - MCXenoDrone
-    - MCXenoRunner
-    - MCXenoSentinel
   - type: MCArmor
     soft:
       melee: 25
@@ -78,13 +69,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.941
     baseSprintSpeed: 4.166
-  - type: TacticalMapIcon
-    icon:
-      sprite: _MC/Interface/Xeno/icons.rsi
-      state: spitter
-  - type: XenoAcid
   # Abilities
-  - type: XenoSprayAcid
+  - type: XenoSprayAcid # TODO: Make MC component
     acid: MCXenoAcidSpraySpitter
     range: 7
     doAfter: 0.5
@@ -92,4 +78,5 @@
       types:
         MCBurn: 5
   - type: MCXenoScatterSpit
-  - type: AcidTrap
+  - type: XenoAcid # TODO: Make MC component
+  - type: AcidTrap # TODO: Make MC component

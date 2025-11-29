@@ -2,89 +2,27 @@
   parent:
   # MC
   - MCXenoBase
-  - MCXenoPlantingWeeds
-  - MCXenoCreateResinJelly
+  - MCXenoComponentPickup
+  - MCXenoComponentPlantingWeeds
+  - MCXenoComponentEvolutionTier2
   # RMC
   - CMXenoDeveloped
   - RMCXenoSpeechSounds
   - RMCXenoCommendationReceiver
   - RMCXenoMobCollision
-  id: MCXenoCarrierBase
-  name: Carrier
+  id: MCXenoCarrier
+  name: carrier
   description: A strange-looking alien creature. It carries a number of scuttling jointed crablike creatures.
-  abstract: true
   components:
-  - type: GhostRole
-    name: cm-job-name-xeno-carrier
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      425: Critical
-      525: Dead
-  - type: Xeno
-    role: CMXenoCarrier
-    tier: 2
-    hudOffset: 0,0.19
-    unlockAt: 300 # 5 minutes
-  - type: XenoDevolve
-    devolvesTo:
-    - MCXenoDrone
-  - type: MCArmor
-    soft:
-      melee: 35
-      bullet: 35
-      laser: 35
-      energy: 35
-      bomb: 0
-      bio: 20
-      fire: 30
-      acid: 20
-  - type: XenoPheromones
-    pheromonesMultiplier: 2.5
-    pheroSuffix: hivelord
-  - type: XenoPlasma
-    plasma: 1000
-    maxPlasma: 1000
-    plasmaRegenOnWeeds: 50
-  - type: XenoDevour
-  - type: MeleeWeapon
-    damage:
-      types:
-        MCBrute: 20
-  - type: TunnelRenamer
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 2
-    baseSprintSpeed: 3.571
-  - type: EggPlantTime
-    plantTime: 1
-  - type: WhitelistPickup
-    whitelist:
-      components:
-      - XenoParasite
-      - XenoEgg
-      - XenoFruit
-  - type: XenoEggRetriever
-  - type: XenoNurturing
-  - type: RMCSize
-    size: Big
-  - type: TacticalMapIcon
-    icon:
-      sprite: _MC/Interface/Xeno/icons.rsi
-      state: carrier
-  - type: XenoInhands
-    prefix: carrier
-  - type: IntelRecoverCorpseObjectiveOnDeath
-    value: 0.2
+  # Name
   - type: FixedIdentity
     name: cm-job-name-xeno-carrier
-
-- type: entity
-  parent: MCXenoCarrierBase
-  id: MCXenoCarrier
-  components:
+  - type: GhostRole
+    name: cm-job-name-xeno-carrier
+  # Visuals
   - type: Sprite
     sprite: _MC/Mobs/Xenos/carrier.rsi
-    offset: 0,0.25
+    offset: 0, 0.25
     layers:
     - map: [ "enum.XenoVisualLayers.Base" ]
       state: alive
@@ -114,34 +52,63 @@
       sprite: _RMC14/Effects/targeted.rsi
       state: sniper_lockon_intense_direction
       visible: false
+  - type: TacticalMapIcon
+    icon:
+      sprite: _MC/Interface/Xeno/icons.rsi
+      state: carrier
+  - type: XenoInhands
+    prefix: carrier
+  # Actions
   - type: Xeno
+    role: CMXenoCarrier
+    tier: 2
     actionIds:
     - MCActionXenoRest
-    - MCActionXenoPheromones
     - MCActionXenoPsydrain
     - MCActionXenoDevolve
+      # Weeds
     - MCActionXenoSelectWeeds
     - MCActionXenoPlantWeeds
+    # Main
+    - MCActionXenoPheromones
+    # Utilities
     - MCActionXenoLayEgg
     - MCActionXenoPlaceTrap
-  - type: XenoParasiteThrower
-  - type: XenoEvolution
-    actionId: MCActionXenoEvolve
-    max: 225
-    evolvesTo:
-    - MCXenoCrusher
-    - MCXenoDefiler
-    - MCXenoGorger
-    - MCXenoWarlock
-    - MCXenoPraetorian
-    - MCXenoBoiler
-    - MCXenoRavager
-    evolvesToWithoutPoints:
-    - MCXenoShrike
-    - MCXenoQueen
-  - type: XenoDevolve
-    devolvesTo:
-    - MCXenoDefender
-    - MCXenoDrone
-    - MCXenoRunner
-    - MCXenoSentinel
+    hudOffset: 0, 0.19
+  # Statistics
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      425: Critical
+      525: Dead
+  - type: XenoPlasma
+    plasma: 1000
+    maxPlasma: 1000
+    plasmaRegenOnWeeds: 50
+  - type: MCArmor
+    soft:
+      melee: 35
+      bullet: 35
+      laser: 35
+      energy: 35
+      bomb: 0
+      bio: 20
+      fire: 30
+      acid: 20
+  - type: MeleeWeapon
+    damage:
+      types:
+        MCBrute: 20
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3.571
+  - type: RMCSize
+    size: Big
+  - type: EggPlantTime
+    plantTime: 1
+  # Abilities
+  - type: XenoPheromones
+    pheromonesMultiplier: 2.5
+    pheroSuffix: hivelord
+  - type: MCXenoCreateResinJelly
+  # - type: MCXenoLayEgg

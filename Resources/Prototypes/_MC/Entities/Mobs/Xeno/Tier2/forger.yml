@@ -2,7 +2,7 @@
   parent:
   # MC
   - MCXenoBase
-  - MCXenoCharge
+  - MCXenoComponentEvolutionTier2
   # RMC
   - CMXenoDeveloped
   - RMCXenoSpeechSounds
@@ -12,22 +12,20 @@
   name: forger
   description: A skittish alien, it burns with fury.
   components:
-  - type: Sprite
-    sprite: _MC/Mobs/Xenos/forger.rsi
-    offset: 0,0.35
-  - type: GhostRole
-    name: mc-job-name-xeno-forger
+  # Name
   - type: FixedIdentity
     name: mc-job-name-xeno-forger
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      275: Critical
-      325: Dead
-  - type: XenoPlasma
-    plasma: 380
-    maxPlasma: 380
-    plasmaRegenOnWeeds: 18
+  - type: GhostRole
+    name: mc-job-name-xeno-forger
+  # Visuals
+  - type: Sprite
+    sprite: _MC/Mobs/Xenos/forger.rsi
+    offset: 0, 0.35
+  - type: TacticalMapIcon
+    icon:
+      sprite: _MC/Interface/MapIcons/xeno.rsi
+      state: forger
+  # Actions
   - type: Xeno
     tier: 2
     role: MCXenoForger
@@ -40,28 +38,17 @@
     - MCActionXenoFireball
     - MCActionXenoFirecharge
     - MCActionXenoWhirlwind
-    hudOffset: -0.15,0.25
-  - type: XenoEvolution
-    canEvolveWithoutGranter: true
-    actionId: MCActionXenoEvolve
-    max: 225
-    evolvesTo:
-    - MCXenoCrusher
-    - MCXenoDefiler
-    - MCXenoGorger
-    - MCXenoWarlock
-    - MCXenoPraetorian
-    - MCXenoBoiler
-    - MCXenoRavager
-    evolvesToWithoutPoints:
-    - MCXenoShrike
-    - MCXenoQueen
-  - type: XenoDevolve
-    devolvesTo:
-    - MCXenoDefender
-    - MCXenoDrone
-    - MCXenoRunner
-    - MCXenoSentinel
+    hudOffset: -0.15, 0.25
+  # Statistics
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      275: Critical
+      325: Dead
+  - type: XenoPlasma
+    plasma: 380
+    maxPlasma: 380
+    plasmaRegenOnWeeds: 18
   - type: MCArmor
     soft:
       melee: 40
@@ -79,13 +66,6 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.225
     baseSprintSpeed: 4.761
-  - type: TacticalMapIcon
-    icon:
-      sprite: _MC/Interface/MapIcons/xeno.rsi
-      state: forger
-  # Passive abilities
-  - type: RMCImmuneToIgnition
-  - type: RMCImmuneToFireTileDamage
   # Abilities
   - type: MCXenoInferno
     damage:
@@ -116,6 +96,8 @@
     hitDamage:
        types:
         MCBurn: 10
-  # Light
+  # Passive abilities
+  - type: RMCImmuneToIgnition
+  - type: RMCImmuneToFireTileDamage
   - type: PointLight
     color: "#069420"
