@@ -1,31 +1,32 @@
-﻿using Content.Shared._RMC14.Actions;
+﻿using Content.Shared._MC.Xeno.Abilities.ResinJelly.Components;
+using Content.Shared._MC.Xeno.Abilities.ResinJelly.Events;
+using Content.Shared._RMC14.Actions;
 using Content.Shared._RMC14.Atmos;
 using Content.Shared._RMC14.Aura;
 using Content.Shared._RMC14.Emote;
+using Content.Shared._RMC14.Hands;
 using Content.Shared._RMC14.Xenonids;
 using Content.Shared._RMC14.Xenonids.Hive;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Popups;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 
-namespace Content.Shared._MC.Xeno.ResinJelly;
+namespace Content.Shared._MC.Xeno.Abilities.ResinJelly;
 
-public sealed class MCXenoResinJellySystem : EntitySystem
+public sealed class MCXenoResinJellySystem : MCXenoAbilitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly INetManager _net = null!;
 
-    [Dependency] private readonly SharedRMCEmoteSystem _emote = default!;
-    [Dependency] private readonly SharedAuraSystem _aura = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedXenoHiveSystem _xenoHive = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = null!;
+    [Dependency] private readonly SharedHandsSystem _hands = null!;
 
-    [Dependency] private readonly RMCActionsSystem _rmcActions = default!;
+    [Dependency] private readonly SharedAuraSystem _rmcAura = null!;
+    [Dependency] private readonly RMCActionsSystem _rmcActions = null!;
+    [Dependency] private readonly SharedRMCEmoteSystem _rmcEmote = null!;
+    [Dependency] private readonly SharedRMCFlammableSystem _rmcFlammable = null!;
+    [Dependency] private readonly SharedXenoHiveSystem _rmcXenoHive = null!;
 
     public override void Initialize()
     {
@@ -34,6 +35,7 @@ public sealed class MCXenoResinJellySystem : EntitySystem
         SubscribeLocalEvent<MCXenoCreateResinJellyComponent, MCXenoCreateResinJellyActionEvent>(OnCreateActionEvent);
 
         SubscribeLocalEvent<MCXenoResinJellyComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<MCXenoResinJellyComponent, ActivateInWorldEvent>(OnPickupAttempt, after: [ typeof(RMCHandsSystem) ]);
         SubscribeLocalEvent<MCXenoResinJellyComponent, MCXenoResinJellyConsumeDoAfterEvent>(OnAfterInteractDoAfter);
 
         SubscribeLocalEvent<MCXenoResinJellyFireproofComponent, RMCIgniteAttemptEvent>(OnFireproofIgniteAttempt);
@@ -59,7 +61,7 @@ public sealed class MCXenoResinJellySystem : EntitySystem
             return;
 
         var instance = Spawn(entity.Comp.ProtoId);
-        _xenoHive.SetSameHive(entity.Owner, instance);
+        _rmcXenoHive.SetSameHive(entity.Owner, instance);
         _hands.TryPickup(entity, instance, handId, false, false);
     }
 
@@ -74,6 +76,11 @@ public sealed class MCXenoResinJellySystem : EntitySystem
         TryConsume(entity, args.User, target);
     }
 
+    private void OnPickupAttempt(Entity<MCXenoResinJellyComponent> entity, ref ActivateInWorldEvent args)
+    {
+        TryConsume(entity, args.User, args.User);
+    }
+
     private void OnAfterInteractDoAfter(Entity<MCXenoResinJellyComponent> entity, ref MCXenoResinJellyConsumeDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
@@ -84,21 +91,16 @@ public sealed class MCXenoResinJellySystem : EntitySystem
         if (args.Target is not { } target)
             return;
 
-        _aura.GiveAura(target, entity.Comp.AuraColor, entity.Comp.Duration);
-        _emote.TryEmoteWithChat(target, entity.Comp.Emote);
+        _rmcAura.GiveAura(target, entity.Comp.AuraColor, entity.Comp.Duration);
+        _rmcEmote.TryEmoteWithChat(target, entity.Comp.Emote);
+        _rmcFlammable.Extinguish(target);
 
         EnsureComp<MCXenoResinJellyFireproofComponent>(target);
 
         if (_net.IsClient)
             return;
 
-        Timer.Spawn(entity.Comp.Duration,
-            () =>
-            {
-                RemCompDeferred<MCXenoResinJellyFireproofComponent>(target);
-            }
-        );
-
+        RemCompDeferredDelayed<MCXenoResinJellyFireproofComponent>(target, entity.Comp.Duration);
         Del(entity);
     }
 
@@ -118,13 +120,13 @@ public sealed class MCXenoResinJellySystem : EntitySystem
         if (HasComp<MCXenoResinJellyFireproofComponent>(target))
             return false;
 
-        if (!_xenoHive.FromSameHive(entity.Owner, user))
+        if (!_rmcXenoHive.FromSameHive(entity.Owner, user))
             return false;
 
-        if (!_xenoHive.FromSameHive(user, target))
+        if (!_rmcXenoHive.FromSameHive(user, target))
             return false;
 
-        var applyDuration = user == target ? entity.Comp.ApplySelfDuration : entity.Comp.ApplyOtherDuration;
+        var applyDuration = user == target ? entity.Comp.DelaySelf : entity.Comp.DelayOther;
 
         var ev = new MCXenoResinJellyConsumeDoAfterEvent();
         var doAfter = new DoAfterArgs(EntityManager, user, applyDuration, ev, entity, target)
