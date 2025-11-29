@@ -10,21 +10,15 @@ namespace Content.Shared._MC.Xeno.Abilities.Inferno;
 public sealed partial class MCXenoInfernoComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public float PostionInfernoX = 2;
+    public float PositionInfernoX = 2;
 
     [DataField, AutoNetworkedField]
-    public float PostionInfernoY = 2;
-
-    [DataField, AutoNetworkedField]
-    public FixedPoint2 PlasmaCost = 50;
+    public float PositionInfernoY = 2;
 
     [DataField, AutoNetworkedField]
     public TimeSpan InfernoDelay = TimeSpan.FromSeconds(0.5);
 
     [DataField, AutoNetworkedField]
-    public TimeSpan Cooldown = TimeSpan.FromSeconds(18);
-
-    [DataField]
     public DamageSpecifier Damage = new();
 
     [DataField, AutoNetworkedField]

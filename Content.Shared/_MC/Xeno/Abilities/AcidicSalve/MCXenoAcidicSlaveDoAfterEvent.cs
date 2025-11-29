@@ -4,10 +4,12 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._MC.Xeno.Abilities.AcidicSalve;
 
 [Serializable, NetSerializable]
-public sealed partial class MCXenoAcidicSlaveDoAfterEvent : DoAfterEvent
+public sealed partial class MCXenoAcidicSlaveDoAfterEvent : SimpleDoAfterEvent
 {
-    public override DoAfterEvent Clone()
+    public readonly NetEntity Action;
+
+    public MCXenoAcidicSlaveDoAfterEvent(NetEntity action)
     {
-        return this;
+        Action = action;
     }
 }

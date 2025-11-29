@@ -20,23 +20,21 @@ using static Content.Shared.Physics.CollisionGroup;
 
 namespace Content.Shared._MC.Xeno.Abilities.Inferno;
 
-public sealed class MCXenoInfernoSystem : EntitySystem
+public sealed class MCXenoInfernoSystem : MCXenoAbilitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly XenoPlasmaSystem _xenoPlasma = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly RMCActionsSystem _rmcActions = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly XenoSystem _xeno = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedXenoHiveSystem _xenoHive = default!;
+    [Dependency] private readonly INetManager _net = null!;
+
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = null!;
+    [Dependency] private readonly MobStateSystem _mobState = null!;
+    [Dependency] private readonly SharedAudioSystem _audio = null!;
+    [Dependency] private readonly DamageableSystem _damageable = null!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = null!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = null!;
+    [Dependency] private readonly TurfSystem _turf = null!;
+    [Dependency] private readonly XenoSystem _xeno = null!;
+    [Dependency] private readonly SharedTransformSystem _transform = null!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = null!;
+    [Dependency] private readonly SharedXenoHiveSystem _xenoHive = null!;
 
     private readonly HashSet<Entity<MobStateComponent>> _receivers = new();
 
@@ -48,65 +46,64 @@ public sealed class MCXenoInfernoSystem : EntitySystem
         SubscribeLocalEvent<MCXenoInfernoComponent, MCXenoInfernoDoAfterEvent>(OnXenoInfernoDoAfter);
     }
 
-    private void OnAction(Entity<MCXenoInfernoComponent> xeno, ref MCXenoInfernoActionEvent args)
+    private void OnAction(Entity<MCXenoInfernoComponent> entity, ref MCXenoInfernoActionEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!_xenoPlasma.HasPlasmaPopup(xeno.Owner, xeno.Comp.PlasmaCost))
+        if (!RMCActions.CanUseActionPopup(entity.Owner, entity))
             return;
 
-        var doAfter = new DoAfterArgs(EntityManager, xeno, xeno.Comp.InfernoDelay, new MCXenoInfernoDoAfterEvent(), xeno, xeno)
+        var ev = new MCXenoInfernoDoAfterEvent(GetNetEntity(args.Action));
+        var doAfter = new DoAfterArgs(EntityManager, entity, entity.Comp.InfernoDelay, ev, entity, entity)
         {
             BreakOnMove = true,
             BreakOnDamage = false,
             ForceVisible = true,
             CancelDuplicate = true,
-            DuplicateCondition = DuplicateConditions.SameEvent
+            DuplicateCondition = DuplicateConditions.SameEvent,
         };
 
-        if (_doAfter.TryStartDoAfter(doAfter))
-            args.Handled = true;
+        _doAfter.TryStartDoAfter(doAfter);
     }
 
-    private void OnXenoInfernoDoAfter(Entity<MCXenoInfernoComponent> xeno, ref MCXenoInfernoDoAfterEvent args)
+    private void OnXenoInfernoDoAfter(Entity<MCXenoInfernoComponent> entity, ref MCXenoInfernoDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
             return;
 
-        if (!_xenoPlasma.TryRemovePlasmaPopup(xeno.Owner, xeno.Comp.PlasmaCost))
-            return;
-
-        if (!TryComp(xeno, out TransformComponent? xform))
-            return;
-
-        if (!_net.IsServer)
+        var action = GetEntity(args.Action);
+        if (!RMCActions.TryUseAction(entity, action, entity))
             return;
 
         args.Handled = true;
 
-        _audio.PlayPvs(xeno.Comp.Sound, xeno);
-        SpawnAttachedTo(xeno.Comp.Effect, xeno.Owner.ToCoordinates());
+        if (!_net.IsServer)
+            return;
+
+        _audio.PlayPvs(entity.Comp.Sound, entity);
+        SpawnAttachedTo(entity.Comp.Effect, entity.Owner.ToCoordinates());
+
+        var transform = Transform(entity);
 
         _receivers.Clear();
-        _entityLookup.GetEntitiesInRange(xform.Coordinates, xeno.Comp.Range, _receivers);
+        _entityLookup.GetEntitiesInRange(transform.Coordinates, entity.Comp.Range, _receivers);
 
-        var center = xform.Coordinates;
-
-        for (var x = -xeno.Comp.PostionInfernoX; x <= xeno.Comp.PostionInfernoX; x++)
+        var center = transform.Coordinates;
+        for (var x = -entity.Comp.PositionInfernoX; x <= entity.Comp.PositionInfernoX; x++)
         {
-            for (var y = -xeno.Comp.PostionInfernoY; y <= xeno.Comp.PostionInfernoY; y++)
+            for (var y = -entity.Comp.PositionInfernoY; y <= entity.Comp.PositionInfernoY; y++)
             {
                 var offsetPosition = center.Offset(new Vector2(x, y));
 
                 if (!CanPlaceFire(offsetPosition))
                     continue;
 
-                if (!_interaction.InRangeUnobstructed(xeno.Owner, offsetPosition, xeno.Comp.Range))
+                if (!_interaction.InRangeUnobstructed(entity.Owner, offsetPosition, entity.Comp.Range))
                     continue;
 
-                var fire = Spawn(xeno.Comp.Spawn, offsetPosition);
-                _xenoHive.SetSameHive(xeno.Owner, fire);
+                var fire = Spawn(entity.Comp.Spawn, offsetPosition);
+                _xenoHive.SetSameHive(entity.Owner, fire);
             }
         }
 
@@ -115,26 +112,23 @@ public sealed class MCXenoInfernoSystem : EntitySystem
             if (_mobState.IsDead(receiver))
                 continue;
 
-            if (!_xeno.CanAbilityAttackTarget(xeno, receiver))
+            if (!_xeno.CanAbilityAttackTarget(entity, receiver))
                 continue;
 
             _damageable.TryChangeDamage(
                 receiver,
-                _xeno.TryApplyXenoSlashDamageMultiplier(receiver, xeno.Comp.Damage),
-                origin: xeno,
-                tool: xeno);
+                _xeno.TryApplyXenoSlashDamageMultiplier(receiver, entity.Comp.Damage),
+                origin: entity,
+                tool: entity);
 
-            if (TryComp<FlammableComponent>(receiver, out var fireStacksComp))
-            {
-                fireStacksComp.FireStacks += 2;
-                Dirty(receiver, fireStacksComp);
-            }
+            if (!TryComp<FlammableComponent>(receiver, out var fireStacksComp))
+                continue;
+
+            fireStacksComp.FireStacks += 2;
+            Dirty(receiver, fireStacksComp);
         }
 
-        foreach (var (actionId, action) in _rmcActions.GetActionsWithEvent<MCXenoInfernoActionEvent>(xeno))
-        {
-            _actions.SetCooldown(actionId, xeno.Comp.Cooldown);
-        }
+        StartUseDelay<MCXenoInfernoActionEvent>(entity);
     }
 
     private bool CanPlaceFire(EntityCoordinates coords)

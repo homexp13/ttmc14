@@ -8,11 +8,13 @@ namespace Content.Shared._MC.Xeno.Abilities.ScatterSpit;
 public sealed partial class MCXenoScatterSpitDoAfterEvent : SimpleDoAfterEvent
 {
     public readonly NetCoordinates Coordinates;
+    public readonly NetEntity Action;
     public readonly NetEntity? Entity;
 
-    public MCXenoScatterSpitDoAfterEvent(NetCoordinates coordinates, NetEntity? entity)
+    public MCXenoScatterSpitDoAfterEvent(NetCoordinates coordinates, NetEntity action, NetEntity? entity)
     {
         Coordinates = coordinates;
+        Action = action;
         Entity = entity;
     }
 }

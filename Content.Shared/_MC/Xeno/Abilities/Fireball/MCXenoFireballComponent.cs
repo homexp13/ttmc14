@@ -9,15 +9,6 @@ namespace Content.Shared._MC.Xeno.Abilities.Fireball;
 public sealed partial class MCXenoFireballComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public int Range = 8;
-
-    [DataField, AutoNetworkedField]
-    public int Count = 1;
-
-    [DataField, AutoNetworkedField]
-    public FixedPoint2 PlasmaCost = 50;
-
-    [DataField, AutoNetworkedField]
     public TimeSpan Delay = TimeSpan.FromSeconds(0.6);
 
     [DataField, AutoNetworkedField]
@@ -25,6 +16,9 @@ public sealed partial class MCXenoFireballComponent : Component
 
     [DataField, AutoNetworkedField]
     public Angle MaxDeviation = Angle.FromDegrees(0);
+
+    [DataField, AutoNetworkedField]
+    public int Range = 8;
 
     [DataField, AutoNetworkedField]
     public float Speed = 15;

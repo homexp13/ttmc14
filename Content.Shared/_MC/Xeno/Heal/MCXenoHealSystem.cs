@@ -1,5 +1,6 @@
 ﻿using Content.Shared._MC.Xeno.Hive.Systems;
 using Content.Shared._MC.Xeno.Weeds;
+using Content.Shared._RMC14.Atmos;
 using Content.Shared._RMC14.Damage;
 using Content.Shared._RMC14.Xenonids.Pheromones;
 using Content.Shared._RMC14.Xenonids.Rest;
@@ -29,8 +30,10 @@ public sealed class MCXenoHealSystem : MCEntitySystemSingleton<MCXenoHealSinglet
     [Dependency] private readonly MobThresholdSystem _mobThresholds = null!;
     [Dependency] private readonly DamageableSystem _damageable = null!;
 
-    [Dependency] private readonly MCSharedXenoHiveSystem _mcXenoHive = null!;
     [Dependency] private readonly SharedRMCDamageableSystem _rmcDamageable = null!;
+    [Dependency] private readonly SharedRMCFlammableSystem _rmcFlammable = null!;
+
+    [Dependency] private readonly MCSharedXenoHiveSystem _mcXenoHive = null!;
 
     private EntityQuery<DamageableComponent> _damageableQuery;
     private EntityQuery<AffectableByWeedsComponent> _rmcAffectableQuery;
@@ -71,6 +74,9 @@ public sealed class MCXenoHealSystem : MCEntitySystemSingleton<MCXenoHealSinglet
                 continue;
 
             xenoHealComponent.RegenerationTimeNext = _timing.CurTime + TimeSpan.FromSeconds(UpdateFrequency);
+
+            if (_rmcFlammable.IsOnFire(uid))
+                return;
 
             var affectable = _rmcAffectableQuery.CompOrNull(uid);
             if (!affectable?.OnXenoWeeds ?? false)

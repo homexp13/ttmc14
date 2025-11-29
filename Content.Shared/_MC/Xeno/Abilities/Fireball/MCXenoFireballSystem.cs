@@ -1,22 +1,18 @@
-﻿using System.Numerics;
-using Content.Shared._RMC14.Actions;
+﻿using Content.Shared._RMC14.Actions;
 using Content.Shared._MC.Xeno.Spit;
-using Content.Shared._RMC14.Actions;
 using Content.Shared._RMC14.Projectiles;
-using Content.Shared._RMC14.Xenonids.GasToggle;
 using Content.Shared._RMC14.Xenonids.Hive;
 using Content.Shared._RMC14.Xenonids.Plasma;
 using Content.Shared.Actions;
 using Content.Shared.DoAfter;
-using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
+using Robust.Shared.Spawners;
 
 namespace Content.Shared._MC.Xeno.Abilities.Fireball;
 
-public sealed class MCXenoFireballSystem : EntitySystem
+public sealed class MCXenoFireballSystem : MCXenoAbilitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -38,23 +34,18 @@ public sealed class MCXenoFireballSystem : EntitySystem
         SubscribeLocalEvent<MCXenoFireballComponent, MCXenoFireballDoAfterEvent>(OnFireballDoAfter);
     }
 
-    private void OnFireball(Entity<MCXenoFireballComponent> xeno, ref MCXenoFireballActionEvent args)
+    private void OnFireball(Entity<MCXenoFireballComponent> entity, ref MCXenoFireballActionEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!_rmcActions.TryUseAction(xeno, args.Action, xeno))
+        if (!RMCActions.CanUseActionPopup(entity, args.Action, entity))
             return;
 
-        args.Handled = true;
+        _audio.PlayPredicted(entity.Comp.SoundPrepare, entity, entity);
 
-        if (!_xenoPlasma.HasPlasmaPopup(xeno.Owner, xeno.Comp.PlasmaCost))
-            return;
-
-        _audio.PlayPvs(xeno.Comp.SoundPrepare, xeno);
-
-        var ev = new MCXenoFireballDoAfterEvent(GetNetCoordinates(args.Target), GetNetEntity(args.Entity));
-        var doAfter = new DoAfterArgs(EntityManager, xeno, xeno.Comp.Delay, ev, xeno)
+        var ev = new MCXenoFireballDoAfterEvent(GetNetCoordinates(args.Target), GetNetEntity(args.Action), GetNetEntity(args.Entity));
+        var doAfter = new DoAfterArgs(EntityManager, entity, entity.Comp.Delay, ev, entity)
         {
             BreakOnMove = true,
         };
@@ -67,25 +58,23 @@ public sealed class MCXenoFireballSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
-        args.Handled = true;
-
-        if (!_xenoPlasma.TryRemovePlasmaPopup(xeno.Owner, xeno.Comp.PlasmaCost))
+        var action = GetEntity(args.Action);
+        if (!RMCActions.TryUseAction(xeno.Owner, action, xeno))
             return;
+
+        args.Handled = true;
 
         _mcXenoSpit.Shoot(
             xeno,
             GetCoordinates(args.Coordinates),
             xeno.Comp.ProjectileId,
-            xeno.Comp.Count,
+            1,
             xeno.Comp.MaxDeviation,
             xeno.Comp.Speed,
             xeno.Comp.Sound,
             target: GetEntity(args.Entity)
         );
 
-        foreach (var (actionId, action) in _rmcActions.GetActionsWithEvent<MCXenoFireballActionEvent>(xeno))
-        {
-            _actions.SetCooldown(actionId, xeno.Comp.Cooldown);
-        }
+        StartUseDelay<MCXenoFireballActionEvent>(xeno);
     }
 }

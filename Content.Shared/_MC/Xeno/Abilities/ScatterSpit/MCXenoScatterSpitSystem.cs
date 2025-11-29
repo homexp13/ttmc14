@@ -4,11 +4,10 @@ using Content.Shared.DoAfter;
 
 namespace Content.Shared._MC.Xeno.Abilities.ScatterSpit;
 
-public sealed class MCXenoScatterSpitSystem : EntitySystem
+public sealed class MCXenoScatterSpitSystem : MCXenoAbilitySystem
 {
-    [Dependency] private readonly RMCActionsSystem _rmcActions = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly MCSharedXenoSpitSystem _mcXenoSpit = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = null!;
+    [Dependency] private readonly MCSharedXenoSpitSystem _mcXenoSpit = null!;
 
     public override void Initialize()
     {
@@ -23,12 +22,10 @@ public sealed class MCXenoScatterSpitSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!_rmcActions.TryUseAction(entity, args.Action, entity))
+        if (!RMCActions.CanUseActionPopup(entity, args.Action, entity))
             return;
 
-        args.Handled = true;
-
-        var ev = new MCXenoScatterSpitDoAfterEvent(GetNetCoordinates(args.Target), GetNetEntity(args.Entity));
+        var ev = new MCXenoScatterSpitDoAfterEvent(GetNetCoordinates(args.Target), GetNetEntity(args.Action), GetNetEntity(args.Entity));
         var doAfter = new DoAfterArgs(EntityManager, entity, entity.Comp.Delay, ev, entity)
         {
             BreakOnMove = true,
@@ -40,6 +37,10 @@ public sealed class MCXenoScatterSpitSystem : EntitySystem
     private void OnDoAfter(Entity<MCXenoScatterSpitComponent> entity, ref MCXenoScatterSpitDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
+            return;
+
+        var action = GetEntity(args.Action);
+        if (!RMCActions.TryUseAction(entity, action, entity))
             return;
 
         args.Handled = true;

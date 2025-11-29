@@ -53,12 +53,10 @@ public sealed class MCXenoAcidicSlaveSystem : MCXenoAbilitySystem
         if (!_xenoHive.FromSameHive(entity.Owner, args.Target))
             return;
 
-        if (!RMCActions.TryUseAction(entity, args.Action, entity))
+        if (!RMCActions.CanUseActionPopup(entity, args.Action, entity))
             return;
 
-        args.Handled = true;
-
-        var ev = new MCXenoAcidicSlaveDoAfterEvent();
+        var ev = new MCXenoAcidicSlaveDoAfterEvent(GetNetEntity(args.Action));
         var doAfter = new DoAfterArgs(EntityManager, entity, entity.Comp.Delay, ev, entity, args.Target)
         {
             RequireCanInteract = false,
@@ -73,17 +71,22 @@ public sealed class MCXenoAcidicSlaveSystem : MCXenoAbilitySystem
         if (args.Handled || args.Cancelled)
             return;
 
+        var action = GetEntity(args.Action);
+        if (!RMCActions.TryUseAction(entity, action, entity))
+            return;
+
         if (args.Target is not {} target)
             return;
 
         args.Handled = true;
 
         var value = 50 + _mcXenoHeal.GetRecoveryAura(target) * _mcXenoHeal.GetMaxHealth(target) * 0.01f;
+
         _mcXenoHeal.Heal(target, value);
         _mcXenoSunder.AddSunder(target, value * 0.1f);
+        _audio.PlayPredicted(entity.Comp.Sound, entity, entity);
 
-        if (entity.Comp.Sound is not null)
-            _audio.PlayPredicted(entity.Comp.Sound, entity, entity);
+        StartUseDelay<MCXenoAcidicSlaveActionEvent>(entity);
 
         if (_net.IsClient)
             return;

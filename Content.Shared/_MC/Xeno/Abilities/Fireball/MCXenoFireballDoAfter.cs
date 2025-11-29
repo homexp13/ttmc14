@@ -8,11 +8,13 @@ namespace Content.Shared._MC.Xeno.Abilities.Fireball;
 public sealed partial class MCXenoFireballDoAfterEvent : SimpleDoAfterEvent
 {
     public readonly NetCoordinates Coordinates;
+    public readonly NetEntity Action;
     public readonly NetEntity? Entity;
 
-    public MCXenoFireballDoAfterEvent(NetCoordinates coordinates, NetEntity? entity)
+    public MCXenoFireballDoAfterEvent(NetCoordinates coordinates, NetEntity action, NetEntity? entity)
     {
         Coordinates = coordinates;
+        Action = action;
         Entity = entity;
     }
 }

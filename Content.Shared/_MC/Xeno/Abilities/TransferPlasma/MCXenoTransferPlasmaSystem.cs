@@ -36,6 +36,17 @@ public sealed class MCXenoTransferPlasmaSystem : MCXenoAbilitySystem
         if (!_mcXenoPlasma.CanTransferPlasma(entity, args.Target, entity.Comp.Amount))
             return;
 
+        var ev = new MCXenoTransferPlasmaDoAfter();
+        var doAfter = new DoAfterArgs(EntityManager, entity, entity.Comp.Delay, ev, entity, args.Target)
+        {
+            BreakOnMove = true,
+            RequireCanInteract = false,
+            DistanceThreshold = entity.Comp.Range,
+        };
+
+        if (!_doAfter.TryStartDoAfter(doAfter))
+            return;
+
         if (_net.IsServer)
         {
             SpawnAttachedTo(entity.Comp.EffectId, entity.Owner.ToCoordinates());
@@ -43,14 +54,6 @@ public sealed class MCXenoTransferPlasmaSystem : MCXenoAbilitySystem
         }
 
         _audio.PlayPredicted(entity.Comp.Sound, entity, entity);
-
-        var ev = new MCXenoTransferPlasmaDoAfter();
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, entity, entity.Comp.Delay, ev, entity, args.Target)
-        {
-            BreakOnMove = true,
-            RequireCanInteract = false,
-            DistanceThreshold = entity.Comp.Range,
-        });
     }
 
     private void OnActionDoAfter(Entity<MCXenoTransferPlasmaComponent> entity, ref MCXenoTransferPlasmaDoAfter args)

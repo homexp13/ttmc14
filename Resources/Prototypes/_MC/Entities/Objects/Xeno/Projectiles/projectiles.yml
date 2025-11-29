@@ -110,13 +110,14 @@
     spawn: MCEffectInfernoPyrogen
   - type: ProjectileMaxRange
     max: 5
-  - type: RMCProjectileAccuracy
-    accuracy: 95
+  - type: MCXenoProjectileTargetingTurf
+  - type: PointLight
+    color: "#069420"
 
 - type: entity
   parent: MCXenoProjectile
   id: MCXenoProjectileWhirlwind
-  name: Plasma Whirlwind
+  name: plasma Whirlwind
   components:
   - type: Sprite
     sprite: _MC/Objects/Xeno/whirlwind.rsi

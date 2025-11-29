@@ -9,9 +9,11 @@
     icon:
       sprite: _MC/Interface/Actions/Xeno/forger.rsi
       state: inferno
-    useDelay: 1.5
+    useDelay: 18
   - type: InstantAction
     event: !type:MCXenoInfernoActionEvent
+  - type: XenoActionPlasma
+    cost: 50
   - type: ActionBlockIfResting
 
 - type: entity
@@ -25,12 +27,14 @@
     icon:
       sprite: _MC/Interface/Actions/Xeno/forger.rsi
       state: fireball
-    useDelay: 1.5
+    useDelay: 15
   - type: TargetAction
     checkCanAccess: false
-    range: 8
+    range: 15
   - type: WorldTargetAction
     event: !type:MCXenoFireballActionEvent
+  - type: XenoActionPlasma
+    cost: 50
   - type: ActionBlockIfResting
 
 - type: entity

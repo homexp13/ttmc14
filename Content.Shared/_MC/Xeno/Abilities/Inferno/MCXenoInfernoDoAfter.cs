@@ -4,10 +4,12 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._MC.Xeno.Abilities.Inferno;
 
 [Serializable, NetSerializable]
-public sealed partial class MCXenoInfernoDoAfterEvent : DoAfterEvent
+public sealed partial class MCXenoInfernoDoAfterEvent : SimpleDoAfterEvent
 {
-    public override DoAfterEvent Clone()
+    public readonly NetEntity Action;
+
+    public MCXenoInfernoDoAfterEvent(NetEntity action)
     {
-        return this;
+        Action = action;
     }
 }

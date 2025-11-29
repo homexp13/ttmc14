@@ -1,11 +1,8 @@
-﻿using Content.Shared._MC.Xeno.Abilities.AcidicSalve;
-using Content.Shared._MC.Xeno.Heal;
+﻿using Content.Shared._MC.Xeno.Heal;
 using Content.Shared._MC.Xeno.Sunder;
 using Content.Shared._RMC14.Atmos;
-using Content.Shared._RMC14.Xenonids;
 using Content.Shared._RMC14.Xenonids.Hive;
 using Content.Shared.Coordinates;
-using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;
@@ -54,12 +51,10 @@ public sealed class MCXenoPsychicCureSystem : MCXenoAbilitySystem
         if (!_xenoHive.FromSameHive(entity.Owner, args.Target))
             return;
 
-        if (!RMCActions.TryUseAction(entity, args.Action, entity))
+        if (!RMCActions.CanUseActionPopup(entity, args.Action, entity))
             return;
 
-        args.Handled = true;
-
-        var ev = new MCXenoPsychicCureDoAfterEvent();
+        var ev = new MCXenoPsychicCureDoAfterEvent(GetNetEntity(args.Action));
         var doAfter = new DoAfterArgs(EntityManager, entity, entity.Comp.Delay, ev, entity, args.Target)
         {
             RequireCanInteract = false,
@@ -77,13 +72,17 @@ public sealed class MCXenoPsychicCureSystem : MCXenoAbilitySystem
         if (args.Target is not {} target)
             return;
 
+        var action = GetEntity(args.Action);
+        if (!RMCActions.TryUseAction(entity, action, entity))
+            return;
+
         args.Handled = true;
 
         _mcXenoHeal.HealWounds(target, 10, powerScaling: false);
         _mcXenoSunder.AddSunder(target, 10);
+        _audio.PlayPredicted(entity.Comp.Sound, entity, entity);
 
-        if (entity.Comp.Sound is not null)
-            _audio.PlayPredicted(entity.Comp.Sound, entity, entity);
+        StartUseDelay<MCXenoPsychicCureActionEvent>(entity);
 
         if (_net.IsClient)
             return;

@@ -28,18 +28,18 @@ namespace Content.Shared._MC.Xeno.Spit;
 /// </summary>
 public abstract class MCSharedXenoSpitSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly INetManager _net = null!;
+    [Dependency] private readonly IGameTiming _timing = null!;
+    [Dependency] private readonly IRobustRandom _random = null!;
 
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedGunSystem _gun = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = null!;
+    [Dependency] private readonly SharedGunSystem _gun = null!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = null!;
+    [Dependency] private readonly SharedTransformSystem _transform = null!;
 
-    [Dependency] private readonly XenoSystem _xeno = default!;
-    [Dependency] private readonly XenoPlasmaSystem _xenoPlasma = default!;
-    [Dependency] private readonly SharedXenoHiveSystem _xenoHive = default!;
+    [Dependency] private readonly XenoSystem _rmcXeno = null!;
+    [Dependency] private readonly XenoPlasmaSystem _rmcXenoPlasma = null!;
+    [Dependency] private readonly SharedXenoHiveSystem _rmcXenoHive = null!;
 
     protected EntityQuery<MCXenoSpitComponent> XenoSpitQuery;
 
@@ -67,7 +67,7 @@ public abstract class MCSharedXenoSpitSystem : EntitySystem
 
         // TODO: add popup delay, caused spamming
         // Abort if not enough plasma
-        if (!_xenoPlasma.TryRemovePlasmaPopup(xeno, comp.PlasmaCost))
+        if (!_rmcXenoPlasma.TryRemovePlasmaPopup(xeno, comp.PlasmaCost))
             return;
 
         comp.NextShot = _timing.CurTime + comp.Delay;
@@ -106,7 +106,7 @@ public abstract class MCSharedXenoSpitSystem : EntitySystem
     /// <summary>
     /// Spawns and launches a projectile from a Xeno.
     /// </summary>
-    public void Shoot(EntityUid xeno,
+    public EntityUid[] Shoot(EntityUid xeno,
         EntityCoordinates targetCoords,
         EntProtoId projectileId,
         int shots,
@@ -121,20 +121,21 @@ public abstract class MCSharedXenoSpitSystem : EntitySystem
 
         // Invalid or same-position shot
         if (origin.MapId != targetMap.MapId || origin.Position == targetMap.Position)
-            return;
+            return [];
 
         _audio.PlayPredicted(sound, xeno, xeno);
-        if (_net.IsClient)
-            return;
 
-        var ammoShotEvent = new AmmoShotEvent { FiredProjectiles = new(shots) };
+        if (_net.IsClient)
+            return [];
+
+        var ammoShotEvent = new AmmoShotEvent { FiredProjectiles = new List<EntityUid>(shots) };
 
         // Prevent friendly fire on invalid targets
-        if (target is not null && HasComp<MobStateComponent>(target) && !_xeno.CanAbilityAttackTarget(xeno, target.Value))
+        if (target is not null && HasComp<MobStateComponent>(target) && !_rmcXeno.CanAbilityAttackTarget(xeno, target.Value))
             target = null;
 
+        var result = new EntityUid[shots];
         var direction = targetMap.Position - origin.Position;
-
         for (var i = 0; i < shots; i++)
         {
             var projTarget = ApplyDeviation(targetMap, deviation, direction);
@@ -146,9 +147,12 @@ public abstract class MCSharedXenoSpitSystem : EntitySystem
             SetupProjectile(projectile, xeno, target, fixedDistance, origin, targetMap, speed);
             _gun.ShootProjectile(projectile, diff, velocity, xeno, xeno, speed);
             ammoShotEvent.FiredProjectiles.Add(projectile);
+
+            result[i] = projectile;
         }
 
         RaiseLocalEvent(xeno, ammoShotEvent);
+        return result;
     }
 
     /// <summary>
@@ -171,7 +175,7 @@ public abstract class MCSharedXenoSpitSystem : EntitySystem
         EnsureComp<XenoProjectileComponent>(projectile);
 
         // Link to hive for friendly behavior
-        _xenoHive.SetSameHive(xeno, projectile);
+        _rmcXenoHive.SetSameHive(xeno, projectile);
 
         if (fixedDistance is not null)
         {
