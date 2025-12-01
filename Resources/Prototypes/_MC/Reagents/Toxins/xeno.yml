@@ -39,7 +39,8 @@
   metabolisms:
     Poison:
       metabolismRate: 0.4
-      effects: []
+      effects:
+      - !type:MCReagentTransvitox
 
 - type: reagent
   parent: MCReagentToxins

@@ -8,6 +8,7 @@
   components:
   # mc-changes-start
   - type: MCSolutionTicker
+  - type: MCSolutionEventProvider
   - type: MCArmor
     showExamine: false
   - type: MCXenoToxicStacks

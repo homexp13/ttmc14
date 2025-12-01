@@ -8,15 +8,13 @@ namespace Content.Server.Body.Systems;
 
 public partial class MetabolizerSystem
 {
-    // ReSharper disable once UseCollectionExpression
-    private readonly ReagentId[] _canTick = new ReagentId[]
-    {
+    private readonly ReagentId[] _canTick =
+    [
         new ("MCNeurotoxin", null),
         new ("MCNanoMachines", null),
-    };
+    ];
 
-    // ReSharper disable once UseCollectionExpression
-    private readonly List<EntityUid> _updated = new();
+    private readonly List<EntityUid> _updated = [];
 
     private void UpdateExtension(float _)
     {
@@ -44,7 +42,7 @@ public partial class MetabolizerSystem
 
         if (!tickerComponent.Entries.TryGetValue(solution, out var entries))
         {
-            entries = new List<MCSolutionTickerComponent.TickEntry>();
+            entries = [];
             foreach (var reagentId in _canTick)
             {
                 entries.Add(new MCSolutionTickerComponent.TickEntry(reagentId, -1));

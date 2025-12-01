@@ -24,24 +24,52 @@ public abstract partial class MCReagentEffect : EntityEffect
     protected MCDamageableSystem MCDamageable;
     protected MCStaminaSystem MCStamina;
 
+    protected bool EffectProcessed;
+    protected bool DamagedProcessed;
+
     #endregion
 
     protected abstract void Effect(EntityEffectReagentArgs args, Solution solution, ReagentPrototype reagent);
 
+    protected virtual void GetDamage(EntityUid uid, Solution solution, ReagentPrototype reagent)
+    {
+    }
+
     public override void Effect(EntityEffectBaseArgs args)
     {
-        Initialize(args);
+        EffectProcessed = true;
 
-        if (args is not EntityEffectReagentArgs reagentArgs)
+        try
+        {
+            Initialize(args);
+
+            if (args is not EntityEffectReagentArgs reagentArgs)
+                return;
+
+            if (reagentArgs.Source is not { } solution)
+                return;
+
+            if (reagentArgs.Reagent is not { } reagent)
+                return;
+
+            Effect(reagentArgs, solution, reagent);
+        }
+        finally
+        {
+            EffectProcessed = false;
+        }
+    }
+
+    public void ProcessDamaged(EntityUid uid, Solution solution, ReagentPrototype reagent)
+    {
+        if (EffectProcessed || DamagedProcessed)
             return;
 
-        if (reagentArgs.Source is not { } solution)
-            return;
+        DamagedProcessed = true;
 
-        if (reagentArgs.Reagent is not { } reagent)
-            return;
+        GetDamage(uid, solution, reagent);
 
-        Effect(reagentArgs, solution, reagent);
+        DamagedProcessed = false;
     }
 
     private void Initialize(EntityEffectBaseArgs args)
