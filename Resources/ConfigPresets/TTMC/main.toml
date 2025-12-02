@@ -35,8 +35,8 @@ can_create_vacuum = false
 server_name = "TTMC"
 
 [game]
-hostname = "[RU][LRP] 🌪️ TornadoTech's Marine Corps — Main"
-desc = "Сборка сервера основана на https://github.com/ttmc14/ttmc14"
+hostname = "[RU][LRP] 🌪️ Unga Marines TGMC — Main"
+desc = "Сборка сервера: https://github.com/ttmc14/ttmc14, порт различных TMGC сборок из ss13"
 defaultpreset = "MCCrash"
 map = "MCPillarOfSpring"
 
@@ -74,11 +74,11 @@ tags = "lang:ru,rp:low,region:eu_e"
 flavor_text = true
 
 [infolinks]
-bug_report = "https://discord.gg/dKng7WJZyn"
-discord = "https://discord.gg/dKng7WJZyn"
+bug_report = "https://discord.gg/Pdzq83GyW7"
+discord = "https://discord.gg/Pdzq83GyW7"
 github = "https://github.com/ttmc14/ttmc14"
 patreon = "https://boosty.to/tornado_tech"
-wiki = "https://wiki.rouny-ss14.com"
+wiki = "https://discord.gg/Pdzq83GyW7"
 
 [net]
 tickrate = 25
