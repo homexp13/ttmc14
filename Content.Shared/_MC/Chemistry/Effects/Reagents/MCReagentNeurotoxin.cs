@@ -14,9 +14,9 @@ public sealed partial class MCReagentNeurotoxin : MCReagentEffect
     {
         return
         """
-        Наносит [color=#64d1fc]-2 выносливости[/color] за тик.
-        После 21 тика потеря увеличивается до [color=#64d1fc]-6 выносливости[/color].
-        После 46 тиков до [color=#64d1fc]-15 выносливости[/color].
+        Наносит 2 [color=#64d1fc]выносливости[/color] за тик.
+        После 21 тика потеря увеличивается до 6 [color=#64d1fc]выносливости[/color].
+        После 46 тиков до 15 [color=#64d1fc]выносливости[/color].
 
         Вызывает боль +15.
         После 21 тика боль +35.

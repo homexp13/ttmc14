@@ -54,7 +54,8 @@
   metabolisms:
     Poison:
       metabolismRate: 0.4
-      effects: []
+      effects:
+      - !type:MCReagentSanguinal
 
 - type: reagent
   parent: MCReagentToxins

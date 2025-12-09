@@ -7,11 +7,11 @@ namespace Content.Shared._MC.Damage;
 
 public sealed class MCDamageableSystem : EntitySystem
 {
-    private readonly ProtoId<DamageTypePrototype> _damageBruteId = "MCBrute";
-    private readonly ProtoId<DamageTypePrototype> _damageBurnId = "MCBurn";
-    private readonly ProtoId<DamageTypePrototype> _damageToxinId = "MCToxin";
-    private readonly ProtoId<DamageTypePrototype> _damageOxygenId = "MCOxygen";
-    private readonly ProtoId<DamageTypePrototype> _damageCloneId = "MCClone";
+    public static readonly ProtoId<DamageTypePrototype> DamageBruteId = "MCBrute";
+    public static readonly ProtoId<DamageTypePrototype> DamageBurnId = "MCBurn";
+    public static readonly ProtoId<DamageTypePrototype> DamageToxinId = "MCToxin";
+    public static readonly ProtoId<DamageTypePrototype> DamageOxygenId = "MCOxygen";
+    public static readonly ProtoId<DamageTypePrototype> DamageCloneId = "MCClone";
 
     private DamageTypePrototype _damageBrute = null!;
     private DamageTypePrototype _damageBurn = null!;
@@ -30,11 +30,11 @@ public sealed class MCDamageableSystem : EntitySystem
 
         _damageableQuery = GetEntityQuery<DamageableComponent>();
 
-        _damageBrute = _prototype.Index(_damageBruteId);
-        _damageBurn = _prototype.Index(_damageBurnId);
-        _damageToxin = _prototype.Index(_damageToxinId);
-        _damageOxygen = _prototype.Index(_damageOxygenId);
-        _damageClone = _prototype.Index(_damageCloneId);
+        _damageBrute = _prototype.Index(DamageBruteId);
+        _damageBurn = _prototype.Index(DamageBurnId);
+        _damageToxin = _prototype.Index(DamageToxinId);
+        _damageOxygen = _prototype.Index(DamageOxygenId);
+        _damageClone = _prototype.Index(DamageCloneId);
     }
 
     public void AdjustBruteLoss(EntityUid uid, float damage)
@@ -67,7 +67,18 @@ public sealed class MCDamageableSystem : EntitySystem
         if (!_damageableQuery.TryComp(uid, out var component))
             return 0;
 
-        if (!component.Damage.DamageDict.TryGetValue(_damageBruteId, out var damage))
+        if (!component.Damage.DamageDict.TryGetValue(DamageBruteId, out var damage))
+            return 0;
+
+        return damage.Float();
+    }
+
+    public float GetBurnLoss(EntityUid uid)
+    {
+        if (!_damageableQuery.TryComp(uid, out var component))
+            return 0;
+
+        if (!component.Damage.DamageDict.TryGetValue(DamageBurnId, out var damage))
             return 0;
 
         return damage.Float();
@@ -80,7 +91,7 @@ public sealed class MCDamageableSystem : EntitySystem
         if (!_damageableQuery.TryComp(uid, out var component))
             return false;
 
-        if (!component.Damage.DamageDict.TryGetValue(_damageBruteId, out var damage))
+        if (!component.Damage.DamageDict.TryGetValue(DamageBruteId, out var damage))
             return false;
 
         return damage > 0;
@@ -91,7 +102,7 @@ public sealed class MCDamageableSystem : EntitySystem
         if (!_damageableQuery.TryComp(uid, out var component))
             return false;
 
-        if (!component.Damage.DamageDict.TryGetValue(_damageBurnId, out var damage))
+        if (!component.Damage.DamageDict.TryGetValue(DamageBurnId, out var damage))
             return false;
 
         return damage > 0;

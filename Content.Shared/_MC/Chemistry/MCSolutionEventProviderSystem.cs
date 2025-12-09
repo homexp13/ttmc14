@@ -22,7 +22,8 @@ public sealed class MCSolutionEventProviderSystem : EntitySystem
 
     private void OnDamageChanged(Entity<MCSolutionEventProviderComponent> entity, ref DamageChangedEvent args)
     {
-        Provide((entity, entity), (effect, solution, reagent) => effect.ProcessDamaged(entity, solution, reagent));
+        var damage = args.DamageDelta ?? new DamageSpecifier();
+        Provide((entity, entity), (effect, solution, reagent) => effect.ProcessDamaged(entity, solution, reagent, damage));
     }
 
     private void Provide(Entity<MCSolutionEventProviderComponent?> entity, Action<MCReagentEffect, Solution, ReagentPrototype> callback)
@@ -30,7 +31,7 @@ public sealed class MCSolutionEventProviderSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp))
             return;
 
-        if (!_solution.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solutionEntity, out var solution))
+        if (!_solution.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
             return;
 
         foreach (var reagentId in entity.Comp.AllowedReagents)
