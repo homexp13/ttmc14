@@ -1,0 +1,9 @@
+<Document>
+
+  # Все химические элементы
+
+  Это список всех доступных химических элементов.
+
+  <GuideReagentGroupEmbed Group="Elements"/>
+
+</Document>

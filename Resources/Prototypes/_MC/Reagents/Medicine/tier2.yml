@@ -288,38 +288,6 @@
 
 - type: reagent
   parent: MCReagentMedicine
-  id: MCSalineGlucose
-  name: reagent-name-mc-saline-glucose
-  desc: reagent-desc-mc-saline-glucose
-  physicalDesc: mc-reagent-physical-desc-liquid
-  color: "#C8A5DC"
-  overdose: 30
-  criticalOverdose: 50
-  metabolisms:
-    Medicine:
-      metabolismRate: 0.2
-      effects:
-      - !type:ModifyBloodLevel
-        amount: 2
-      - !type:HealthChange
-        conditions:
-        - !type:ReagentThreshold
-          min: 30
-        damage:
-          types:
-            MCToxin: 1
-            MCBrute: 1
-      - !type:HealthChange
-        conditions:
-        - !type:ReagentThreshold
-          min: 50
-        damage:
-          types:
-            MCBrute: 1
-            MCToxin: 1
-
-- type: reagent
-  parent: MCReagentMedicine
   id: MCNanoblood
   name: reagent-name-mc-nanoblood
   desc: reagent-desc-mc-nanoblood

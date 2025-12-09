@@ -1,0 +1,35 @@
+- type: guideEntry
+  parent: MC
+  id: MCMedicineChemicalsAll
+  priority: 1
+  name: Все реагенты
+  text: "/ServerInfo/Guidebook/_MC/Medicine/Chemicals/All/All.xml"
+  children:
+  - MCMedicineChemicalsAllElement
+  - MCMedicineChemicalsAllMedicine
+  - MCMedicineChemicalsAllSpecial
+  - MCMedicineChemicalsAllToxins
+
+- type: guideEntry
+  parent: MC
+  id: MCMedicineChemicalsBase
+  priority: 2
+  name: Базовая медицина
+  text: "/ServerInfo/Guidebook/_MC/Medicine/Chemicals/Base.xml"
+  filterEnabled: true
+
+- type: guideEntry
+  parent: MC
+  id: MCMedicineChemicalsSpecial
+  priority: 3
+  name: Специализированная медицина
+  text: "/ServerInfo/Guidebook/_MC/Medicine/Chemicals/Special.xml"
+  filterEnabled: true
+
+- type: guideEntry
+  parent: MC
+  id: MCMedicineChemicalsToxinsXeno
+  priority: 3
+  name: Токсины ксеноморфов
+  text: "/ServerInfo/Guidebook/_MC/Medicine/Chemicals/Toxins/Xeno.xml"
+  filterEnabled: true

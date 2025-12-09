@@ -1,0 +1,14 @@
+<Document>
+
+  # Специализированные лекарственные препараты
+
+  Эти лекарственные препараты, как правило, имеют конкретные показания к применению.
+
+  <GuideReagentEmbed Reagent="MCInaprovaline"/>
+  <GuideReagentEmbed Reagent="MCEthylredoxrazine"/>
+  <GuideReagentEmbed Reagent="MCArithrazine"/>
+  <GuideReagentEmbed Reagent="MCLeporazine"/>
+  <GuideReagentEmbed Reagent="MCCryoxadone"/>
+  <GuideReagentEmbed Reagent="MCImidazoline"/>
+
+</Document>

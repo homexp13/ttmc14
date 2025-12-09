@@ -1,0 +1,11 @@
+<Document>
+
+  # Основные токсины ксеноморфов
+
+  <GuideReagentEmbed Reagent="MCNeurotoxin"/>
+  <GuideReagentEmbed Reagent="MCHemodile"/>
+  <GuideReagentEmbed Reagent="MCTransvitox"/>
+  <GuideReagentEmbed Reagent="MCSanguinal"/>
+  <GuideReagentEmbed Reagent="MCOzelomelyn"/>
+
+</Document>

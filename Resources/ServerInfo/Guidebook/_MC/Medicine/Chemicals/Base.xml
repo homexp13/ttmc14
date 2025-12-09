@@ -1,0 +1,20 @@
+<Document>
+
+  # Основные лекарственные препараты
+
+  Эти лекарственные препараты почти всегда полезны в той или иной степени.
+
+  <GuideReagentEmbed Reagent="MCBicaridine"/>
+  <GuideReagentEmbed Reagent="MCKelotane"/>
+  <GuideReagentEmbed Reagent="MCTricordrazine"/>
+  <GuideReagentEmbed Reagent="MCTramadol"/>
+  <GuideReagentEmbed Reagent="MCParacetamol"/>
+  <GuideReagentEmbed Reagent="MCSalineGlucose"/>
+
+  <GuideReagentEmbed Reagent="MCDylovene"/>
+  <GuideReagentEmbed Reagent="MCDexalin"/>
+  <GuideReagentEmbed Reagent="MCDexalinPlus"/>
+  <GuideReagentEmbed Reagent="MCMeralyne"/>
+  <GuideReagentEmbed Reagent="MCDermaline"/>
+
+</Document>

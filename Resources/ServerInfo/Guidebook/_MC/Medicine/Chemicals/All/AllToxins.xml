@@ -1,0 +1,9 @@
+<Document>
+
+  # Все токсины
+
+  Это список всех доступных токсинов.
+
+  <GuideReagentGroupEmbed Group="Toxins"/>
+
+</Document>

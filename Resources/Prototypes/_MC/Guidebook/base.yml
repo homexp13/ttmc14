@@ -1,0 +1,4 @@
+- type: guideEntry
+  id: MC
+  isCM: true
+  abstract: true

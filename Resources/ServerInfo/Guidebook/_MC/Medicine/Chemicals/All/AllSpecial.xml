@@ -1,0 +1,9 @@
+<Document>
+
+  # Все особые препараты
+
+  Это список всех доступных особых препаратов.
+
+  <GuideReagentGroupEmbed Group="MCSpecial"/>
+
+</Document>

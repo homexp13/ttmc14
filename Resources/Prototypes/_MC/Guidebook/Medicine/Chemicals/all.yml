@@ -1,0 +1,31 @@
+- type: guideEntry
+  parent: MC
+  id: MCMedicineChemicalsAllElement
+  priority: 1
+  name: Элементы
+  text: "/ServerInfo/Guidebook/_MC/Medicine/Chemicals/All/AllElements.xml"
+  filterEnabled: true
+
+- type: guideEntry
+  parent: MC
+  id: MCMedicineChemicalsAllMedicine
+  priority: 2
+  name: Медицина
+  text: "/ServerInfo/Guidebook/_MC/Medicine/Chemicals/All/AllMedicine.xml"
+  filterEnabled: true
+
+- type: guideEntry
+  parent: MC
+  id: MCMedicineChemicalsAllToxins
+  priority: 3
+  name: Токсины
+  text: "/ServerInfo/Guidebook/_MC/Medicine/Chemicals/All/AllToxins.xml"
+  filterEnabled: true
+
+- type: guideEntry
+  parent: MC
+  id: MCMedicineChemicalsAllSpecial
+  priority: 4
+  name: Особое
+  text: "/ServerInfo/Guidebook/_MC/Medicine/Chemicals/All/AllSpecial.xml"
+  filterEnabled: true
