@@ -1,0 +1,32 @@
+- type: entity
+  parent: ActionXenoBase
+  id: MCActionXenoSelectReagent
+  name: Select Reagent
+  description: Selects which reagent to use for reagent slash and noxious gas. Hemodile slows targets down, multiplied by each other xeno-based toxin. Transvitox converts burns to toxin, and causes additional toxin damage when they take brute damage, both effects multiplied by other xeno-based toxins. Ozelomelyn purges all medicines from their system rapidly and causes minor toxin damage. Acid is transparent but causes major burn damage.
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: _MC/Interface/Xeno/toxins.rsi
+      state: empty
+    useDelay: 0.1
+  - type: InstantAction
+    event: !type:MCXenoReagentSelectorActionEvent
+
+- type: entity
+  parent: ActionXenoBase
+  id: MCActionXenoReagentSlash
+  name: Reagent Slash (100)
+  description: For a short duration the next 3 slashes made will inject a small amount of selected toxin.
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    icon:
+      sprite: _MC/Interface/Actions/Xeno/defiler.rsi
+      state: reagent_slash
+    useDelay: 6
+  - type: InstantAction
+    event: !type:MCXenoReagentSlashActionEvent
+  - type: XenoActionPlasma
+    cost: 100
+  - type: ActionBlockIfResting

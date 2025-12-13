@@ -38,6 +38,8 @@
   - type: UserInterface
     interfaces:
       # MC
+      enum.MCXenoReagentSelectorUI.Key:
+        type: MCXenoReagentSelectorBui
       enum.MCXenoPortalPlacerUI.Key:
         type: MCXenoChoosePortalBui
       enum.MCXenoPlantingWeedsUI.Key:

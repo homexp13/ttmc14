@@ -13,26 +13,25 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Shared._MC.Xeno.Construction;
 
 public sealed class MCXenoPlantingWeedsSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IMapManager _map = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogs = default!;
+    [Dependency] private readonly INetManager _net = null!;
+    [Dependency] private readonly IMapManager _map = null!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogs = null!;
 
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedXenoWeedsSystem _xenoWeeds = default!;
-    [Dependency] private readonly SharedXenoHiveSystem _xenoHive = default!;
-    [Dependency] private readonly XenoPlasmaSystem _xenoPlasma = default!;
-    [Dependency] private readonly RMCActionsSystem _rmcActions = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = null!;
+    [Dependency] private readonly SharedAudioSystem _audio = null!;
+    [Dependency] private readonly SharedTransformSystem _transform = null!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = null!;
+    [Dependency] private readonly SharedPopupSystem _popup = null!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = null!;
+    [Dependency] private readonly SharedXenoWeedsSystem _xenoWeeds = null!;
+    [Dependency] private readonly SharedXenoHiveSystem _xenoHive = null!;
+    [Dependency] private readonly XenoPlasmaSystem _xenoPlasma = null!;
+    [Dependency] private readonly RMCActionsSystem _rmcActions = null!;
 
     public override void Initialize()
     {

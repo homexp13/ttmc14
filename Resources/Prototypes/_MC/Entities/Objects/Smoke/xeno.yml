@@ -1,5 +1,15 @@
 - type: entity
   parent: MCSmoke
+  id: MCSmokeXeno
+  abstract: true
+  components:
+  - type: MCEdgeSpreader
+    delay: 0.1
+  - type: TimedDespawn
+    lifetime: 6
+
+- type: entity
+  parent: MCSmoke
   id: MCSmokeXenoNeurotoxin
   name: smoke xeno neurotoxin
   components:
@@ -8,6 +18,18 @@
   - type: MCSmokeReagent
     reagents:
     - ReagentId: MCNeurotoxin
+      Quantity: 7
+
+- type: entity
+  parent: MCSmoke
+  id: MCSmokeXenoHemodile
+  name: smoke xeno hemodile
+  components:
+  - type: Sprite
+    color: "#0287A1"
+  - type: MCSmokeReagent
+    reagents:
+    - ReagentId: MCHemodile
       Quantity: 7
 
 - type: entity
