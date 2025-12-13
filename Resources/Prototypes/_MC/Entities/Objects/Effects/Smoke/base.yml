@@ -1,6 +1,6 @@
 - type: entity
   parent: RMCSmoke
-  id: MCSmoke
+  id: MCSmokeDepricated
   suffix: MC
   components:
   - type: Sprite
@@ -13,7 +13,7 @@
   - type: EdgeSpreader
     id: MCSmokeAcid
   - type: EvenSmoke
-    spawn: MCSmoke
+    spawn: MCSmokeDepricated
     range: 3
   - type: DeleteOnExplosion
 

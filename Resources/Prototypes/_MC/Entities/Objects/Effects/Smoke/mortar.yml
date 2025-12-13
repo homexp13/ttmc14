@@ -1,5 +1,5 @@
 - type: entity
-  parent: MCSmoke
+  parent: MCSmokeDepricated
   id: MCSmokeMortar
   suffix: MC, Mortar
   components:

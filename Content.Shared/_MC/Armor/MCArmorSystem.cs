@@ -1,4 +1,5 @@
-﻿using Content.Shared._MC.Xeno.Sunder;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared._MC.Xeno.Sunder;
 using Content.Shared._RMC14.Weapons.Ranged;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
@@ -44,6 +45,31 @@ public sealed class MCArmorSystem : EntitySystem
         SubscribeLocalEvent<MCArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
 
         SubscribeLocalEvent<InventoryComponent, MCArmorGetEvent>(_inventory.RelayEvent);
+    }
+
+    public MCArmorDefinition? GetArmor(Entity<MCArmorComponent?> entity, SlotFlags slotFlags = SlotFlags.OUTERCLOTHING | SlotFlags.INNERCLOTHING)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return null;
+
+        var ev = new MCArmorGetEvent(slotFlags, new MCArmorDefinition());
+        RaiseLocalEvent(entity, ref ev);
+
+        return ev.ArmorDefinition;
+    }
+
+    public bool TryGetArmor(Entity<MCArmorComponent?> entity, [NotNullWhen(true)] out MCArmorDefinition? armor)
+    {
+        armor = null;
+
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
+        var ev = new MCArmorGetEvent(SlotFlags.OUTERCLOTHING | SlotFlags.INNERCLOTHING, new MCArmorDefinition());
+        RaiseLocalEvent(entity, ref ev);
+
+        armor = ev.ArmorDefinition;
+        return true;
     }
 
     private static void OnGet(Entity<MCArmorComponent> entity, ref MCArmorGetEvent args)
@@ -130,11 +156,6 @@ public sealed class MCArmorSystem : EntitySystem
         }
     }
 
-    private static float ArmorToValue(int armor, int penetration, float sunder)
-    {
-        return Math.Clamp((100 - armor * sunder + penetration) * 0.01f, 0, 1);
-    }
-
     private void OnArmorVerbExamine(Entity<MCArmorComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess || !entity.Comp.ShowExamine)
@@ -185,5 +206,10 @@ public sealed class MCArmorSystem : EntitySystem
         }
 
         return msg;
+    }
+
+    public static float ArmorToValue(int armor, int penetration = 0, float sunder = 1)
+    {
+        return Math.Clamp((100 - armor * sunder + penetration) * 0.01f, 0, 1);
     }
 }
