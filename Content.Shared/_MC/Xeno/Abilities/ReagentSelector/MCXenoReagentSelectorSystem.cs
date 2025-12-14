@@ -16,6 +16,14 @@ public sealed class MCXenoReagentSelectorSystem : MCXenoAbilitySystem
         SubscribeLocalEvent<MCXenoReagentSelectorComponent, MCXenoReagentSelectorActionEvent>(OnAction);
     }
 
+    public EntProtoId? GetSmoke(Entity<MCXenoReagentSelectorComponent?> entity)
+    {
+        return !Resolve(entity, ref entity.Comp)
+            ? null
+            : entity.Comp.SelectedEntry?.SmokeEntityId;
+    }
+
+
     public ProtoId<ReagentPrototype>? GetReagent(Entity<MCXenoReagentSelectorComponent?> entity)
     {
         return !Resolve(entity, ref entity.Comp)

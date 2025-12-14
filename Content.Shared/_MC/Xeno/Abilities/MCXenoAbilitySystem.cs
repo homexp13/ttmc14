@@ -6,6 +6,8 @@ using Content.Shared.Damage;
 using Content.Shared.Effects;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee;
+using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -13,6 +15,8 @@ namespace Content.Shared._MC.Xeno.Abilities;
 
 public abstract class MCXenoAbilitySystem : EntitySystem
 {
+    [Dependency] protected readonly INetManager Net = null!;
+
     /// <summary>
     /// Reference to the central actions system used for validating and consuming ability actions.
     /// Automatically injected by dependency resolution.
@@ -74,6 +78,28 @@ public abstract class MCXenoAbilitySystem : EntitySystem
             Actions.StartUseDelay((action, action));
             break;
         }
+    }
+
+    protected void StartUseDelay<T>(EntityUid uid, EntityUid actionUid) where T : BaseActionEvent
+    {
+        foreach (var action in RMCActions.GetActionsWithEvent<T>(uid))
+        {
+            if (action.Owner != actionUid)
+                continue;
+
+            Actions.StartUseDelay((action, action));
+            break;
+        }
+    }
+
+    protected EntityUid SpawnServer(string? prototype, EntityCoordinates coordinates)
+    {
+        return Net.IsClient ? EntityUid.Invalid : Spawn(prototype, coordinates);
+    }
+
+    protected EntityUid SpawnServer(string? prototype, MapCoordinates coordinates)
+    {
+        return Net.IsClient ? EntityUid.Invalid : Spawn(prototype, coordinates);
     }
 }
 

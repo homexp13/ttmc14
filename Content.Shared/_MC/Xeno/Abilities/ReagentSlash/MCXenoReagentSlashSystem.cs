@@ -57,7 +57,7 @@ public sealed class MCXenoReagentSlashSystem : MCXenoAbilitySystem
         var active = EnsureComp<MCXenoReagentSlashActiveComponent>(entity);
         active.Solution = entity.Comp.Solution;
         active.ExpiresTime = _timing.CurTime + entity.Comp.Duration;
-        active.MaxCount = entity.Comp.Count;
+        active.Count = entity.Comp.Count;
         active.Amount = entity.Comp.Amount;
         Dirty(entity, active);
     }
@@ -69,12 +69,6 @@ public sealed class MCXenoReagentSlashSystem : MCXenoAbilitySystem
 
     private void OnMeleeHit(Entity<MCXenoReagentSlashActiveComponent> entity, ref MeleeHitEvent args)
     {
-        if (entity.Comp.Count >= entity.Comp.MaxCount)
-        {
-            RemCompDeferred<MCXenoReagentSlashActiveComponent>(entity);
-            return;
-        }
-
         var reagentId = _mcXenoReagentSelector.GetReagent(entity.Owner);
         if (reagentId is null)
             return;
@@ -87,8 +81,13 @@ public sealed class MCXenoReagentSlashSystem : MCXenoAbilitySystem
             if (!_solutionContainer.TryAddReagent(solution.Value, reagentId.Value, entity.Comp.Amount))
                 continue;
 
-            entity.Comp.Count++;
+            entity.Comp.Count--;
             Dirty(entity);
         }
+
+        if (entity.Comp.Count > 0)
+            return;
+
+        RemCompDeferred<MCXenoReagentSlashActiveComponent>(entity);
     }
 }

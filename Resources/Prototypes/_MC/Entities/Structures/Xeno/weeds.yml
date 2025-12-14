@@ -230,3 +230,26 @@
     healthModifier: 1.2
     plasmaModifier: 1.2
     sunderModifier: 2
+
+- type: entity
+  parent: MCXenoWeedsBase
+  id: MCXenoWeedsFireproof
+  components:
+  - type: Sprite
+    sprite: _MC/Structures/Xeno/Weeds/red.rsi
+  - type: XenoWeeds
+    spawns: MCXenoWeedsFireproof
+  - type: RMCImmuneToIgnition
+  - type: RMCImmuneToFireTileDamage
+
+- type: entity
+  parent: MCXenoWeedsNodeBase
+  id: MCXenoWeedsNodeFireproof
+  components:
+  - type: Sprite
+    sprite: _MC/Structures/Xeno/Weeds/red.rsi
+  - type: XenoWeeds
+    spawns: MCXenoWeedsFireproof
+  - type: RMCImmuneToIgnition
+  - type: RMCImmuneToFireTileDamage
+

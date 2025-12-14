@@ -97,6 +97,12 @@
         sprite:
           sprite: _MC/Interface/Xeno/weed_icons.rsi
           state: sticky
+      MCXenoWeedsNodeFireproof:
+        name: Fireproof (150)
+        cost: 150
+        sprite:
+          sprite: _MC/Interface/Xeno/weed_icons.rsi
+          state: fireproof
       MCXenoWeedsNodeResting:
         name: Resting (225)
         cost: 225
