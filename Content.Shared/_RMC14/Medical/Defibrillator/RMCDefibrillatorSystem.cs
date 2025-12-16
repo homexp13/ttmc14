@@ -35,7 +35,7 @@ public sealed class RMCDefibrillatorSystem : EntitySystem
         {
             foreach (var (type, amount) in ent.Comp.RMCZapDamage)
             {
-                args.Heal += _damageable.TryChangeDamage(args.Target, new DamageSpecifier(_prototypeManager.Index(type), FixedPoint2.New(amount)), ignoreResistances: true) ?? new DamageSpecifier();
+                args.Heal += new DamageSpecifier(_prototypeManager.Index(type), FixedPoint2.New(amount));
             }
         }
 
