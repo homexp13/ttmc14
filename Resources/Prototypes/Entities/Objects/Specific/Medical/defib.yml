@@ -32,7 +32,7 @@
     - type: Defibrillator
       zapHeal:
         types:
-          Asphyxiation: -40
+          MCOxygen: -40
     - type: DoAfter
     - type: UseDelay
     - type: StaticPrice
@@ -90,7 +90,7 @@
   - type: Defibrillator
     zapHeal:
       types:
-        Asphyxiation: -40
+        MCOxygen: -40
     doAfterDuration: 6
   - type: DoAfter
   - type: UseDelay

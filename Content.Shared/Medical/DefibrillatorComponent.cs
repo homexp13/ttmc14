@@ -90,7 +90,7 @@ public sealed partial class DefibrillatorComponent : Component
     /// How much damage is healed from getting zapped.
     /// </summary>
     [DataField("rmcZapHeal"), ViewVariables(VVAccess.ReadWrite)]
-    public List<(ProtoId<DamageGroupPrototype> Group, int Amount)>? RMCZapDamage;
+    public List<(ProtoId<DamageTypePrototype> Type, int Amount)>? RMCZapDamage;
 
     // TODO RMC14 different sound per skill level
     [DataField]

@@ -36,13 +36,13 @@
     allowDoAfterMovement: false
     canDefibCrit: false
     rmcZapHeal:
-    - Brute: -12
-    - Burn: -12
-    - Toxin: -12
-    - Genetic: -12
+    - MCBrute: -12
+    - MCBurn: -12
+    - MCToxin: -12
+    - MCClone: -12
     zapHeal:
       groups:
-        Airloss: -400
+        MCOxygen: -400
     zapSound:
       path: /Audio/_RMC14/Medical/defib_release.ogg
       params:

@@ -56,8 +56,8 @@
     - MCToxin: -10
     - MCClone: -10
     zapHeal:
-      groups:
-        Airloss: -400
+      types:
+        MCOxygen: -400
     zapSound:
       path: /Audio/_RMC14/Medical/defib_release.ogg
       params:
