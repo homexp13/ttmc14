@@ -87,7 +87,8 @@
   - type: ActivatableUI
     key: enum.MortarUiKey.Key
   - type: RMCCameraComputer
-    id: MCMortarKit
+    protoIds:
+    - MCMortarKit
     title: rmc-mortar-camera-title
   - type: Appearance
   - type: GenericVisualizer
