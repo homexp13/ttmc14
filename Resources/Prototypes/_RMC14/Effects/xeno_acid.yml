@@ -57,6 +57,7 @@
   - type: DamageOnCollide
     acidic: true
     acidComboDuration: 40
+    acidComboResists: 2
     acidComboDamage:
       types:
         Heat: 3
@@ -78,6 +79,7 @@
   - type: UncloakOnHit
   - type: ExtinguishFire
   - type: IgnorePredictionHit
+  - type: SprayExtinguishTileFire
 
 - type: entity
   parent: XenoAcidSprayWeak
@@ -95,6 +97,8 @@
         Heat: 36
   - type: TimedDespawn
     lifetime: 1.0
+  - type: SprayExtinguishTileFire
+    extinguishAmount: 13
 
 - type: entity
   parent: XenoAcidSprayWeak
@@ -113,6 +117,8 @@
         Heat: 24
   - type: TimedDespawn
     lifetime: 1.0
+  - type: SprayExtinguishTileFire
+    extinguishAmount: 13
 
 - type: entity
   parent: XenoAcidSprayWeak
@@ -153,6 +159,8 @@
         Heat: 12.2
   - type: TimedDespawn
     lifetime: 0.6
+  - type: SprayExtinguishTileFire
+    extinguishAmount: 13
 
 - type: entity
   parent: XenoAcidSprayTrap
@@ -173,6 +181,8 @@
         Heat: 21.3
   - type: TimedDespawn
     lifetime: 3.0
+  - type: SprayExtinguishTileFire
+    extinguishAmount: 18
 
 - type: entity
   parent: RMCBaseEffect

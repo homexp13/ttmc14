@@ -278,9 +278,9 @@ namespace Content.Server.Atmos.EntitySystems
             if (args.Handled)
                 return;
 
+            _rmcFlammable.DoStopDropRollAnimation(ent.Owner);
             Resist(ent, ent);
             _xenoSpit.Resist(ent.Owner);
-            RaiseNetworkEvent(new RMCStopDropRollVisualsNetworkEvent(GetNetEntity(ent.Owner)), Filter.Pvs(ent.Owner));
             args.Handled = true;
         }
 
@@ -527,18 +527,23 @@ namespace Content.Server.Atmos.EntitySystems
 
                     if (_steppingOnFireQuery.HasComp(uid))
                         damage *= 2;
+
                     // Check fire immunity for DOT damage
-                    if (TryComp<RMCImmuneToFireTileDamageComponent>(uid, out var immunity))
+                    var tileEv = new RMCGetFireImmunityEvent(null);
+                    RaiseLocalEvent(uid, ref tileEv);
+
+                    if (tileEv.Immune ||
+                        HasComp<RMCImmuneToFireTileDamageComponent>(uid))
                     {
                         // If entity has fire immunity, only deal damage if they have the bypass component
-                        if (HasComp<RMCFireBypassActiveComponent>(uid) && damage != null && !HasComp<MCXenoResinJellyFireproofComponent>(uid))
-                            _damageableSystem.TryChangeDamage(uid, damage, true, false);
+                        if (HasComp<RMCFireBypassActiveComponent>(uid) && damage != null)
+                            _damageableSystem.TryChangeDamage(uid, damage, true, false, origin: uid);
                     }
                     else
                     {
                         // No immunity, deal damage normally
-                        if (damage != null && !HasComp<MCXenoResinJellyFireproofComponent>(uid))
-                            _damageableSystem.TryChangeDamage(uid, damage, true, false);
+                        if (damage != null)
+                            _damageableSystem.TryChangeDamage(uid, damage, true, false, origin: uid);
                     }
 
                     AdjustFireStacks(uid, flammable.Resisting ? flammable.ResistStacks : -0.25f, flammable, flammable.OnFire);

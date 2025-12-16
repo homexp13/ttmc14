@@ -37,6 +37,12 @@ public sealed partial class HiveComponent : Component
     public List<TimeSpan> AnnouncementsLeft = [];
 
     [DataField, AutoNetworkedField]
+    public bool AnnouncedQueenDeathCooldownOver;
+
+    [DataField, AutoNetworkedField]
+    public bool AnnouncedHiveCoreCooldownOver;
+
+    [DataField, AutoNetworkedField]
     public SoundSpecifier AnnounceSound = new SoundPathSpecifier("/Audio/_RMC14/Xeno/alien_distantroar_3.ogg", AudioParams.Default.WithVolume(-6));
 
     [DataField, AutoNetworkedField]
@@ -64,7 +70,10 @@ public sealed partial class HiveComponent : Component
     public TimeSpan PreSetupCutoff = TimeSpan.FromMinutes(20);
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
-    public TimeSpan NewCoreAt;
+    public TimeSpan? NewCoreAt;
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan? NewQueenAt;
 
     [DataField, AutoNetworkedField]
     public bool HijackSurged;
