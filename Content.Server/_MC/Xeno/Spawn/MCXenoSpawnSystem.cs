@@ -115,7 +115,7 @@ public sealed class MCXenoSpawnSystem : EntitySystem
         if (_selectedPlanetMap is not null)
             return _selectedPlanetMap.Value;
 
-        var planet = _random.Pick(_rmcPlanet.GetCandidates());
+        var planet = _random.Pick(_rmcPlanet.GetCandidatesInRotation());
         _selectedPlanetMap = planet;
         return planet;
     }
